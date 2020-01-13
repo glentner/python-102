@@ -1,0 +1,391 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Documenting your code &mdash; Python 102</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Improving the usability of Python programs" href="usability.html" />
+    <link rel="prev" title="Testing your code" href="testing.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Python 102
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="packaging.html">Organizing code for a Python project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">Testing your code</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Documenting your code</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#docstrings-and-comments">Docstrings and comments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#deleting-code">Deleting code</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#what-to-document">What to document?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#doctests">Doctests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#documentation-generation">Documentation generation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usability.html">Improving the usability of Python programs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance.html">Improving the performance of Python programs</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Python 102</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Documenting your code</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/documenting.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="documenting-your-code">
+<h1>Documenting your code<a class="headerlink" href="#documenting-your-code" title="Permalink to this headline">¶</a></h1>
+<p>Most people think of writing documentation as
+an unpleasant, but necessary task,
+done for the benefit of othe people
+with no real benefit to themselves.
+So they choose not to do it,
+or they do it with little care.</p>
+<p>But even if you are the only person who will ever use your code,
+it’s still a good idea to document it well.
+Being able to document your own code gives you confidence that you understand it yourself,
+and a sign of well-written code is that it can be easily documented.
+Code you wrote a few weeks ago
+may as well have been written by someone else,
+and you will be glad that you documented it.</p>
+<p>The good news is that writing documentation can be fun,
+and you really don’t need to write a lot of it.</p>
+<div class="section" id="docstrings-and-comments">
+<h2>Docstrings and comments<a class="headerlink" href="#docstrings-and-comments" title="Permalink to this headline">¶</a></h2>
+<p>Documentation is <em>not</em> comments.</p>
+<p>A <em>docstring</em> in Python is a string literal
+that appears at the beginning of a module, function, class, or method.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">A docstring in Python that appears</span>
+<span class="sd">at the beginning of a module, function, class or method.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>The <em>docstring</em> of a module, function, class or method
+becomes the <code class="docutils literal notranslate"><span class="pre">__doc__</span></code> attribute of that object,
+and is printed if you type <code class="docutils literal notranslate"><span class="pre">help(object)</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="k">def</span> <span class="nf">fahr_to_celsius</span><span class="p">(</span><span class="n">F</span><span class="p">):</span>
+   <span class="o">...</span><span class="p">:</span>     <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">   ...:     Convert temperature from Fahrenheit to Celsius.</span>
+<span class="s2">   ...:     &quot;&quot;&quot;</span>
+   <span class="o">...</span><span class="p">:</span>     <span class="k">return</span> <span class="p">(</span><span class="n">F</span> <span class="o">-</span> <span class="mi">32</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">5</span><span class="o">/</span><span class="mi">9</span><span class="p">)</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="n">help</span><span class="p">(</span><span class="n">fahr_to_celsius</span><span class="p">)</span>
+
+<span class="n">Help</span> <span class="n">on</span> <span class="n">function</span> <span class="n">fahr_to_celsius</span> <span class="ow">in</span> <span class="n">module</span> <span class="n">__main__</span><span class="p">:</span>
+
+<span class="n">fahr_to_celsius</span><span class="p">(</span><span class="n">F</span><span class="p">)</span>
+ <span class="n">Convert</span> <span class="n">temperature</span> <span class="kn">from</span> <span class="nn">Fahrenheit</span> <span class="n">to</span> <span class="n">Celsius</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>A <em>comment</em> in Python is any line that begins with a <code class="docutils literal notranslate"><span class="pre">#</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># a comment.</span>
+</pre></div>
+</div>
+<p>The purpose of a docstring is to document a module, function, class, or method.
+The purpose of a comment is to explain a very difficult piece of code,
+or to justify a choice that was made while writing it.</p>
+<p>Docstrings should not be used in place of comments,
+or vice versa. <strong>Don’t do the following</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="k">def</span> <span class="nf">fahr_to_celsius</span><span class="p">(</span><span class="n">F</span><span class="p">):</span>
+   <span class="o">...</span><span class="p">:</span>     <span class="c1"># Convert temperature from Fahrenheit to Celsius.</span>
+   <span class="o">...</span><span class="p">:</span>     <span class="k">return</span> <span class="p">(</span><span class="n">F</span> <span class="o">-</span> <span class="mi">32</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">5</span><span class="o">/</span><span class="mi">9</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="deleting-code">
+<h3>Deleting code<a class="headerlink" href="#deleting-code" title="Permalink to this headline">¶</a></h3>
+<p>Incidentally, many people use comments and string literals
+as a way of “deleting” code - also known as <em>commenting out</em> code.
+See <a class="reference external" href="https://nedbatchelder.com/text/deleting-code.html">this article</a> on a better way to delete code.</p>
+</div>
+</div>
+<div class="section" id="what-to-document">
+<h2>What to document?<a class="headerlink" href="#what-to-document" title="Permalink to this headline">¶</a></h2>
+<p>So what goes in a dosctring?</p>
+<p>At minimum, the docstring for a function or method should consist of the following:</p>
+<ol class="arabic simple">
+<li><p>A <strong>Summary</strong> section that describes in a sentence or two
+what the function does.</p></li>
+<li><p>A <strong>Parameters</strong> section that provides a
+description of the parameters to the function,
+their types,
+and default values (in the case of optional arguments).</p></li>
+<li><p>A <strong>Returns</strong> section that similarly describes the return values.</p></li>
+<li><p>Optionally,
+a <strong>Notes</strong> section that describes the implementation,
+and includes references.</p></li>
+</ol>
+<p>Here is a simple example of this in action:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">flip_list</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Flip (reverse) a list.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    a : list </span>
+<span class="sd">        List to be reversed.</span>
+<span class="sd">    inplace : bool, optional</span>
+<span class="sd">        Specifies whether to flip the list &quot;in place&quot;,</span>
+<span class="sd">        or return a new list (default).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    flipped : list (or None)</span>
+<span class="sd">        The flipped list. If `inplace=True`, None is returned.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">inplace</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">a</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">a</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>NumPy’s <a class="reference external" href="https://numpydoc.readthedocs.io/en/latest/">documentation guidelines</a> are a great
+reference for more information about what and how to document your code.</p>
+</div>
+<div class="section" id="doctests">
+<h2>Doctests<a class="headerlink" href="#doctests" title="Permalink to this headline">¶</a></h2>
+<p>In addition to the sections above,
+your documentation can also contain runnable tests.
+This is possible using the
+<a class="reference external" href="https://docs.python.org/3/library/doctest.html">doctest</a> module.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">flip_list.py</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">flip_list</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Flip (reverse) a list.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    a : list </span>
+<span class="sd">        List to be reversed.</span>
+<span class="sd">    inplace : bool, optional</span>
+<span class="sd">        Specifies whether to flip the list &quot;in place&quot;,</span>
+<span class="sd">        or return a new list (default).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    flipped : list (or None)</span>
+<span class="sd">        The flipped list. If `inplace=True`, None is returned.</span>
+
+
+<span class="sd">    &gt;&gt;&gt; flip_list([1, 2, 3])</span>
+<span class="sd">    [3, 2, 1]</span>
+
+<span class="sd">    &gt;&gt;&gt; a = [1, 2, 3]</span>
+<span class="sd">    &gt;&gt;&gt; flip_list(a, inplace=True)</span>
+<span class="sd">    &gt;&gt;&gt; a</span>
+<span class="sd">    [3, 2, 1]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">inplace</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">a</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">a</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<p>You can tell <code class="docutils literal notranslate"><span class="pre">pytest</span></code> to run doctests as well as other tests
+using the <code class="docutils literal notranslate"><span class="pre">--doctest-modules</span></code> switch:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pytest --doctest-modules flip_list.py
+
+collected 1 item
+
+flip_list.py .                                                            [100%]
+
+=========================== 1 passed in 0.03 seconds ===========================
+</pre></div>
+</div>
+<p>Doctests are great because they double up
+as documentation as well as tests.
+But they shouldn’t be the <em>only</em> kind of tests you write.</p>
+</div>
+<div class="section" id="documentation-generation">
+<h2>Documentation generation<a class="headerlink" href="#documentation-generation" title="Permalink to this headline">¶</a></h2>
+<p>Finally, you can turn your documentation into a beautiful website (like this one!),
+a PDF manual, and various other formats,
+using a document generator such as
+<a class="reference external" href="http://www.sphinx-doc.org/en/master/">Sphinx</a>.
+You can use services like
+<a class="reference external" href="http://readthedocs.org/">readthedocs</a>
+to build and host your website for free.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="usability.html" class="btn btn-neutral float-right" title="Improving the usability of Python programs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="testing.html" class="btn btn-neutral float-left" title="Testing your code" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Ashwin Srinath
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
