@@ -4,6 +4,12 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+pydata-sphinx-theme = "*"
+sphinx = "*"
+pytest = "*"
+hypothesis = "*"
+ipython = "*"
+twine = "*"
 
 [packages]
 sphinx = "*"
@@ -14,6 +20,9 @@ numpy = "*"
 scipy = "*"
 matplotlib = "*"
 ipython = "*"
+line-profiler = "*"
+memory-profiler = "*"
+python201 = {editable = true, path = "."}
 
 [requires]
-python_version = "3.7"
+python_version = "3.8.3"
