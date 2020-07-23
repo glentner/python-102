@@ -168,7 +168,7 @@
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#useful-tests" class="nav-link">Useful Tests</a>
+            <a href="#assertions" class="nav-link">Assertions</a>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
@@ -176,7 +176,23 @@
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#testing-frameworks" class="nav-link">Testing Frameworks</a>
+            <a href="#useful-tests" class="nav-link">Useful Tests</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#fixing-the-code" class="nav-link">Fixing the Code</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#types-of-testing" class="nav-link">Types of Testing</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#test-driven-development" class="nav-link">Test-Driven Development</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#growing-a-useful-test-suite" class="nav-link">Growing a Useful Test Suite</a>
         </li>
     
     </ul>
@@ -194,25 +210,231 @@
                 
   <div class="section" id="testing">
 <span id="id1"></span><h1>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h1>
+<p>Now that we’ve encapsulated our code in a well structured and installable package,
+how can we validate that our code is robust and works as expected?</p>
+<p><cite>We want to address the following …</cite></p>
+<ul class="simple">
+<li><p>How can you write modular, extensible, and reusable code?</p></li>
+<li><p>After making changes to a program, how do you ensure that it will still give
+the same answers as before?</p></li>
+<li><p>How can we make finding and fixing bugs an easy, fun, and rewarding experience?</p></li>
+</ul>
+<p>These seemingly unrelated questions all have the same answer, and it is
+<cite>automated testing</cite>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This section was originally based on Ned Batchelder’s
+excellent article and PyCon 2014 talk
+<a class="reference external" href="https://nedbatchelder.com/text/test0.html">Getting Started Testing</a>.</p>
+<div class="line-block">
+<div class="line">“<em>Tests are the dental floss of development: everyone knows they should do it more,</em></div>
+<div class="line"><em>but they don’t, and they feel guilty about it.</em>”</div>
+<div class="line">- Ned Batchelder</div>
+</div>
+<div class="line-block">
+<div class="line">“<em>Code without tests should be approached with a 10-foot pole.</em>”</div>
+<div class="line">- Ashwin Srinath</div>
+</div>
+</div>
 <div class="section" id="testing-interactively">
 <h2>Testing Interactively<a class="headerlink" href="#testing-interactively" title="Permalink to this headline">¶</a></h2>
-<p>…</p>
+<p>Let’s look at our initial bit of code.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">python201/algorithms.py</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">cumulative_product</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">array</span><span class="p">[:</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">last_value</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">array</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="n">last_value</span><span class="p">:</span>
+            <span class="k">break</span>
+    <span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div>
+</div>
+<p>While we were developing this function, we would have likely started up an IPython console
+and either copied the code snippet or imported the function and tested it on a
+few simple cases to validate that it returns expected results.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [1]: </span><span class="kn">from</span> <span class="nn">python201.algorithms</span> <span class="kn">import</span> <span class="n">cumulative_product</span>
+
+<span class="gp">In [2]: </span><span class="n">cumulative_product</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="gh">Out[2]: </span><span class="go">[1, 2, 6]</span>
+
+<span class="gp">In [3]: </span><span class="n">cumulative_product</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="gh">Out[3]: </span><span class="go">[3, 6, 6]</span>
+
+<span class="gp">In [4]: </span><span class="n">cumulative_product</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="gh">Out[4]: </span><span class="go">[1, 2, 6, 24]</span>
+</pre></div>
+</div>
+<p>While this kind of testing is better than not doing any testing at all, it leaves much
+to be desired. First, it needs to be done each time <code class="docutils literal notranslate"><span class="pre">cumulative_product</span></code> is changed.
+It also requires that we manually inspect the output from each test to decide if the
+code “passes” or “fails” that test. Further, we need to remember all the tests we came
+up with today if we want to test again tomorrow.</p>
 </div>
 <div class="section" id="test-scripts">
 <h2>Test Scripts<a class="headerlink" href="#test-scripts" title="Permalink to this headline">¶</a></h2>
-<p>…</p>
+<p>A <cite>much</cite> better way to write tests is to put them in a script.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">tests/test_algorithms.py</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">python201.algorithms</span> <span class="kn">import</span> <span class="n">cumulative_product</span>
+
+<span class="n">array</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;cumulative_product(</span><span class="si">{</span><span class="n">array</span><span class="si">}</span><span class="s1">) ==&#39;</span><span class="p">,</span> <span class="n">cumulative_product</span><span class="p">(</span><span class="n">array</span><span class="p">))</span>
+
+<span class="n">array</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;cumulative_product(</span><span class="si">{</span><span class="n">array</span><span class="si">}</span><span class="s1">) ==&#39;</span><span class="p">,</span> <span class="n">cumulative_product</span><span class="p">(</span><span class="n">array</span><span class="p">))</span>
+
+<span class="n">array</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;cumulative_product(</span><span class="si">{</span><span class="n">array</span><span class="si">}</span><span class="s1">) ==&#39;</span><span class="p">,</span> <span class="n">cumulative_product</span><span class="p">(</span><span class="n">array</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>Now, running and re-running our tests is very easy - we just run the script.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python tests/test_algorithms.py
+cumulative_product([1, 2, 3]) == [1, 2, 6]
+cumulative_product([3, 2, 1]) == [3, 6, 6]
+cumulative_product([1, 2, 3, 4]) == [1, 2, 6, 24]
+</pre></div>
+</div>
+<p>It’s also easy to add new tests, and there’s no need to remember all the tests we come up with.</p>
+</div>
+<div class="section" id="assertions">
+<h2>Assertions<a class="headerlink" href="#assertions" title="Permalink to this headline">¶</a></h2>
+<p>One problem with the method above is that
+we <em>still</em> need to manually inspect the results of our tests.</p>
+<p>Assertions can help with this. The <code class="docutils literal notranslate"><span class="pre">assert</span></code> statement in Python is very simple: Given a
+condition, like <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">==</span> <span class="pre">2</span></code>, it checks to see if the condition is true or false. If it is true,
+then <code class="docutils literal notranslate"><span class="pre">assert</span></code> does nothing, and if it false, it raises an <code class="docutils literal notranslate"><span class="pre">AssertionError</span></code>.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [1]: </span><span class="k">assert</span> <span class="mi">1</span> <span class="o">==</span> <span class="mi">1</span>
+
+<span class="gp">In [2]: </span><span class="k">assert</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="mi">2</span>
+
+<span class="gp">In [3]: </span><span class="k">assert</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="mi">2</span>
+<span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">AssertionError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">3</span><span class="o">-</span><span class="n">f53b9196f459</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="k">assert</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="mi">2</span>
+
+<span class="ne">AssertionError</span>:
+</pre></div>
+</div>
+<p>We can re-write our script as follows.</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">tests/test_algorithms.py</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">python201.algorithms</span> <span class="kn">import</span> <span class="n">cumulative_product</span>
+
+<span class="k">assert</span> <span class="n">cumulative_product</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span> <span class="o">==</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+<span class="k">assert</span> <span class="n">cumulative_product</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span> <span class="o">==</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+<span class="k">assert</span> <span class="n">cumulative_product</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span> <span class="o">==</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">24</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<p>And we still run our tests the same way.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python tests/test_algorithms.py
+</pre></div>
+</div>
+<p>This time, there’s no need to inspect the test results. If we get an <code class="docutils literal notranslate"><span class="pre">AssertionError</span></code>,
+then we had a test fail; and if not, all our tests passed.</p>
+<p>That said, there’s no way to know if <cite>more</cite> than one test failed. The script stops executing
+after the first <code class="docutils literal notranslate"><span class="pre">AssertionError</span></code> is encountered. Let’s add another test to our test script and
+re-run it.</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">tests/test_algorithms.py</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">python201.algorithms</span> <span class="kn">import</span> <span class="n">cumulative_product</span>
+
+<span class="k">assert</span> <span class="n">cumulative_product</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span> <span class="o">==</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+<span class="k">assert</span> <span class="n">cumulative_product</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span> <span class="o">==</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+<span class="k">assert</span> <span class="n">cumulative_product</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span> <span class="o">==</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">24</span><span class="p">]</span>
+<span class="k">assert</span> <span class="n">cumulative_product</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span> <span class="o">==</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">18</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python tests/test_algorithms.py
+Traceback (most recent call last):
+  File &quot;tests/test_algorithms.py&quot;, line 8, in &lt;module&gt;
+    assert cumulative_product([1, 2, 3, 3]) == [1, 2, 6, 18]
+AssertionError
+</pre></div>
+</div>
+<p>This time we get a failed test, because – as we said – our code is “bad”. Before adding
+more tests to investigate, we’ll discuss one more method for running tests.</p>
+</div>
+<div class="section" id="automated-testing">
+<h2>Automated Testing<a class="headerlink" href="#automated-testing" title="Permalink to this headline">¶</a></h2>
+<p>A test runner takes a bunch of tests, executes them all, and then reports which of them passed
+and which of them failed. A very popular test runner for Python is
+<a class="reference external" href="https://docs.pytest.org/en/latest/">pytest</a>.</p>
+<p>Like many testing frameworks, <code class="docutils literal notranslate"><span class="pre">pytest</span></code> can be quite sophisticated. For the purposes of
+this tutorial, we’ll stick to the basics. Essentially, if you place all of your tests within
+the appropriate layout, <code class="docutils literal notranslate"><span class="pre">pytest</span></code> will automatically find and execute all your tests.</p>
+<p>We want all of our tests to live under files that start with <code class="docutils literal notranslate"><span class="pre">test</span></code> and we need all of
+our tests to be encapsulated by functions that also start with <code class="docutils literal notranslate"><span class="pre">test</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">tests/test_algorithms.py</span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">python201.algorithms</span> <span class="kn">import</span> <span class="n">cumulative_product</span>
+
+<span class="k">def</span> <span class="nf">test_cumulative_product</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="n">cumulative_product</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span> <span class="o">==</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">cumulative_product</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span> <span class="o">==</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">cumulative_product</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span> <span class="o">==</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">24</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">cumulative_product</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span> <span class="o">==</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">18</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<p>To run our tests, we simple execute <code class="docutils literal notranslate"><span class="pre">pytest</span></code> at the command line at the top of our
+project.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ pytest
+=================================== test session starts ====================================
+platform linux -- Python 3.8.3, pytest-5.4.3, py-1.9.0, pluggy-0.13.1
+rootdir: /home/glentner/code/github.com/glentner/python201
+plugins: hypothesis-5.20.3
+collected 1 item
+
+tests/test_algorithms.py F                                                           [100%]
+
+========================================= FAILURES =========================================
+_________________________________ test_cumulative_product __________________________________
+
+    def test_cumulative_product():
+        assert cumulative_product([1, 2, 3]) == [1, 2, 6]
+        assert cumulative_product([3, 2, 1]) == [3, 6, 6]
+        assert cumulative_product([1, 2, 3, 4]) == [1, 2, 6, 24]
+&gt;       assert cumulative_product([1, 2, 3, 3]) == [1, 2, 6, 18]
+E       assert [1, 2, 6] == [1, 2, 6, 18]
+E         Right contains one more item: 18
+E         Use -v to get the full diff
+
+tests/test_algorithms.py:9: AssertionError
+================================= short test summary info ==================================
+FAILED tests/test_algorithms.py::test_cumulative_product - assert [1, 2, 6] == [1, 2, 6, 18]
+==================================== 1 failed in 0.21s =====================================
+</pre></div>
+</div>
 </div>
 <div class="section" id="useful-tests">
 <h2>Useful Tests<a class="headerlink" href="#useful-tests" title="Permalink to this headline">¶</a></h2>
 <p>…</p>
 </div>
-<div class="section" id="automated-testing">
-<h2>Automated Testing<a class="headerlink" href="#automated-testing" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="fixing-the-code">
+<h2>Fixing the Code<a class="headerlink" href="#fixing-the-code" title="Permalink to this headline">¶</a></h2>
 <p>…</p>
 </div>
-<div class="section" id="testing-frameworks">
-<h2>Testing Frameworks<a class="headerlink" href="#testing-frameworks" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="types-of-testing">
+<h2>Types of Testing<a class="headerlink" href="#types-of-testing" title="Permalink to this headline">¶</a></h2>
 <p>…</p>
+</div>
+<div class="section" id="test-driven-development">
+<h2>Test-Driven Development<a class="headerlink" href="#test-driven-development" title="Permalink to this headline">¶</a></h2>
+<p>…</p>
+</div>
+<div class="section" id="growing-a-useful-test-suite">
+<h2>Growing a Useful Test Suite<a class="headerlink" href="#growing-a-useful-test-suite" title="Permalink to this headline">¶</a></h2>
+<p>…</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 </div>
 </div>
 
