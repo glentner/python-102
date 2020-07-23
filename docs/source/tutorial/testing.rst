@@ -203,8 +203,8 @@ project.
 
     $ pytest
     =================================== test session starts ====================================
-    platform darwin -- Python 3.8.3, pytest-5.4.3, py-1.9.0, pluggy-0.13.1
-    rootdir: /Users/geoffrey/Documents/Code/github.com/glentner/python201
+    platform linux -- Python 3.8.3, pytest-5.4.3, py-1.9.0, pluggy-0.13.1
+    rootdir: /home/glentner/code/github.com/glentner/python201
     plugins: hypothesis-5.20.3
     collected 1 item
 
