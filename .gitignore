@@ -69,7 +69,7 @@ instance/
 .scrapy
 
 # Sphinx documentation
-docs/_build/
+docs/source/_build/
 
 # PyBuilder
 target/
@@ -133,3 +133,6 @@ dmypy.json
 
 # PyCharm
 .idea
+
+# OS caches
+.DS_Store/
