@@ -1,0 +1,318 @@
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building Better Scientific Software in Python &#8212; python201 0.2 documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Setup" href="setup.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+    
+    <a class="navbar-brand" href="#">
+      <img src="_static/logo.png" class="logo" alt="logo">
+    </a>
+    
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="setup.html">Setup</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="tutorial/index.html">Tutorial</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="references.html">References</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="license.html">License</a>
+        </li>
+        
+        
+      </ul>
+
+
+      
+
+      <ul class="navbar-nav">
+        
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/glentner/python201" target="_blank" rel="noopener">
+              <span><i class="fab fa-github-square"></i></span>
+            </a>
+          </li>
+        
+        
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+          <div class="col-12 col-md-3 bd-sidebar">
+
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+
+  <div class="bd-toc-item active">
+  
+
+  <ul class="nav bd-sidenav">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    </ul>
+
+</nav>
+          </div>
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#about" class="nav-link">About</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#tutorial" class="nav-link">Tutorial</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#getting-started" class="nav-link">Getting Started</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#table-of-contents" class="nav-link">Table of Contents</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <div class="section" id="building-better-scientific-software-in-python">
+<h1>Building Better Scientific Software in Python<a class="headerlink" href="#building-better-scientific-software-in-python" title="Permalink to this headline">¶</a></h1>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>This website provides a tutorial on building better scientific software in Python. It was
+developed over time, by multiple people, and has been delivered in multiple formats and venues.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="about">
+<h2>About<a class="headerlink" href="#about" title="Permalink to this headline">¶</a></h2>
+<p>Scientists and researchers are increasingly put in the position of also being software developers.
+Writing code in the pursuit of science and data analysis brings with it the challenge of making
+that code deployable and accessible to collaborators. Novice programmers often find themselves
+writing difficult to maintain, difficult to manage code that their peers and collaborators have
+trouble using.</p>
+<p>The goal of this tutorial is to expose researchers to several best practices in scientific
+software engineering that may otherwise take several years to become acquainted with. Though the
+implementation of these lessons is Python-specific, the essential ideas can be exported to other
+languages or platforms.</p>
+<p>The code for this website and the final resulting <em>package</em> are available on <a class="reference external" href="https://github.com/glentner/python201">GitHub</a>. Feedback is welcome in the form of <em>Issues</em> or
+<em>Pull Requests</em>.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="tutorial">
+<h2>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h2>
+<p>The content presented in the <a class="reference internal" href="tutorial/index.html#tutorial"><span class="std std-ref">Tutorial</span></a> can stand on its own as a reference. It
+can also be delivered as a hands-on workshop by a qualified instructor, with the materials
+presented alongside a live demonstration. A simple example bit of code is used to interactively
+build up a full featured Python package, complete with documentation and automated testing.</p>
+<p>The following topics do not complete an exhaustive set of what could be included; however, they
+cover some of the most import elements of good scientific software.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="tutorial/packaging.html#packaging"><span class="std std-ref">Packaging</span></a></p></li>
+<li><p><a class="reference internal" href="tutorial/testing.html#testing"><span class="std std-ref">Testing</span></a></p></li>
+<li><p><a class="reference internal" href="tutorial/documentation.html#documentation"><span class="std std-ref">Documentation</span></a></p></li>
+<li><p><a class="reference internal" href="tutorial/commandline.html#commandline-interfaces"><span class="std std-ref">Command-line Interfaces</span></a></p></li>
+<li><p><a class="reference internal" href="tutorial/logging.html#logging"><span class="std std-ref">Logging</span></a></p></li>
+<li><p><a class="reference internal" href="tutorial/performance.html#performance"><span class="std std-ref">Performance</span></a></p></li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<p>Proceed to the <a class="reference internal" href="setup.html#setup"><span class="std std-ref">setup</span></a> page to read about the prerequisites for this tutorial. The
+content itself is in the <a class="reference internal" href="tutorial/index.html#tutorial"><span class="std std-ref">Tutorial</span></a> section. If you can write a loop and a
+function in Python, and if you know how to run a <code class="docutils literal notranslate"><span class="pre">.py</span></code> script, you should be able to follow this
+tutorial.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="table-of-contents">
+<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#python-environment">Python Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#developer-tools">Developer Tools</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/index.html">Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/packaging.html">Packaging</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/packaging.html#starting-point">Starting Point</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/packaging.html#functions">Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/packaging.html#creating-a-python-package">Creating a Python Package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tutorial/packaging.html#how-does-python-find-packages">How does Python Find Packages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tutorial/packaging.html#organizing-a-python-project">Organizing a Python Project</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tutorial/packaging.html#installation">Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/packaging.html#extras">Extras</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tutorial/packaging.html#readme">README</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tutorial/packaging.html#version-control">Version Control</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tutorial/packaging.html#license">License</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tutorial/packaging.html#more-details">More Details</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tutorial/packaging.html#upload-to-pypi">Upload to PyPI</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/testing.html">Testing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/testing.html#testing-interactively">Testing Interactively</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/testing.html#test-scripts">Test Scripts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/testing.html#useful-tests">Useful Tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/testing.html#automated-testing">Automated Testing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/testing.html#testing-frameworks">Testing Frameworks</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/documentation.html">Documentation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/documentation.html#docstrings-and-comments">Docstrings and Comments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/documentation.html#what-to-document">What to Document</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/documentation.html#doctests">Doctests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/documentation.html#documentation-generation">Documentation Generation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/commandline.html">Command-line Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/commandline.html#conventions">Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/commandline.html#parsing-command-line-arguments">Parsing Command-line Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/commandline.html#entry-point-generation">Entry-point Generation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/logging.html">Logging</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/logging.html#starting-point">Starting Point</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/logging.html#conventions">Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/logging.html#logging-setup">Logging Setup</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/performance.html">Performance</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/performance.html#starting-point">Starting Point</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/performance.html#performance-profiling">Performance Profiling</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tutorial/performance.html#line-profiler">Line Profiler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tutorial/performance.html#memory-profiler">Memory Profiler</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/performance.html#use-existing-libraries">Use Existing Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/performance.html#just-in-time-compilation">Just-in-Time Compilation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/performance.html#parallel-and-distributed-computing">Parallel and Distributed Computing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/performance.html#developing-c-extensions">Developing C-Extensions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">References</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="references.html#better-scientific-software">Better Scientific Software</a></li>
+<li class="toctree-l2"><a class="reference internal" href="references.html#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+              </div>
+              
+              
+              <div class='prev-next-bottom'>
+                
+    <a class='right-next' id="next-link" href="setup.html" title="next page">Setup</a>
+
+              </div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    <script src="_static/js/index.js"></script>
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2019-2020 Geoffrey Lentner, 2018 Ashwin Srinath.<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.1.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

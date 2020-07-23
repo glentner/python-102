@@ -8,7 +8,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
-build/
+# build/ # ignore this one so we can push docs as github pages
 develop-eggs/
 dist/
 downloads/

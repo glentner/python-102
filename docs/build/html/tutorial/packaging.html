@@ -1,0 +1,686 @@
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Packaging &#8212; python201 0.2 documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Testing" href="testing.html" />
+    <link rel="prev" title="Tutorial" href="index.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+    
+    <a class="navbar-brand" href="../index.html">
+      <img src="../_static/logo.png" class="logo" alt="logo">
+    </a>
+    
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../setup.html">Setup</a>
+        </li>
+        
+        <li class="nav-item active">
+            <a class="nav-link" href="index.html">Tutorial</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../references.html">References</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../license.html">License</a>
+        </li>
+        
+        
+      </ul>
+
+
+      
+
+      <ul class="navbar-nav">
+        
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/glentner/python201" target="_blank" rel="noopener">
+              <span><i class="fab fa-github-square"></i></span>
+            </a>
+          </li>
+        
+        
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+          <div class="col-12 col-md-3 bd-sidebar">
+
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+
+  <div class="bd-toc-item active">
+  
+
+  <ul class="nav bd-sidenav">
+      
+      
+      
+      
+        
+          
+              <li class="active">
+                  <a href="">Packaging</a>
+              </li>
+          
+        
+          
+              <li class="">
+                  <a href="testing.html">Testing</a>
+              </li>
+          
+        
+          
+              <li class="">
+                  <a href="documentation.html">Documentation</a>
+              </li>
+          
+        
+          
+              <li class="">
+                  <a href="commandline.html">Command-line Interfaces</a>
+              </li>
+          
+        
+          
+              <li class="">
+                  <a href="logging.html">Logging</a>
+              </li>
+          
+        
+          
+              <li class="">
+                  <a href="performance.html">Performance</a>
+              </li>
+          
+        
+      
+      
+      
+      
+      
+      
+    </ul>
+
+</nav>
+          </div>
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#starting-point" class="nav-link">Starting Point</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#functions" class="nav-link">Functions</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#creating-a-python-package" class="nav-link">Creating a Python Package</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#how-does-python-find-packages" class="nav-link">How does Python Find Packages</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#organizing-a-python-project" class="nav-link">Organizing a Python Project</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#installation" class="nav-link">Installation</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#extras" class="nav-link">Extras</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#readme" class="nav-link">README</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#version-control" class="nav-link">Version Control</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#license" class="nav-link">License</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#more-details" class="nav-link">More Details</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#upload-to-pypi" class="nav-link">Upload to PyPI</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+    </ul>
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <div class="section" id="packaging">
+<span id="id1"></span><h1>Packaging<a class="headerlink" href="#packaging" title="Permalink to this headline">¶</a></h1>
+<p>When developing code to accomplish some goal, researchers will typically work within a single
+script or even something like a Jupyter notebook. Often, the code written here will be useful in
+another situation, by the same person, a collaborator, or a student. Frequently, that script or
+notebook gets copied from place to place and edited as a matter of course. This can be problematic
+for a number of reasons. And it can be a challenge to keep track of which version of the script
+was used for what task.</p>
+<p>Learning how to properly package your code in a way that others (or even yourself) can install
+into one or more environments and used everywhere is powerful. Not only will it be easier to track
+which version is needed for which project, but having a centralized location to collaborate on
+that code makes it easier to manage and deploy those changes.</p>
+<p>This section introduces a simple code example. We will discuss the anatomy of a Python package and
+how Python looks for and deals with installed assets. Version control (i.e., <cite>Git</cite> and <cite>GitHub</cite>) and
+managing deployed assets (e.g., deploying to <cite>PyPI</cite> with <cite>Twine</cite>) are not covered.</p>
+<div class="section" id="starting-point">
+<h2>Starting Point<a class="headerlink" href="#starting-point" title="Permalink to this headline">¶</a></h2>
+<p>The following code snippet will be the starting point of this tutorial and developed on
+throughout. It is entirely contrived and purposefully made to be both simple and initially “bad”
+as a teaching aid.</p>
+<p>Here we have an example bit of code written to compute the cumulative product of an array of
+numeric values.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">cumulative_product.py</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># original data</span>
+<span class="n">array</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+
+<span class="c1"># compute cumulative product</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">array</span><span class="p">[:</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">last_value</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">array</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+    <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">value</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="n">last_value</span><span class="p">:</span>
+        <span class="k">break</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>There are of course many things that could be improved about this bit of code. We will get to
+those soon enough! Let’s just say for the sake of argument that it meets the needs of our use-case
+initially. We’ve written this bit of code in a file somewhere and can execute it to display our
+result.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python cumulative_product.py
+[3, 12, 72, 648]
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Different kinds of code snippets and examples will be shown throughout the tutorial. Anything
+that looks like Python code should be interpreted as residing in a file. If it includes
+<code class="docutils literal notranslate"><span class="pre">In[1]</span></code> style markings that is to be executed at the IPython console. If it includes a <code class="docutils literal notranslate"><span class="pre">$</span></code>
+prompt it represents an unspecified, generic shell prompt; these lines should be executed at
+the command-line.</p>
+<p>Examples:</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [1]: </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Hello, world!&#39;</span><span class="p">)</span>
+<span class="go">Hello, world!</span>
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">echo</span> <span class="s1">&#39;Hello, world!&#39;</span>
+Hello, world!
+</pre></div>
+</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<p>The first thing to tackle here is how to make this code re-usable. We’ve hard coded the input
+data, and if we wanted to compute the cumulative product on more than one set of data we would
+need to duplicate those lines of code each time.</p>
+<p>Functions facilitate code reuse. Whenever you see yourself typing the same code twice in the same
+program or project, it is a clear indication that the code belongs in a function.</p>
+<p>A good function:</p>
+<ul class="simple">
+<li><p>has a descriptive name. <code class="docutils literal notranslate"><span class="pre">cumulative_product</span></code> is a better name than <code class="docutils literal notranslate"><span class="pre">alg32</span></code>.</p></li>
+<li><p>is small – no more than a couple of dozen lines – and does <strong>one</strong> thing.
+If a function is doing too much, then it should probably be broken into smaller functions.</p></li>
+<li><p>can be easily tested – more on this soon.</p></li>
+<li><p>is well documented – more on this later.</p></li>
+</ul>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">cumulative_product.py</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">cumulative_product</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">array</span><span class="p">[:</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">last_value</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">array</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="n">last_value</span><span class="p">:</span>
+            <span class="k">break</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">cumulative_product</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cumulative_product</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<p>Now we can do more work without duplicating those lines of code. But we’re still hard coding the
+input data. We’ll explore making this function better in the next section when we discuss
+<a class="reference internal" href="testing.html#testing"><span class="std std-ref">testing</span></a>. For now, let’s focus on making this code available as part of an
+installable package.</p>
+</div>
+<div class="section" id="creating-a-python-package">
+<h2>Creating a Python Package<a class="headerlink" href="#creating-a-python-package" title="Permalink to this headline">¶</a></h2>
+<p>In order make this code broadly available to Python, it needs to be “packaged” in a particular way
+and “installed” into a particular location that Python knows where to find it. There are many
+different types of files Python can import from and there is more than one location Python can
+look for packages.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Before diving into the mechanics of Python packaging it is usefully to talk about terminology.
+When not accepting input directly via an interactive console, Python needs to find code in a
+file somewhere. In the simplest case we are speaking of a <code class="docutils literal notranslate"><span class="pre">.py</span></code> file. If we execute such a
+file directly (as we did just now) it is referred to as a <cite>script</cite>. If instead we want to
+import some code (either in an interactive session or within another file) it is typically
+referred to as a <cite>module</cite>. Python files can in fact be both a <cite>script</cite> and a <cite>module</cite>
+simultaneously, depending on context; more on this soon! A folder containing a collection of
+Python <cite>modules</cite> is a <cite>package</cite>. In order for that folder to be understood by Python as a
+<cite>package</cite> there are a few criteria, more on that in a minute. A <cite>package</cite> can in fact be a
+nesting of such folders (or <cite>sub-packages</cite>).</p>
+</div>
+<div class="section" id="how-does-python-find-packages">
+<h3>How does Python Find Packages<a class="headerlink" href="#how-does-python-find-packages" title="Permalink to this headline">¶</a></h3>
+<p>What we want to be able to do is import our function as library code to use somewhere else.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [4]: </span><span class="kn">from</span> <span class="nn">cumulative_product</span> <span class="kn">import</span> <span class="n">cumulative_product</span>
+
+<span class="gp">In [5]: </span><span class="n">cumulative_product</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="gh">Out[5]: </span><span class="go">[1, 2, 6]</span>
+</pre></div>
+</div>
+<p>In this case, the <code class="docutils literal notranslate"><span class="pre">cumulative_product.py</span></code> file is acting as a <cite>module</cite> and we’ve imported a
+function from it. Python will complain that there is no module named “cumulative_product” if it’s
+not found on one of the designated <cite>paths</cite> it knows about.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [6]: </span><span class="kn">import</span> <span class="nn">cumulative_product</span>
+<span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">6</span><span class="o">-</span><span class="mi">7</span><span class="n">f58dd7fb72e</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">cumulative_product</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;cumulative_product&#39;
+</pre></div>
+</div>
+<p>The notion of a “path” (and environment variables that can supplement them) is ubiquitous on most
+platforms (including Windows) and used by many systems and tools. In Python, there are a few
+pre-defined values that will show up on your <cite>Python path</cite>. You can view and manipulate these
+paths by accessing the <code class="docutils literal notranslate"><span class="pre">sys.path</span></code> <cite>list</cite> from within a Python session or module.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [2]: </span><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="gp">In [3]: </span><span class="n">sys</span><span class="o">.</span><span class="n">path</span>
+<span class="gh">Out[3]:</span>
+<span class="go">[&#39;/usr/local/lib/python38.zip&#39;,</span>
+<span class="go"> &#39;/usr/local/lib/python3.8&#39;,</span>
+<span class="go"> &#39;/usr/local/lib/python3.8/lib-dynload&#39;,</span>
+<span class="go"> &#39;&#39;,</span>
+<span class="go"> &#39;/home/glentner/.local/lib/python3.8/site-packages&#39;,</span>
+<span class="go"> &#39;/usr/local/lib/python3.8/site-packages&#39;]</span>
+</pre></div>
+</div>
+<p>The exact values depend on both how Python was installed and what platform you are using (i.e.,
+Windows, MacOS, Linux, etc.). But there are some common patterns to observer. Your <cite>system</cite>
+libraries will occur first on your path; that’s the <code class="docutils literal notranslate"><span class="pre">.zip</span></code>, top-level library, and
+<code class="docutils literal notranslate"><span class="pre">lib-dynload</span></code> you see (this will be slightly different on Windows). These represent Python
+<cite>itself</cite> and the built-ins. Discussion of these is beyond the scope of this tutorial.</p>
+<p>The final three paths are what’s important here. The empty string represents your
+<cite>current working directory</cite>. Python can always import from a module or package that exists within
+your current working directory. Next are two <cite>site-packages</cite> directories which are essentially
+fixed and represent the target for installed packages. By default, your <cite>user</cite> site packages folder
+is first which allows you to install extra packages without needing write permissions to the
+<cite>system</cite> path.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When using the word <cite>system</cite> we don’t necessarily mean the Python installation used by the
+operating system. We mean the location where the Python you are invoking resides. If your
+Python installation is in your home directory, that is the <cite>system</cite> location.</p>
+</div>
+<p>Technically, we could create a special folder somewhere on our system and populate it with
+<code class="docutils literal notranslate"><span class="pre">.py</span></code> files and be able to import code from them by adding it to our Python path.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [7]: </span><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;/opt/lab/python/modules&#39;</span><span class="p">)</span>
+
+<span class="gp">In [8]: </span><span class="kn">import</span> <span class="nn">cumulative_product</span>
+<span class="gh">Out[8]: </span><span class="go">&lt;module &#39;cumulative_product&#39; from &#39;/opt/lab/python/modules/cumulative_product.py&#39;&gt;</span>
+</pre></div>
+</div>
+<p>Alternatively, we could automate this by defining (or extending) the <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code>
+environment variable before launching a Python session or script.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">export</span> <span class="nv">PYTHONPATH</span><span class="o">=</span>/opt/lab/python/modules:<span class="nv">$PYTHONPATH</span>
+</pre></div>
+</div>
+<p>This isn’t the best solution however because it requires specially knowledge and facilitation
+to make use of the library. If we wanted to be able to use our algorithm in another project
+without having to hard code the location of the installed dependency <cite>in the project</cite>, we
+should instead make it so our code is <cite>installable</cite> and automatically placed in the
+appropriate location wherever that happens to be.</p>
+</div>
+<div class="section" id="organizing-a-python-project">
+<h3>Organizing a Python Project<a class="headerlink" href="#organizing-a-python-project" title="Permalink to this headline">¶</a></h3>
+<p>To make your module or package <cite>installable</cite> we will use
+<a class="reference external" href="https://setuptools.readthedocs.io/en/latest/">setuptools</a>.  There is a long
+and storied history regarding the development tools used to package Python libraries.
+We’ll neglect that here and instead simply recommend the current “best practice”.</p>
+<p>The picture looks a little different if you are trying to make a single <code class="docutils literal notranslate"><span class="pre">.py</span></code> file
+installable as a module. In either case we need a <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> present at the top-level
+of our project. The tooling and systems we will use expect a file with this exact name
+to exist. Think of it as a configuration file.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ tree .
+.
+├── cumulative_product.py
+└── setup.py
+</pre></div>
+</div>
+<p>In this case, a minimum viable setup file would look something like the following.</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">setup.py</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">setuptools</span> <span class="kn">import</span> <span class="n">setup</span>
+
+<span class="n">setup</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;cumulative_product&#39;</span><span class="p">,</span>
+    <span class="n">version</span><span class="o">=</span><span class="s1">&#39;0.0.1&#39;</span><span class="p">,</span>
+    <span class="n">py_modules</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;cumulative_product&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>For a small number of functions this approach is fine, and even recommended, but as the
+size and scope of the project grows, it will become necessary to organize the code across
+multiple files. Let’s assume this to be the case from the outset and restructure our
+project. We’ll use the name <code class="docutils literal notranslate"><span class="pre">python201</span></code> for the purposes of this tutorial, but your
+package of course should take on a name relevant to the project.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ tree .
+.
+├── python201/
+│   ├── __init__.py
+│   └── algorithms.py
+└── setup.py
+</pre></div>
+</div>
+<p>Notice the presence of the <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code> file. A detail neglected until this point,
+the existence of a file with this special name is what defines a folder as a <cite>package</cite>.
+This file must be present throughout the package/sub-package hierarchy at every level.
+An entire tutorial could be devoted to the purpose and use of these modules.
+Suffice it to say these files can literally be empty.</p>
+<p>Now our import would look like the following.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [1]: </span><span class="kn">from</span> <span class="nn">python201.algorithms</span> <span class="kn">import</span> <span class="n">cumulative_product</span>
+
+<span class="gp">In [2]: </span><span class="n">cumulative_product</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="gh">Out[2]: </span><span class="go">[1, 2, 6]</span>
+</pre></div>
+</div>
+<p>Our setup file would then instead need to be the following.</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">setup.py</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">setuptools</span> <span class="kn">import</span> <span class="n">setup</span>
+
+<span class="n">setup</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;python201&#39;</span><span class="p">,</span>
+    <span class="n">version</span><span class="o">=</span><span class="s1">&#39;0.0.1&#39;</span><span class="p">,</span>
+    <span class="n">packages</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;python201&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">packages</span></code> keyword argument is similarly a list of strings, but now representing packages
+(and any sub-packages therein). The modules below a package will automatically be included, but
+sub-packages will not. To automatically enumerate our package structure should we choose to expand
+our project, we can use a handy tool included in <code class="docutils literal notranslate"><span class="pre">setuptools</span></code> that does exactly what it sounds
+like.</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">setup.py</span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">setuptools</span> <span class="kn">import</span> <span class="n">setup</span><span class="p">,</span> <span class="n">find_packages</span>
+
+<span class="n">setup</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;python201&#39;</span><span class="p">,</span>
+    <span class="n">version</span><span class="o">=</span><span class="s1">&#39;0.0.1&#39;</span><span class="p">,</span>
+    <span class="n">packages</span><span class="o">=</span><span class="n">find_packages</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="installation">
+<h3>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h3>
+<p>To install a Python package we will use the command line tool, <code class="docutils literal notranslate"><span class="pre">pip</span></code>, which is typically
+included out-of-the-box with any Python installation. You are likely familiar with the use
+of <code class="docutils literal notranslate"><span class="pre">pip</span></code> to install packages from Python’s online package index, <a class="reference external" href="https://pypi.org">PyPI</a>.
+There are in fact numerous types of targets that can be specified to <code class="docutils literal notranslate"><span class="pre">pip</span></code>, including
+local source code repositories you have on your system, such as ours.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ pip install .
+</pre></div>
+</div>
+<p>Here the <cite>dot</cite> represents the current working directory. In practice, you can point to
+any folder path that contains a <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> file. This will install our package to the
+<cite>system</cite> site-packages path. To install to our <cite>user</cite> site-packages, we can include the
+<code class="docutils literal notranslate"><span class="pre">--user</span></code> flag.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ pip install . --user
+</pre></div>
+</div>
+<p>Finally, an often used feature of developers is to install your package in <cite>editable</cite>
+mode using the <code class="docutils literal notranslate"><span class="pre">-e</span></code> flag. This allows you to work on the code and see the changes
+without needing to re-install it every time.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ pip install -e . --user
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="extras">
+<h2>Extras<a class="headerlink" href="#extras" title="Permalink to this headline">¶</a></h2>
+<p>We’ve arrived now at the conclusion of the essentials for our package. Here are some extra
+things that you might want to consider for your project, particular if you plan on sharing
+it with others.</p>
+<div class="section" id="readme">
+<h3>README<a class="headerlink" href="#readme" title="Permalink to this headline">¶</a></h3>
+<p>A staple of open-source projects, a <cite>README</cite> file is a plain text file included in your
+project that explains what is included in the project and typically some guidance on
+how to use it. Many only hosting services including <cite>PyPI</cite> itself understand what these
+files are and will render them in different formats.</p>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">README.rst</span><a class="headerlink" href="#id7" title="Permalink to this code">¶</a></div>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span><span class="gh">python201</span>
+<span class="gh">=========</span>
+
+A Python package for numerical algorithms.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="version-control">
+<h3>Version Control<a class="headerlink" href="#version-control" title="Permalink to this headline">¶</a></h3>
+<p>Even if you plan to work on the project alone, you definitely should consider developing
+your code using some kind of version control system. These days, <code class="docutils literal notranslate"><span class="pre">git</span></code> is ubiquitous.
+If you’ll be sharing the code, online hosting services such as <a class="reference external" href="https://github.com">github.com</a>
+and <a class="reference external" href="https://gitlab.com">gitlab.com</a> offer sophisticated features.</p>
+</div>
+<div class="section" id="license">
+<h3>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h3>
+<p>You should pick a software license the best suites your project. A license specifies the
+terms of use of the code. <a class="reference external" href="https://choosealicense.com">Choosing a license</a> is beyond the scope
+of this tutorial. Once you’ve decided on an appropriate license, most commonly used licenses
+are recognized by hosting services like <cite>PyPI</cite> and <cite>github.com</cite>.</p>
+<p>You should include the license in full in a <code class="docutils literal notranslate"><span class="pre">LICENSE</span></code> file at the top-level of your project.
+It may be appropriate to include a brief snippet pertaining to the license at the top of some
+or all of your code files.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ tree .
+.
+├── LICENSE
+├── python201/
+│   ├── __init__.py
+│   └── algorithms.py
+├── README.rst
+└── setup.py
+</pre></div>
+</div>
+<p>It doesn’t affect the installed package, but if you plan to upload your package to <cite>PyPI</cite>
+you can define the license within the setup function using the appropriate name and
+<cite>classifier</cite>.</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">setup.py</span><a class="headerlink" href="#id8" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">setuptools</span> <span class="kn">import</span> <span class="n">setup</span><span class="p">,</span> <span class="n">find_packages</span>
+
+<span class="n">setup</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;python201&#39;</span><span class="p">,</span>
+    <span class="n">version</span><span class="o">=</span><span class="s1">&#39;0.0.1&#39;</span><span class="p">,</span>
+    <span class="n">license</span><span class="o">=</span><span class="s1">&#39;Apache Software License&#39;</span><span class="p">,</span>
+    <span class="n">classifiers</span><span class="o">=</span><span class="p">[</span>
+        <span class="s1">&#39;License :: OSI Approved :: Apache Software License&#39;</span>
+    <span class="p">],</span>
+    <span class="n">packages</span><span class="o">=</span><span class="n">find_packages</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="more-details">
+<h3>More Details<a class="headerlink" href="#more-details" title="Permalink to this headline">¶</a></h3>
+<p>There are <cite>many</cite> options one can and may need to use within the <cite>setup</cite> function
+to make a package function as desired, such as dependencies, non-python installed assets (such as
+data files or man pages), etc. You also should consider including additional information
+if you plan to upload your package to the package index.</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-text">setup.py</span><a class="headerlink" href="#id9" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">setuptools</span> <span class="kn">import</span> <span class="n">setup</span><span class="p">,</span> <span class="n">find_packages</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;README.rst&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">readme</span><span class="p">:</span>
+    <span class="n">long_description</span> <span class="o">=</span> <span class="n">readme</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="n">setup</span><span class="p">(</span>
+    <span class="n">name</span>             <span class="o">=</span> <span class="s1">&#39;python201&#39;</span><span class="p">,</span>
+    <span class="n">version</span>          <span class="o">=</span> <span class="s1">&#39;0.0.1&#39;</span><span class="p">,</span>
+    <span class="n">author</span>           <span class="o">=</span> <span class="s1">&#39;Geoffrey Lentner&#39;</span><span class="p">,</span>
+    <span class="n">author_email</span>     <span class="o">=</span> <span class="s1">&#39;glentner@purdue.edu&#39;</span><span class="p">,</span>
+    <span class="n">description</span>      <span class="o">=</span> <span class="s1">&#39;A Python package for numerical algorithms.&#39;</span><span class="p">,</span>
+    <span class="n">license</span>          <span class="o">=</span> <span class="s1">&#39;Apache Software License&#39;</span><span class="p">,</span>
+    <span class="n">keywords</span>         <span class="o">=</span> <span class="s1">&#39;tutorial packaging example&#39;</span><span class="p">,</span>
+    <span class="n">url</span>              <span class="o">=</span> <span class="s1">&#39;https://github.com/glentner/python201&#39;</span><span class="p">,</span>
+    <span class="n">packages</span>         <span class="o">=</span> <span class="n">find_packages</span><span class="p">(),</span>
+    <span class="n">include_package_data</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">long_description</span> <span class="o">=</span> <span class="n">long_description</span><span class="p">,</span>
+    <span class="n">long_description_content_type</span> <span class="o">=</span> <span class="s1">&#39;text/x-rst&#39;</span><span class="p">,</span>
+    <span class="n">classifiers</span>      <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Development Status :: 4 - Beta&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;Programming Language :: Python :: 3.7&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;Programming Language :: Python :: 3.8&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;Operating System :: POSIX :: Linux&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;Operating System :: MacOS&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;Operating System :: Microsoft :: Windows&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;License :: OSI Approved :: Apache Software License&#39;</span><span class="p">,</span> <span class="p">],</span>
+    <span class="n">install_requires</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;numpy&#39;</span><span class="p">,</span> <span class="s1">&#39;numba&#39;</span><span class="p">,</span> <span class="p">],</span>
+    <span class="n">extras_require</span>   <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;dev&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;ipython&#39;</span><span class="p">,</span> <span class="s1">&#39;pytest&#39;</span><span class="p">,</span> <span class="s1">&#39;hypothesis&#39;</span><span class="p">,</span> <span class="s1">&#39;pylint&#39;</span><span class="p">,</span> <span class="s1">&#39;sphinx&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;pydata_sphinx_theme&#39;</span><span class="p">],</span>
+    <span class="p">},</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="upload-to-pypi">
+<h3>Upload to PyPI<a class="headerlink" href="#upload-to-pypi" title="Permalink to this headline">¶</a></h3>
+<p>You can validate, register, and upload your package to the Python package index using the
+<a class="reference external" href="https://twine.readthedocs.io/en/latest/">Twine</a> command line tool. This is the officially
+supported way of doing so. It’s perfectly accepted to <cite>not</cite> host your package via <cite>PyPI</cite>, and
+instead merely instruct users how to install directly via GitHub, for example.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+</div>
+
+
+              </div>
+              
+              
+              <div class='prev-next-bottom'>
+                
+    <a class='left-prev' id="prev-link" href="index.html" title="previous page">Tutorial</a>
+    <a class='right-next' id="next-link" href="testing.html" title="next page">Testing</a>
+
+              </div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    <script src="../_static/js/index.js"></script>
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2019-2020 Geoffrey Lentner, 2018 Ashwin Srinath.<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.1.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
