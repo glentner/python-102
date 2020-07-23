@@ -358,7 +358,7 @@ Extras
 ------
 
 We've arrived now at the conclusion of the essentials for our package. Here are some extra
-things that you might want to consider for your project, particular if you plan on sharing
+things that you might want to consider for your project, particularly if you plan on sharing
 it with others.
 
 README
