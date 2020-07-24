@@ -366,7 +366,7 @@ README
 
 A staple of open-source projects, a `README` file is a plain text file included in your
 project that explains what is included in the project and typically some guidance on
-how to use it. Many only hosting services including `PyPI` itself understand what these
+how to use it. Many online hosting services including `PyPI` itself understand what these
 files are and will render them in different formats.
 
 .. code-block:: rst
