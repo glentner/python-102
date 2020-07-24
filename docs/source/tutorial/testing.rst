@@ -182,8 +182,12 @@ Like many testing frameworks, ``pytest`` can be quite sophisticated. For the pur
 this tutorial, we'll stick to the basics. Essentially, if you place all of your tests within
 the appropriate layout, ``pytest`` will automatically find and execute all your tests.
 
-We want all of our tests to live under files that start with ``test`` and we need all of
-our tests to be encapsulated by functions that also start with ``test``.
+We want all of our tests to live under files that start with ``test`` and we need all of our tests
+to be encapsulated by functions that also start with ``test``. A nice approach is to have a top
+level ``tests`` folder in your project with a structure that mirrors your python package,
+including a ``tests_X.py`` partner for every module in your package.
+
+In our case, we would have ``tests/test_algorithms.py``.
 
 .. code-block:: python
     :caption: tests/test_algorithms.py
@@ -228,33 +232,186 @@ project.
     ==================================== 1 failed in 0.21s =====================================
 
 
+Pytest has found our test modules and run all our tests. Each module will be reported on it's own
+line. A `dot` will appear while it is running each test. An ``F`` is printed when a test fails
+with a summary of what happened. Here we see that our final comparison failed and we are told
+precisely what the problem is.
+
+
 Useful Tests
 ------------
 
-...
+Now that we know how to write and run tests, what kind of tests should we write?
+Testing ``cumulative_product`` for arbitrary choices of inputs like ``[1, 2, 3]``
+might not tell us much about where the problem might be.
+
+Instead, we should choose tests that exercise specific functionality of the code we are testing,
+or represent different conditions that the code may be exposed to.
+
+For example:
+
+* An array of length 0 or 1.
+* An array mixed sign or precision.
+* An array containing NaN values.
+
+In our case, it was even simpler than that; the existence of a value equal to that of the final
+value prematurely truncates the sequence.
+
+.. note::
+
+    Handling edge cases like those listed above are of course important, but even simple tests
+    that may seem silly are equally important sanity checks that will exercise your code when you
+    make changes.
 
 
 Fixing the Code
 ---------------
 
-...
+Let's rewrite our function to be a bit more `Pythonic` and without that troublesome bug.
+
+
+.. code-block:: python
+    :caption: python201/algorithms.py
+
+    def cumulative_product(array):
+        result = array.copy()
+        for i, value in enumerate(array[1:]):
+            result[i+1] = result[i] * value
+        return result
+
+Not necessarily perfect, but clean and concise. Our intent is better expressed by the code
+and we've become a bit more flexible with the possible input data types.
+And we've eliminated the bug!
+
+.. code-block:: python
+    :caption: tests/test_algorithms.py
+
+    from python201.algorithms import cumulative_product
+
+    def test_cumulative_product_simple():
+        assert cumulative_product([1, 2, 3]) == [1, 2, 6]
+        assert cumulative_product([3, 2, 1]) == [3, 6, 6]
+        assert cumulative_product([1, 2, 3, 4]) == [1, 2, 6, 24]
+        assert cumulative_product([1, 2, 3, 3]) == [1, 2, 6, 18]
+
+    def test_cumulative_product_empty():
+        assert cumulative_product([]) == []
+
+    def test_cumulative_product_starts_with_zero():
+        assert cumulative_product([0] + list(range(100))) == [0] * 101
+
+Let's run our tests again.
+
+.. code-block:: none
+
+    $ pytest
+    ================================== test session starts ===================================
+    platform linux -- Python 3.8.3, pytest-5.4.3, py-1.9.0, pluggy-0.13.1
+    rootdir: /home/glentner/code/github.com/glentner/python201
+    plugins: hypothesis-5.20.3
+    collected 3 items
+
+    tests/test_algorithms.py ...                                                       [100%]
+
+    =================================== 3 passed in 0.09s ====================================
 
 
 Types of Testing
 ----------------
 
-...
+Software testing is a vast topic and there are
+`many levels and types <https://en.wikipedia.org/wiki/Software_testing>`_
+of software testing. For scientific and
+research software, the focus of testing efforts is primarily:
+
+1. **Unit tests**: Unit tests aim to test small, independent sections of code
+   (a function or parts of a function),
+   so that when a test fails,
+   the failure can easily be associated with that section of code.
+   This is the kind of testing that we have been doing so far.
+
+2. **Regression tests**: Regression tests aim to check whether
+   changes to the program result in it producing
+   different results from before.
+   Regression tests can test
+   larger sections of code
+   than unit tests.
+   As an example, if you are writing a machine learning application,
+   you may want to run your model on small data
+   in an automated way
+   each time your software undergoes changes,
+   and make sure that the same (or a better) result is produced.
 
 
 Test-Driven Development
 -----------------------
 
-...
+`Test-driven development (TDD) <https://en.wikipedia.org/wiki/Test-driven_development>`_
+is the practice of writing tests for a function or method
+*before* actually writing any code for that function or method.
+The TDD process is to:
+
+1. Write a test for a function or method
+2. Write just enough code that the function or method passes that test
+3. Ensure that all tests written so far pass
+4. Repeat the above steps until you are satisfied with the code
+
+Proponents of TDD suggest that this results in better code.
+Whether or not TDD sounds appealing to you,
+writing tests should be *part* of your development process,
+and never an afterthought.
+In the process of writing tests,
+you often come up with new corner cases for your code,
+and realize better ways to organize it.
+The result is usually code that is
+more modular,
+more reusable
+and of course,
+more testable,
+than if you didn't do any testing.
+
+.. image:: https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/TDD_Global_Lifecycle.png/1920px-TDD_Global_Lifecycle.png
+    :target: https://en.wikipedia.org/wiki/Test-driven_development
+    :alt: Test-Driven Development
+
 
 
 Growing a Useful Test Suite
 ---------------------------
 
-...
+More tests are always better than less,
+and your code should have as many tests as you are willing to write.
+That being said,
+some tests are more useful than others.
+Designing a useful suite of tests is a challenge in itself,
+and it helps to keep the following in mind when growing tests:
+
+1. **Tests should run quickly**: testing is meant to be done as often as possible.
+   Your entire test suite should complete in no more than a few seconds,
+   otherwise you won't run your tests often enough for them to be useful.
+   Always test your functions or algorithms on very small and simple data;
+   even if in practice they will be dealing with more complex and large datasets.
+
+2. **Tests should be focused**: each test should exercise a small part of your code.
+   When a test fails,
+   it should be easy for you to
+   figure out which part of your program you need to focus debugging efforts on.
+   This can be difficult if your code isn't modular,
+   i.e., if different parts of your code depend heavily on each other.
+   This is one of the reasons TDD is said to produce more modular code.
+
+3. **Tests should cover all possible code paths**: if your function has multiple code paths
+   (e.g., an if-else statement),
+   write tests that execute both the "if" part
+   and the "else" part.
+   Otherwise, you might have bugs in your code and still have all tests pass.
+
+4. **Test data should include difficult and edge cases**: it's easy to
+   write code that only handles cases with well-defined inputs and outputs.
+   In practice however, your code may have to deal with
+   input data for which it isn't clear what the behavior should be.
+   For example, what should ``cumulative_product([])`` return?
+   Make sure you write tests for such cases,
+   so that you force your code to handle them.
 
 |
