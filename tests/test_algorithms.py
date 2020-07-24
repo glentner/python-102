@@ -1,5 +1,7 @@
 
-import pytest
+from hypothesis.strategies import lists, integers
+from hypothesis import given
+
 from python201.algorithms import cumulative_product
 
 
@@ -9,8 +11,12 @@ def test_cumulative_product_simple():
     assert cumulative_product([1, 2, 3, 4]) == [1, 2, 6, 24]
     assert cumulative_product([1, 2, 3, 3]) == [1, 2, 6, 18]
 
+
 def test_cumulative_product_empty():
     assert cumulative_product([]) == []
 
-def test_cumulative_product_starts_with_zero():
-    assert cumulative_product([0] + list(range(100))) == [0] * 101
+
+@given(lists(integers()))
+def test_cumulative_product_starts_with_zero(values):
+    array = [0] + list(values)
+    assert cumulative_product(array) == [0] * len(array)

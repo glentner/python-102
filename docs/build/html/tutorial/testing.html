@@ -195,6 +195,16 @@
             <a href="#growing-a-useful-test-suite" class="nav-link">Growing a Useful Test Suite</a>
         </li>
     
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#extras" class="nav-link">Extras</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#hypothesis" class="nav-link">Hypothesis</a>
+        </li>
+    
+            </ul>
+        </li>
+    
     </ul>
 </nav>
 
@@ -239,8 +249,8 @@ excellent article and PyCon 2014 talk
 <div class="section" id="testing-interactively">
 <h2>Testing Interactively<a class="headerlink" href="#testing-interactively" title="Permalink to this headline">¶</a></h2>
 <p>Let’s look at our initial bit of code.</p>
-<div class="literal-block-wrapper docutils container" id="id2">
-<div class="code-block-caption"><span class="caption-text">python201/algorithms.py</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">python201/algorithms.py</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">cumulative_product</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">array</span><span class="p">[:</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">last_value</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
@@ -252,9 +262,9 @@ excellent article and PyCon 2014 talk
 </pre></div>
 </div>
 </div>
-<p>While we were developing this function, we would have likely started up an IPython console
-and either copied the code snippet or imported the function and tested it on a
-few simple cases to validate that it returns expected results.</p>
+<p>While we were developing this function, we would have likely started up an IPython console and
+either copied the code snippet or imported the function and tested it on a few simple cases to
+validate that it returns expected results.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [1]: </span><span class="kn">from</span> <span class="nn">python201.algorithms</span> <span class="kn">import</span> <span class="n">cumulative_product</span>
 
 <span class="gp">In [2]: </span><span class="n">cumulative_product</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
@@ -267,17 +277,17 @@ few simple cases to validate that it returns expected results.</p>
 <span class="gh">Out[4]: </span><span class="go">[1, 2, 6, 24]</span>
 </pre></div>
 </div>
-<p>While this kind of testing is better than not doing any testing at all, it leaves much
-to be desired. First, it needs to be done each time <code class="docutils literal notranslate"><span class="pre">cumulative_product</span></code> is changed.
-It also requires that we manually inspect the output from each test to decide if the
-code “passes” or “fails” that test. Further, we need to remember all the tests we came
-up with today if we want to test again tomorrow.</p>
+<p>While this kind of testing is better than not doing any testing at all, it leaves much to be
+desired. First, it needs to be done each time <code class="docutils literal notranslate"><span class="pre">cumulative_product</span></code> is changed. It also requires
+that we manually inspect the output from each test to decide if the code “passes” or “fails” that
+test. Further, we need to remember all the tests we came up with today if we want to test again
+tomorrow.</p>
 </div>
 <div class="section" id="test-scripts">
 <h2>Test Scripts<a class="headerlink" href="#test-scripts" title="Permalink to this headline">¶</a></h2>
 <p>A <cite>much</cite> better way to write tests is to put them in a script.</p>
-<div class="literal-block-wrapper docutils container" id="id3">
-<div class="code-block-caption"><span class="caption-text">tests/test_algorithms.py</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">tests/test_algorithms.py</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">python201.algorithms</span> <span class="kn">import</span> <span class="n">cumulative_product</span>
 
 <span class="n">array</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
@@ -321,8 +331,8 @@ then <code class="docutils literal notranslate"><span class="pre">assert</span><
 </pre></div>
 </div>
 <p>We can re-write our script as follows.</p>
-<div class="literal-block-wrapper docutils container" id="id4">
-<div class="code-block-caption"><span class="caption-text">tests/test_algorithms.py</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">tests/test_algorithms.py</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">python201.algorithms</span> <span class="kn">import</span> <span class="n">cumulative_product</span>
 
 <span class="k">assert</span> <span class="n">cumulative_product</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span> <span class="o">==</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
@@ -340,8 +350,8 @@ then we had a test fail; and if not, all our tests passed.</p>
 <p>That said, there’s no way to know if <cite>more</cite> than one test failed. The script stops executing
 after the first <code class="docutils literal notranslate"><span class="pre">AssertionError</span></code> is encountered. Let’s add another test to our test script and
 re-run it.</p>
-<div class="literal-block-wrapper docutils container" id="id5">
-<div class="code-block-caption"><span class="caption-text">tests/test_algorithms.py</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">tests/test_algorithms.py</span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">python201.algorithms</span> <span class="kn">import</span> <span class="n">cumulative_product</span>
 
 <span class="k">assert</span> <span class="n">cumulative_product</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span> <span class="o">==</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
@@ -374,8 +384,8 @@ to be encapsulated by functions that also start with <code class="docutils liter
 level <code class="docutils literal notranslate"><span class="pre">tests</span></code> folder in your project with a structure that mirrors your python package,
 including a <code class="docutils literal notranslate"><span class="pre">tests_X.py</span></code> partner for every module in your package.</p>
 <p>In our case, we would have <code class="docutils literal notranslate"><span class="pre">tests/test_algorithms.py</span></code>.</p>
-<div class="literal-block-wrapper docutils container" id="id6">
-<div class="code-block-caption"><span class="caption-text">tests/test_algorithms.py</span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">tests/test_algorithms.py</span><a class="headerlink" href="#id7" title="Permalink to this code">¶</a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">python201.algorithms</span> <span class="kn">import</span> <span class="n">cumulative_product</span>
 
 <span class="k">def</span> <span class="nf">test_cumulative_product</span><span class="p">():</span>
@@ -445,8 +455,8 @@ make changes.</p>
 <div class="section" id="fixing-the-code">
 <h2>Fixing the Code<a class="headerlink" href="#fixing-the-code" title="Permalink to this headline">¶</a></h2>
 <p>Let’s rewrite our function to be a bit more <cite>Pythonic</cite> and without that troublesome bug.</p>
-<div class="literal-block-wrapper docutils container" id="id7">
-<div class="code-block-caption"><span class="caption-text">python201/algorithms.py</span><a class="headerlink" href="#id7" title="Permalink to this code">¶</a></div>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">python201/algorithms.py</span><a class="headerlink" href="#id8" title="Permalink to this code">¶</a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">cumulative_product</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
@@ -458,8 +468,8 @@ make changes.</p>
 <p>Not necessarily perfect, but clean and concise. Our intent is better expressed by the code
 and we’ve become a bit more flexible with the possible input data types.
 And we’ve eliminated the bug!</p>
-<div class="literal-block-wrapper docutils container" id="id8">
-<div class="code-block-caption"><span class="caption-text">tests/test_algorithms.py</span><a class="headerlink" href="#id8" title="Permalink to this code">¶</a></div>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-text">tests/test_algorithms.py</span><a class="headerlink" href="#id9" title="Permalink to this code">¶</a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">python201.algorithms</span> <span class="kn">import</span> <span class="n">cumulative_product</span>
 
 <span class="k">def</span> <span class="nf">test_cumulative_product_simple</span><span class="p">():</span>
@@ -578,6 +588,51 @@ so that you force your code to handle them.</p></li>
 </ol>
 <div class="line-block">
 <div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="extras">
+<h2>Extras<a class="headerlink" href="#extras" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="hypothesis">
+<h3>Hypothesis<a class="headerlink" href="#hypothesis" title="Permalink to this headline">¶</a></h3>
+<p>Like many such frameworks, <code class="docutils literal notranslate"><span class="pre">pytest</span></code> has a plugin system that allows its functionality to be
+extended by design. A notable package that works as a plugin for <code class="docutils literal notranslate"><span class="pre">pytest</span></code> is
+<a class="reference external" href="https://hypothesis.readthedocs.io/en/latest/index.html">Hypothesis</a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Hypothesis</span></code> implements <cite>property-based testing</cite> that allows you to write unit tests in a way
+that isn’t hard coded. You define strategies for given inputs and it automatically generates
+entire ensembles of tests for a given definition including edge cases you would want to cover.</p>
+<p>For our <cite>zero</cite> test, if the initial value of the array is zero, it simply doesn’t matter what the
+remaining values of the array are, the result will be an array of the same length and all zeros.
+So our test could use <code class="docutils literal notranslate"><span class="pre">hypothesis</span></code> to define a strategy that will test many cases without us
+hard coding them.</p>
+<div class="literal-block-wrapper docutils container" id="id10">
+<div class="code-block-caption"><span class="caption-text">tests/test_algorithms.py</span><a class="headerlink" href="#id10" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">hypothesis.strategies</span> <span class="kn">import</span> <span class="n">lists</span><span class="p">,</span> <span class="n">integers</span>
+<span class="kn">from</span> <span class="nn">hypothesis</span> <span class="kn">import</span> <span class="n">given</span>
+
+<span class="kn">from</span> <span class="nn">python201.algorithms</span> <span class="kn">import</span> <span class="n">cumulative_product</span>
+
+
+<span class="k">def</span> <span class="nf">test_cumulative_product_simple</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="n">cumulative_product</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span> <span class="o">==</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">cumulative_product</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span> <span class="o">==</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">cumulative_product</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span> <span class="o">==</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">24</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">cumulative_product</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span> <span class="o">==</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">18</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">test_cumulative_product_empty</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="n">cumulative_product</span><span class="p">([])</span> <span class="o">==</span> <span class="p">[]</span>
+
+
+<span class="nd">@given</span><span class="p">(</span><span class="n">lists</span><span class="p">(</span><span class="n">integers</span><span class="p">()))</span>
+<span class="k">def</span> <span class="nf">test_cumulative_product_starts_with_zero</span><span class="p">(</span><span class="n">values</span><span class="p">):</span>
+    <span class="n">array</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">cumulative_product</span><span class="p">(</span><span class="n">array</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 </div>
 </div>
 </div>

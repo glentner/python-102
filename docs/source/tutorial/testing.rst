@@ -47,9 +47,9 @@ Let's look at our initial bit of code.
                 break
         return result
 
-While we were developing this function, we would have likely started up an IPython console
-and either copied the code snippet or imported the function and tested it on a
-few simple cases to validate that it returns expected results.
+While we were developing this function, we would have likely started up an IPython console and
+either copied the code snippet or imported the function and tested it on a few simple cases to
+validate that it returns expected results.
 
 .. code-block:: ipython
 
@@ -64,11 +64,11 @@ few simple cases to validate that it returns expected results.
     In [4]: cumulative_product([1, 2, 3, 4])
     Out[4]: [1, 2, 6, 24]
 
-While this kind of testing is better than not doing any testing at all, it leaves much
-to be desired. First, it needs to be done each time ``cumulative_product`` is changed.
-It also requires that we manually inspect the output from each test to decide if the
-code "passes" or "fails" that test. Further, we need to remember all the tests we came
-up with today if we want to test again tomorrow.
+While this kind of testing is better than not doing any testing at all, it leaves much to be
+desired. First, it needs to be done each time ``cumulative_product`` is changed. It also requires
+that we manually inspect the output from each test to decide if the code "passes" or "fails" that
+test. Further, we need to remember all the tests we came up with today if we want to test again
+tomorrow.
 
 
 Test Scripts
@@ -413,5 +413,51 @@ and it helps to keep the following in mind when growing tests:
    For example, what should ``cumulative_product([])`` return?
    Make sure you write tests for such cases,
    so that you force your code to handle them.
+
+|
+
+Extras
+------
+
+Hypothesis
+^^^^^^^^^^
+
+Like many such frameworks, ``pytest`` has a plugin system that allows its functionality to be
+extended by design. A notable package that works as a plugin for ``pytest`` is
+`Hypothesis <https://hypothesis.readthedocs.io/en/latest/index.html>`_.
+
+``Hypothesis`` implements `property-based testing` that allows you to write unit tests in a way
+that isn't hard coded. You define strategies for given inputs and it automatically generates
+entire ensembles of tests for a given definition including edge cases you would want to cover.
+
+For our `zero` test, if the initial value of the array is zero, it simply doesn't matter what the
+remaining values of the array are, the result will be an array of the same length and all zeros.
+So our test could use ``hypothesis`` to define a strategy that will test many cases without us
+hard coding them.
+
+.. code-block:: python
+    :caption: tests/test_algorithms.py
+
+    from hypothesis.strategies import lists, integers
+    from hypothesis import given
+
+    from python201.algorithms import cumulative_product
+
+
+    def test_cumulative_product_simple():
+        assert cumulative_product([1, 2, 3]) == [1, 2, 6]
+        assert cumulative_product([3, 2, 1]) == [3, 6, 6]
+        assert cumulative_product([1, 2, 3, 4]) == [1, 2, 6, 24]
+        assert cumulative_product([1, 2, 3, 3]) == [1, 2, 6, 18]
+
+
+    def test_cumulative_product_empty():
+        assert cumulative_product([]) == []
+
+
+    @given(lists(integers()))
+    def test_cumulative_product_starts_with_zero(values):
+        array = [0] + list(values)
+        assert cumulative_product(array) == [0] * len(array)
 
 |
