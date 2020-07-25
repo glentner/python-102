@@ -22,9 +22,9 @@ software engineering that may otherwise take several years to become acquainted 
 implementation of these lessons is Python-specific, the essential ideas can be exported to other
 languages or platforms.
 
-The code for this website and the final resulting *package* are available on `GitHub
-<https://github.com/glentner/python201>`_. Feedback is welcome in the form of *Issues* or
-*Pull Requests*.
+The code for this website and the final resulting *package* are available on
+`GitHub <https://github.com/glentner/python201>`_.
+Feedback is welcome in the form of *Issues* or *Pull Requests*.
 
 |
 
