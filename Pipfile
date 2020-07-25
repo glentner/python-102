@@ -4,22 +4,16 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-pydata-sphinx-theme = "*"
-sphinx = "*"
+ipython = "*"
 pytest = "*"
 hypothesis = "*"
-ipython = "*"
+sphinx = "*"
+pydata-sphinx-theme = "*"
+sphinx-autobuild = "*"
 twine = "*"
 
 [packages]
-sphinx = "*"
-sphinx-rtd-theme = "*"
-pytest = "*"
-hypothesis = "*"
 numpy = "*"
-scipy = "*"
-matplotlib = "*"
-ipython = "*"
 line-profiler = "*"
 memory-profiler = "*"
 python201 = {editable = true, path = "."}
