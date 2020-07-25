@@ -160,11 +160,17 @@
     <ul class="nav section-nav flex-column">
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#docstrings-and-comments" class="nav-link">Docstrings and Comments</a>
+            <a href="#docstrings-and-comments" class="nav-link">Docstrings and Comments</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#deleting-code" class="nav-link">Deleting code</a>
+        </li>
+    
+            </ul>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#what-to-document" class="nav-link">What to Document</a>
+            <a href="#what-to-document" class="nav-link">What to document?</a>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
@@ -172,7 +178,31 @@
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#documentation-generation" class="nav-link">Documentation Generation</a>
+            <a href="#documentation-driven-development" class="nav-link">Documentation-Driven Development</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#extras" class="nav-link">Extras</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#automatic-documentation-generation" class="nav-link">Automatic Documentation Generation</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#id2" class="nav-link">Sphinx</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#hosting" class="nav-link">Hosting</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#type-annotations" class="nav-link">Type Annotations</a>
+        </li>
+    
+            </ul>
         </li>
     
     </ul>
@@ -190,21 +220,338 @@
                 
   <div class="section" id="documentation">
 <span id="id1"></span><h1>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h1>
+<p>Most people think of writing documentation as an unpleasant, but necessary task, done for the
+benefit of other people with no real benefit to themselves. So they choose not to do it, or they
+do it with little care.</p>
+<p>But even if you are the only person who will ever use your code, it’s still a good idea to
+document it well. Being able to document your own code gives you confidence that you understand it
+yourself, and a sign of well-written code is that it can be easily documented. Code you wrote a
+few weeks ago may as well have been written by someone else, and you will be glad that you
+documented it.</p>
+<p>The good news is that writing documentation can be fun, and you really don’t need to write a lot
+of it.</p>
 <div class="section" id="docstrings-and-comments">
 <h2>Docstrings and Comments<a class="headerlink" href="#docstrings-and-comments" title="Permalink to this headline">¶</a></h2>
-<p>…</p>
+<p>Documentation is <em>not</em> comments.</p>
+<p>A <em>docstring</em> in Python is a string literal that appears at the beginning of a module, function,
+class, or method.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">A docstring in Python that appears</span>
+<span class="sd">at the beginning of a module, function, class or method.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Let’s add a trivial docstring to our code.</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">python201/algorithms.py</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">cumulative_product</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the cumulative product of an array of numbers.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">array</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
+        <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">value</span>
+    <span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div>
+</div>
+<p>The <em>docstring</em> of a module, function, class or method becomes the <code class="docutils literal notranslate"><span class="pre">__doc__</span></code> attribute of that
+object, and is printed if you type <code class="docutils literal notranslate"><span class="pre">help(object)</span></code>:</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [1]: </span><span class="kn">from</span> <span class="nn">python201.algorithms</span> <span class="kn">import</span> <span class="n">cumulative_product</span>
+
+<span class="gp">In [2]: </span><span class="n">help</span><span class="p">(</span><span class="n">cumulative_product</span><span class="p">)</span>
+
+<span class="go">Help on function cumulative_product in module python201.algorithms:</span>
+
+<span class="go">cumulative_product(array)</span>
+<span class="go">    Compute the cumulative product of an array of numbers.</span>
+</pre></div>
+</div>
+<p>A <em>comment</em> in Python is any line that begins with a <code class="docutils literal notranslate"><span class="pre">#</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># a comment.</span>
+</pre></div>
+</div>
+<p>The purpose of a docstring is to document a module, function, class, or method.
+The purpose of a comment is to explain a very difficult piece of code,
+or to justify a choice that was made while writing it.</p>
+<p>Docstrings should not be used in place of comments, or vice versa.
+<strong>Don’t do the following</strong>:</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">python201/algorithms.py</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">cumulative_product</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
+    <span class="c1"># Compute the cumulative product of an array of numbers.</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">array</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
+        <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">value</span>
+    <span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="deleting-code">
+<h3>Deleting code<a class="headerlink" href="#deleting-code" title="Permalink to this headline">¶</a></h3>
+<p>Incidentally, many people use comments and string literals
+as a way of “deleting” code - also known as <em>commenting out</em> code.
+See <a class="reference external" href="https://nedbatchelder.com/text/deleting-code.html">this article</a>
+on a better way to delete code.</p>
+</div>
 </div>
 <div class="section" id="what-to-document">
-<h2>What to Document<a class="headerlink" href="#what-to-document" title="Permalink to this headline">¶</a></h2>
-<p>…</p>
+<h2>What to document?<a class="headerlink" href="#what-to-document" title="Permalink to this headline">¶</a></h2>
+<p>So what goes in a docstring?</p>
+<p>At minimum, the docstring for a function or method should consist of the following:</p>
+<ol class="arabic simple">
+<li><p>A <strong>Summary</strong> section that describes in a sentence or two
+what the function does.</p></li>
+<li><p>A <strong>Parameters</strong> section that provides a
+description of the parameters to the function,
+their types,
+and default values (in the case of optional arguments).</p></li>
+<li><p>A <strong>Returns</strong> section that similarly describes the return values.</p></li>
+<li><p>Optionally,
+a <strong>Notes</strong> section that describes the implementation,
+and includes references.</p></li>
+</ol>
+<p>Let’s add some more information to our docstring.</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">python201/algorithms.py</span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">cumulative_product</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the cumulative product of an array of numbers.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        array (list): An array of numeric values.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        result (list): A list of the same shape as `array`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">array</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
+        <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">value</span>
+    <span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div>
+</div>
+<p>Here we’ve followed a particular style guide; Sphinx uses <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/extensions/example_google.html">Google’s documentation guidelines</a> by default to parse
+your docstrings, more on this later! NumPy’s <a class="reference external" href="https://numpydoc.readthedocs.io/en/latest/">documentation guidelines</a> are also a great reference for more information
+about what and how to document your code. There are other style guides you might prefer.</p>
 </div>
 <div class="section" id="doctests">
 <h2>Doctests<a class="headerlink" href="#doctests" title="Permalink to this headline">¶</a></h2>
-<p>…</p>
+<p>In addition to the sections above, your documentation can also contain runnable tests. This is
+possible using the <a class="reference external" href="https://docs.python.org/3/library/doctest.html">doctest</a> module. Include a
+section of examples in the following format and <code class="docutils literal notranslate"><span class="pre">pytest</span></code> will discover and validate that the
+expected output is indeed generated.</p>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">python201/algorithms.py</span><a class="headerlink" href="#id7" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">cumulative_product</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the cumulative product of an array of numbers.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        array (list): An array of numeric values.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        result (list): A list of the same shape as `array`.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; cumulative_product([1, 2, 3, 4, 5])</span>
+<span class="sd">        [1, 2, 6, 24, 120]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">array</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
+        <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">value</span>
+    <span class="k">return</span> <span class="n">result</span>
+</pre></div>
 </div>
-<div class="section" id="documentation-generation">
-<h2>Documentation Generation<a class="headerlink" href="#documentation-generation" title="Permalink to this headline">¶</a></h2>
-<p>…</p>
+</div>
+<p>You can tell <code class="docutils literal notranslate"><span class="pre">pytest</span></code> to run doctests as well as other tests
+using the <code class="docutils literal notranslate"><span class="pre">--doctest-modules</span></code> switch:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ pytest --doctest-modules python201/algorithms.py
+================================== test session starts ===================================
+platform linux -- Python 3.8.3, pytest-5.4.3, py-1.9.0, pluggy-0.13.1
+rootdir: /home/glentner/code/github.com/glentner/python201
+plugins: hypothesis-5.20.3
+collected 1 item
+
+python201/algorithms.py .                                                          [100%]
+
+=================================== 1 passed in 0.02s ====================================
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><em>Doctests</em> are great because they double up as documentation as well as tests. But they
+shouldn’t be the <em>only</em> kind of tests you write.</p>
+</div>
+</div>
+<div class="section" id="documentation-driven-development">
+<h2>Documentation-Driven Development<a class="headerlink" href="#documentation-driven-development" title="Permalink to this headline">¶</a></h2>
+<p>In a similar manner in which <cite>Test-driven Development</cite> (TDD) forces you to think clearly about how
+the feature you intend to develop should behave, so to does <cite>Documentation-driven Development</cite>
+(DDD).</p>
+<p>The idea is as follows, you must first be able to describe what the thing does before you can
+build the thing that does it. In this way, documentation-driven development <cite>precedes</cite> test-driven
+development. Think of writing your docstrings first as a sort of planning phase. Once you’ve
+sorted out the documentation, write the tests that it should pass; then and only then, write the
+implementation.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We have of course gone in precisely the wrong order in this tutorial, but its a
+tutorial so we’ll make an exception for the our sake.</p>
+</div>
+</div>
+<div class="section" id="extras">
+<h2>Extras<a class="headerlink" href="#extras" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="automatic-documentation-generation">
+<h3>Automatic Documentation Generation<a class="headerlink" href="#automatic-documentation-generation" title="Permalink to this headline">¶</a></h3>
+<p>Finally, you can turn your documentation into a beautiful website (like this one!),
+a PDF manual, and various other formats, using a document generator such as <a class="reference external" href="http://www.sphinx-doc.org/en/master/">Sphinx</a>.</p>
+<div class="section" id="id2">
+<h4>Sphinx<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<p>For a Python project like this, it is common practice to have a <code class="docutils literal notranslate"><span class="pre">docs</span></code> folder at the top level
+of your project with the source to a Sphinx website. We won’t include a complete guide to using
+Sphinx here; there are many such guides online.</p>
+<p>To get started, create the directory and run the <code class="docutils literal notranslate"><span class="pre">sphinx-quickstart</span></code> command from <cite>inside</cite>
+the directory. There are a few options it will ask you about.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ mkdir docs
+$ cd docs
+$ sphinx-quickstart
+</pre></div>
+</div>
+<p>Depending on how you answered the prompts from the quickstart command you will have a new source
+tree with an <code class="docutils literal notranslate"><span class="pre">index.rst</span></code> and <code class="docutils literal notranslate"><span class="pre">conf.py</span></code> file. The <cite>build</cite> directory will either be within this
+same folder as <code class="docutils literal notranslate"><span class="pre">_build</span></code> or you will have explicit, adjacent <code class="docutils literal notranslate"><span class="pre">source</span></code> and <code class="docutils literal notranslate"><span class="pre">build</span></code>
+directories. Either setup is fine, I prefer to have them separate.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">conf.py</span></code> file is your Sphinx configuration for the project and it contains essential,
+high-level information (e.g., the name and version number for your project, copyright information,
+etc.), as well as detailed options that may be specific to the <cite>theme</cite> you are using. Typically,
+Sphinx themes are easily installable as Pip modules, and need merely to be assigned in
+<code class="docutils literal notranslate"><span class="pre">conf.py</span></code>. We’re using the
+<a class="reference external" href="https://github.com/pandas-dev/pydata-sphinx-theme">pydata_sphinx_theme</a>.</p>
+<p>The pages for your documentation are <cite>restructured text</cite> files (kind of like <cite>markdown</cite>), and the
+top-level <code class="docutils literal notranslate"><span class="pre">index.rst</span></code> (as well as within any folder) behave just as an <code class="docutils literal notranslate"><span class="pre">index.html</span></code> page
+would.</p>
+<p>To build your documentation, use the provided <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> (or <code class="docutils literal notranslate"><span class="pre">make.bat</span></code> on Windows).</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ make html
+</pre></div>
+</div>
+<p>Sphinx doesn’t just create html. The whole point of Sphinx is that you create layers of content
+files that you can build into multiple formats, include HTML, PDF, man pages, etc.</p>
+<p>The nice thing about using Sphinx with Python is that it <cite>knows</cite> about Python docstrings.
+We’ll neglect a full exposition here, but to illustrate the point, documenting the API
+for your project could quite literally be as simple as creating an <code class="docutils literal notranslate"><span class="pre">api.rst</span></code> page
+with something like the following.</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">docs/source/api.rst</span><a class="headerlink" href="#id8" title="Permalink to this code">¶</a></div>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span><span class="gh">API</span>
+<span class="gh">===</span>
+
+<span class="p">..</span> <span class="ow">automodule</span><span class="p">::</span> python201
+    <span class="nc">:members:</span>
+
+<span class="gh">:mod:`python201.algorithms`</span>
+<span class="gh">---------------------------</span>
+
+<span class="p">..</span> <span class="ow">automodule</span><span class="p">::</span> python201.algorithms
+    <span class="nc">:members:</span>
+</pre></div>
+</div>
+</div>
+<p>If we maintain a certain style in our docstrings as described here, now we only need to
+manage a single copy of the documentation! Sphinx can pull out and format our docstrings
+into a fully functioning website!</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This kind of special functionality and other features like it are often provided as a builtin
+or third party <cite>extension</cite>, in this case we are using the builtin <code class="docutils literal notranslate"><span class="pre">sphinx.ext.autodoc</span></code>
+extension. You can simple add these to the list of extensions activated in your <code class="docutils literal notranslate"><span class="pre">conf.py</span></code>.</p>
+</div>
+</div>
+<div class="section" id="hosting">
+<h4>Hosting<a class="headerlink" href="#hosting" title="Permalink to this headline">¶</a></h4>
+<p>If you put your project under version control, typically using <code class="docutils literal notranslate"><span class="pre">git</span></code>, and host it online using a
+provider (such as <a class="reference external" href="https://github.com">github.com</a>, you can use git <cite>hooks</cite> to automatically
+trigger an update to a website. Basically, services can register themselves with your repository
+and when a particular event occurs (like a <cite>push</cite> to the <cite>master</cite> branch), they’ll take some
+action (like <cite>pull</cite> to update the docs and update the website).</p>
+<p>This tutorial is hosted using <cite>Github Pages</cite>. In the settings to the repository on GitHub I have
+it pointing to my <code class="docutils literal notranslate"><span class="pre">docs</span></code> folder with some additional necessary bits to tell GitHub what lives
+where. When I <cite>push</cite> changes to GitHub it automatically syncs the contents of my <code class="docutils literal notranslate"><span class="pre">docs/build</span></code>
+directory.</p>
+<p>Many open-source projects like to use <a class="reference external" href="https://readthedocs.org">readthedocs.org</a>, especially for
+Python projects. You can create an account and authenticate with GitHub, point to your repository,
+and follow some simple setup procedures. Not only will it host your Sphinx documentation, it will
+<cite>build</cite> it for you!</p>
+</div>
+</div>
+<div class="section" id="type-annotations">
+<h3>Type Annotations<a class="headerlink" href="#type-annotations" title="Permalink to this headline">¶</a></h3>
+<p>A relatively new concept in Python,
+<a class="reference external" href="https://docs.python.org/3/library/typing.html">type annotations</a> are a powerful new feature that
+let you be more precise about your intentions with code. Many of the tools we rely on to develop
+code have support for using type annotations to help you catch bugs before you even get
+to your unit tests.</p>
+<p>A trivial example might be as follows.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">greeting</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="s1">&#39;Hello &#39;</span> <span class="o">+</span> <span class="n">name</span>
+</pre></div>
+</div>
+<p>Here we’re saying that <code class="docutils literal notranslate"><span class="pre">name</span></code> should be type <code class="docutils literal notranslate"><span class="pre">str</span></code> and that <code class="docutils literal notranslate"><span class="pre">greeting</span></code> also returns a
+<code class="docutils literal notranslate"><span class="pre">str</span></code>. The topic of type annotations can unveil some deep philosophical questions about how to
+write Python code, or even what it means for code to be <cite>Pythonic</cite>. We won’t crack that <cite>egg</cite> (pun
+intended) open here, but type annotations are an officially supported part of the language and
+with tooling like we’ll point out next, it let’s you take the weight of type checking off of
+run-time code and leave it to <cite>development</cite>-time(?) code.</p>
+<p>The <a class="reference external" href="http://mypy-lang.org">mypy</a> project provides static type checking to your project using these
+type annotations. Editors like <cite>PyCharm</cite> will alert you if you use a method in a way that doesn’t
+conform to the annotations provided.</p>
+<p>Type annotations in Python, in a sense, are part of <cite>documentation-driven development</cite>. If you cannot
+annotate your code, perhaps you should reconsider its design. And you will thank yourself later when
+trying to use your own code.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Type annotations currently are not (and may never be) “real code”. That is, it is not in fact
+an error to provide an argument that doesn’t conform to the given type annotation.</p>
+</div>
+<p>We can add annotations to our code as follows.</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-text">python201/algorithms.py</span><a class="headerlink" href="#id9" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+
+<span class="k">def</span> <span class="nf">cumulative_product</span><span class="p">(</span><span class="n">array</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the cumulative product of an array of numbers.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        array (list): An array of numeric values.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        result (list): A list of the same shape as `array`.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; cumulative_product([1, 2, 3, 4, 5])</span>
+<span class="sd">        [1, 2, 6, 24, 120]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">array</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
+        <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">value</span>
+    <span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Using type <code class="docutils literal notranslate"><span class="pre">float</span></code> in this instance is actually sufficient to annotate as a generic numeric
+type.</p>
+<p>From <a class="reference external" href="https://www.python.org/dev/peps/pep-0484/#id27">PEP 484</a>:</p>
+<p><em>Rather than requiring that users write import numbers and then use numbers.Float etc.,
+this PEP proposes a straightforward shortcut that is almost as effective: when an argument is
+annotated as having type float, an argument of type int is acceptable…</em></p>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
 </div>
 </div>
 

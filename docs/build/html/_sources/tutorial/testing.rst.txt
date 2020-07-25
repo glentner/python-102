@@ -274,7 +274,7 @@ Let's rewrite our function to be a bit more `Pythonic` and without that troubles
     :caption: python201/algorithms.py
 
     def cumulative_product(array):
-        result = array.copy()
+        result = list(array).copy()
         for i, value in enumerate(array[1:]):
             result[i+1] = result[i] * value
         return result
