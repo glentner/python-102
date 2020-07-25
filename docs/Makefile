@@ -18,3 +18,17 @@ help:
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 %: Makefile
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+
+livehtml:
+	sphinx-autobuild -q -p 0 --open-browser --delay 5 \
+		--ignore "*.swp" \
+		--ignore "*.pdf" \
+		--ignore "*.log" \
+		--ignore "*.out" \
+		--ignore "*.toc" \
+		--ignore "*.aux" \
+		--ignore "*.idx" \
+		--ignore "*.ind" \
+		--ignore "*.ilg" \
+		--ignore "*.tex" \
+		source build/html
