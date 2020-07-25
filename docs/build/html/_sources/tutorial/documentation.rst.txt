@@ -295,7 +295,7 @@ Hosting
 +++++++
 
 If you put your project under version control, typically using ``git``, and host it online using a
-provider (such as `github.com <https://github.com>`_, you can use git `hooks` to automatically
+provider (such as `github.com <https://github.com>`_), you can use git `hooks` to automatically
 trigger an update to a website. Basically, services can register themselves with your repository
 and when a particular event occurs (like a `push` to the `master` branch), they'll take some
 action (like `pull` to update the docs and update the website).
