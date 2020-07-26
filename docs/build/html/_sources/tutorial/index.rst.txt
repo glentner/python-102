@@ -4,7 +4,7 @@ Tutorial
 ========
 
 The following sections outline some important topics in well managed, robust scientific software.
-These topics are not the *only* thing that one could include in such a list, but they are common
+These topics are not the *only* things that one could include in such a list, but they are common
 ones.
 
 The implementations here are Python specific: the packaging, *pytest* for testing, *sphinx* for
