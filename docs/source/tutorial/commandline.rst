@@ -34,7 +34,7 @@ Command-line Arguments
 ^^^^^^^^^^^^^^^^^^^^^^
 
 The distinguishing characteristic of a "real" command-line tool and `merely` a script is the
-presents of what could be a rich set of arguments and options passable to the command.
+presence of what could be a rich set of arguments and options passable to the command.
 
 As with functions in Python, there are both positional arguments and named parameters. Positional
 arguments are precisely what they sound like, any and all unqualified arguments that occur on the
@@ -112,7 +112,7 @@ will provide an exit status, it's up to you as a developer to make that exit sta
 
 The idea is that other programs (e.g., a shell script you are writing) should be able to refer to
 a previously executed program's exit status in order to take some action. The convention is that
-an exit status of zero, ``0``, means everything when as expected, "success". Anything else, any
+an exit status of zero, ``0``, means everything went as expected, "success". Anything else, any
 `non-zero` exit status, means something went wrong. The particular value should have meaning. Many
 programs publish the meaning of different exit status values in their documentation.
 
@@ -122,7 +122,7 @@ We will demonstrate how to manage this in your code below.
 Usage and Help Text
 ^^^^^^^^^^^^^^^^^^^
 
-A good CLI tool should print it's own usage and help information to standard output upon request.
+A good CLI tool should print its own usage and help information to standard output upon request.
 The convention is that the lack of any arguments (positional or otherwise) is a request to see a
 `usage` statement (exceptions exist, the ``python`` command among them).
 
@@ -246,8 +246,8 @@ Switches meant to be true/false are enabled with the ``action`` parameter.
     const=True, default=False, type=None, choices=None, help='only keep the last value', metavar=None)
 
 When you've finished adding all of your options, you can actually `parse` a set
-of inputs by calling the ``parse_args`` method with a list of strings. Be default, if nothing
-is given it will check ``sys.argv`` to get the "real" arguments to your program.
+of inputs by calling the ``parse_args`` method with a list of strings. By default, if nothing
+is given, it will check ``sys.argv`` to get the "real" arguments to your program.
 
 .. code-block:: ipython
 
@@ -355,7 +355,7 @@ a virtual environment on Linux, so I'll have something like the following.
 
 Now, there are many ways that you might organize or layout your interface in Python within your
 package. There are a few patterns that have become common place these days. This tutorial is not
-focussed on code style though. Here is what that entry-point might look like in the simplest case.
+focused on code style though. Here is what that entry-point might look like in the simplest case.
 
 .. code-block:: python
     :caption: python201/algorithms.py
@@ -449,7 +449,7 @@ in a range. Let's use it to compute the cumulative product of a sequence.
 
 ::
 
-    $ sed 5
+    $ seq 5
     1
     2
     3
@@ -458,7 +458,7 @@ in a range. Let's use it to compute the cumulative product of a sequence.
 
 ::
 
-    $ sed 5 | cumprod -
+    $ seq 5 | cumprod -
     1
     2
     6
@@ -588,7 +588,7 @@ You can then build your manual page by using the same Makefile as we did for the
 
 In order for you to include your now constructed manual page as part of the Python package, you
 need to place it somewhere that your ``setup.py`` file can access and include as an installable
-asset. If you are committing your build folder to version control, than you just need to point
+asset. If you are committing your build folder to version control, then you just need to point
 there; otherwise, we should copy our new manual page out of the build folder to somewhere we will
 commit to version control.
 
