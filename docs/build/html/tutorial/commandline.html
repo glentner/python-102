@@ -6,7 +6,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Command-line Interfaces &#8212; python201 0.2 documentation</title>
+    <title>Command-line Interfaces &#8212; python201 0.0.1 documentation</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
@@ -160,15 +160,43 @@
     <ul class="nav section-nav flex-column">
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#conventions" class="nav-link">Conventions</a>
+            <a href="#conventions" class="nav-link">Conventions</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#command-line-arguments" class="nav-link">Command-line Arguments</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#file-io" class="nav-link">File IO</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#exit-status" class="nav-link">Exit Status</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#usage-and-help-text" class="nav-link">Usage and Help Text</a>
+        </li>
+    
+            </ul>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#parsing-command-line-arguments" class="nav-link">Parsing Command-line Arguments</a>
+            <a href="#parsing-command-line-arguments-in-python" class="nav-link">Parsing Command-line Arguments in Python</a>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#entry-point-generation" class="nav-link">Entry-point Generation</a>
+            <a href="#entry-points" class="nav-link">Entry-points</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#extras" class="nav-link">Extras</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#manual-pages" class="nav-link">Manual Pages</a>
+        </li>
+    
+            </ul>
         </li>
     
     </ul>
@@ -186,17 +214,641 @@
                 
   <div class="section" id="command-line-interfaces">
 <span id="commandline-interfaces"></span><h1>Command-line Interfaces<a class="headerlink" href="#command-line-interfaces" title="Permalink to this headline">¶</a></h1>
+<p>In addition to including routines in a package that yourself and others can import within other
+projects, typically it is a good idea to expose those elements that can stand alone as a command
+line utility (e.g., a high level function whose parameters might map in a straightforward way to
+command-line arguments). Structuring your project so that it can manifest as both a library and a
+command-line tool lets others not only execute that routine easily and repeatedly, but also allows
+for that routine to be integrated into other workflows.</p>
 <div class="section" id="conventions">
 <h2>Conventions<a class="headerlink" href="#conventions" title="Permalink to this headline">¶</a></h2>
-<p>…</p>
+<p>There are several elements to a good command-line interface that are common to most CLI tools.
+Keeping with this common design language makes it easier for others to intuit their way through
+the use of your tool; e.g., usage/help statements, command-line arguments, input/output behavior,
+exit status.</p>
+<p>These design elements can and should be implemented regardless of the language or platform used
+to create the application. For many users, it is simply not important what language the tools
+was created in, all they see is the command-line interface.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Most everything in this section could be said of a CLI on Windows; however, some aspects of
+the conventions discussed here are particular to Unix/Linux. These days, even on Windows,
+these are the prevailing conventions.</p>
 </div>
-<div class="section" id="parsing-command-line-arguments">
-<h2>Parsing Command-line Arguments<a class="headerlink" href="#parsing-command-line-arguments" title="Permalink to this headline">¶</a></h2>
-<p>…</p>
+<div class="section" id="command-line-arguments">
+<h3>Command-line Arguments<a class="headerlink" href="#command-line-arguments" title="Permalink to this headline">¶</a></h3>
+<p>The distinguishing characteristic of a “real” command-line tool and <cite>merely</cite> a script is the
+presents of what could be a rich set of arguments and options passable to the command.</p>
+<p>As with functions in Python, there are both positional arguments and named parameters. Positional
+arguments are precisely what they sound like, any and all unqualified arguments that occur on the
+command line. If you think of a command line as a sentence, the primary position argument(s) would
+be the object of the sentence.</p>
+<p>In the following command, <code class="docutils literal notranslate"><span class="pre">docs</span></code> is the positional argument of the <code class="docutils literal notranslate"><span class="pre">ls</span></code> command.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ls docs
+</pre></div>
 </div>
-<div class="section" id="entry-point-generation">
-<h2>Entry-point Generation<a class="headerlink" href="#entry-point-generation" title="Permalink to this headline">¶</a></h2>
-<p>…</p>
+<p>Named parameters, or <cite>options</cite>, are any qualified argument, typically not necessarily required to
+execute the command. That is, <cite>options</cite> usually have default values and you are providing an
+alternative.</p>
+<p>The convention is that <cite>options</cite> are signaled as such using hyphens. There are <cite>short</cite> form
+options and <cite>long</cite> form options. All <cite>short</cite> form options are prefixed with a single hyphen, e.g.,
+<code class="docutils literal notranslate"><span class="pre">-l</span></code>. All <cite>long</cite> form options are prefixed with two hyphens and multiple words joined with a
+hyphen, e.g., <code class="docutils literal notranslate"><span class="pre">--output-directory</span></code>.</p>
+<p>Options may take zero, one, or more arguments. Sometimes, an option that takes no arguments is
+referred to as a <cite>switch</cite>. This is because it’s like a true/false setting, e.g., <code class="docutils literal notranslate"><span class="pre">--debug</span></code>.
+Short form options that take no argument can be stacked together, e.g., <code class="docutils literal notranslate"><span class="pre">-lh</span></code>. Options that take
+a single argument can have that argument specified as:</p>
+<ul class="simple">
+<li><p>immediately adjacent, e.g., <code class="docutils literal notranslate"><span class="pre">-N8</span></code>.</p></li>
+<li><p>with a space, e.g., <code class="docutils literal notranslate"><span class="pre">-o</span> <span class="pre">build</span></code></p></li>
+<li><p>with an equal sign, e.g., <code class="docutils literal notranslate"><span class="pre">--output-directory=build</span></code>.</p></li>
+</ul>
+<p>Finally, a single naked hyphen, <code class="docutils literal notranslate"><span class="pre">-</span></code>, taken as an option usually is reserved to refer to standard
+IO (see next section). And a double hyphen, <code class="docutils literal notranslate"><span class="pre">--</span></code>, is ignored as a positional argument. It can
+generally serve two purposes. Any argument that follows it is forced to be a positional argument
+regardless of syntax, e.g., <code class="docutils literal notranslate"><span class="pre">--</span> <span class="pre">--output-directory</span></code> if you really mean <code class="docutils literal notranslate"><span class="pre">--output-directory</span></code> as
+a positional argument (madness!). Also, typically the lack of any argument should signal that you
+want to have a usage statement printed (see section below). Passing a <code class="docutils literal notranslate"><span class="pre">--</span></code> should allow the user
+to execute a command that requires no positional arguments.</p>
+</div>
+<div class="section" id="file-io">
+<h3>File IO<a class="headerlink" href="#file-io" title="Permalink to this headline">¶</a></h3>
+<p>In conventional Unix style, commands should read data from standard input (stdin) and publish data
+to standard output (stdout). These are special file descriptors whose access can be managed by
+your shell. The idea is that you might chain multiple commands into a pipeline, with their inputs
+and outputs linked together. This is a powerful concept worth exploring. To the extent possible,
+you should allow the user to provide input and output in this way.</p>
+<p>That said, in the context of scientific/research computing, especially in high performance
+computing (HPC), you would expect files to typically contain data in an efficient binary format,
+e.g., HDF5. This is not easily compatible with the above notion. However, there are still some
+scenarios to consider.</p>
+<p>On all platforms, there is a single input channel (stdin) but <cite>two</cite> output channels (stdout and
+stderr). The idea is that data should be written to stdout such that other commands might consume
+that data. But stderr should be reserved for messages (e.g., logging, see next section). This way
+all commands in a pipeline can have their messages printed in sync while data flows down the
+pipeline.</p>
+<p>For a CLI tool, it’s convention to have the object (primary positional argument) of the command
+line refer to input and the lack of that input argument result in data being taken from stdin.
+E.g.,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ grep <span class="s1">&#39;def&#39;</span> python201/algorithms.py
+$ cat python201/algorithms.py <span class="p">|</span> grep <span class="s1">&#39;def&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="exit-status">
+<h3>Exit Status<a class="headerlink" href="#exit-status" title="Permalink to this headline">¶</a></h3>
+<p>Command-line programs have what’s called an <cite>exit status</cite>. This is an integer value reported when
+a command exits that is meant to provide some signal regarding the state of the program. Python
+will provide an exit status, it’s up to you as a developer to make that exit status meaningful.</p>
+<p>The idea is that other programs (e.g., a shell script you are writing) should be able to refer to
+a previously executed program’s exit status in order to take some action. The convention is that
+an exit status of zero, <code class="docutils literal notranslate"><span class="pre">0</span></code>, means everything when as expected, “success”. Anything else, any
+<cite>non-zero</cite> exit status, means something went wrong. The particular value should have meaning. Many
+programs publish the meaning of different exit status values in their documentation.</p>
+<p>We will demonstrate how to manage this in your code below.</p>
+</div>
+<div class="section" id="usage-and-help-text">
+<h3>Usage and Help Text<a class="headerlink" href="#usage-and-help-text" title="Permalink to this headline">¶</a></h3>
+<p>A good CLI tool should print it’s own usage and help information to standard output upon request.
+The convention is that the lack of any arguments (positional or otherwise) is a request to see a
+<cite>usage</cite> statement (exceptions exist, the <code class="docutils literal notranslate"><span class="pre">python</span></code> command among them).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ rm
+usage: rm [-f | -i] [-dPRrvW] file ...
+   unlink file
+</pre></div>
+</div>
+<p>To show a more comprehensive statement, a <code class="docutils literal notranslate"><span class="pre">-h</span></code> or <code class="docutils literal notranslate"><span class="pre">--help</span></code> option should print a longer
+message and exit.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ gzip --help
+usage: gzip [-123456789acdfhklLNnqrtVv] [-S .suffix] [&lt;file&gt; [&lt;file&gt; ...]]
+-1 --fast            fastest (worst) compression
+-2 .. -8             set compression level
+-9 --best            best (slowest) compression
+-c --stdout          write to stdout, keep original files
+--to-stdout
+-d --decompress      uncompress files
+--uncompress
+-f --force           force overwriting &amp; compress links
+-h --help            display this help
+-k --keep            don&#39;t delete input files during operation
+-l --list            list compressed file contents
+-N --name            save or restore original file name and time stamp
+-n --no-name         don&#39;t save original file name or time stamp
+-q --quiet           output no warnings
+-r --recursive       recursively compress files in directories
+-S .suf              use suffix .suf instead of .gz
+--suffix .suf
+-t --test            test compressed file
+-V --version         display program version
+-v --verbose         print extra statistics
+</pre></div>
+</div>
+<p>Another convention (as seen with <cite>gzip</cite>) is to allow for the version number of the tool to be
+readily printed to stdout upon request with a <code class="docutils literal notranslate"><span class="pre">--version</span></code> switch. The short form may be either
+<code class="docutils literal notranslate"><span class="pre">-v</span></code> or <code class="docutils literal notranslate"><span class="pre">-V</span></code> depending on if the lower-case <code class="docutils literal notranslate"><span class="pre">-v</span></code> is used to mean something else, typically
+enabling <cite>verbose</cite> mode (meaning copious output) as seen here.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python --version
+Python 3.8.5
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Some tools will print the name of the application with the version number. This is not always
+the case and either way is fine.</p>
+</div>
+<p>There are many aspects to the convention regarding the styling of usage and help statements, and
+there are as many examples of tools violating the convention as there are conforming to them.
+Generally, the following few elements are universal.</p>
+<ul class="simple">
+<li><p>The usage statement begins with the word “usage”, <code class="docutils literal notranslate"><span class="pre">usage:</span> <span class="pre">program</span> <span class="pre">...</span></code>.</p></li>
+<li><p>The usage statement is listed on a single line if possible, with a one sentence description.</p></li>
+<li><p>Options are wrapped in square brackets, e.g., <code class="docutils literal notranslate"><span class="pre">[-abc]</span></code> or <code class="docutils literal notranslate"><span class="pre">[-o</span> <span class="pre">PATH]</span></code>.</p></li>
+<li><p>Positional arguments are named with either angle brackets or in all capitol letters,
+e.g., <code class="docutils literal notranslate"><span class="pre">&lt;file&gt;</span></code> or <code class="docutils literal notranslate"><span class="pre">FILE</span></code>.</p></li>
+<li><p>The help text includes the usage statement at the top.</p></li>
+<li><p>Positional arguments are listed before optional arguments.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="parsing-command-line-arguments-in-python">
+<h2>Parsing Command-line Arguments in Python<a class="headerlink" href="#parsing-command-line-arguments-in-python" title="Permalink to this headline">¶</a></h2>
+<p>The good news is that in Python you don’t need to worry about implementing this convention in
+terms of parsing these command-line arguments. We have a built in module in Python,
+<a class="reference external" href="https://docs.python.org/3/library/argparse.html">argparse</a> that makes it simple to implement
+interfaces compliant with these conventions.</p>
+<p>Create an <code class="docutils literal notranslate"><span class="pre">ArgumentParser</span></code> instance with the name of the program and a brief description,
+then use the <code class="docutils literal notranslate"><span class="pre">add_argument</span></code> function to add arguments to your interface. Special behavior
+is enabled using the <code class="docutils literal notranslate"><span class="pre">action</span></code> keyword argument.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [1]: </span><span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">ArgumentParser</span>
+
+<span class="gp">In [2]: </span><span class="n">parser</span> <span class="o">=</span> <span class="n">ArgumentParser</span><span class="p">(</span><span class="n">prog</span><span class="o">=</span><span class="s1">&#39;cumprod&#39;</span><span class="p">,</span>
+<span class="gp">   ...: </span>                        <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Compute the cumulative.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Positional arguments can be specified with just the name. A <cite>metavar</cite> is how it will be referred to
+in the usage/help statements. The <cite>type</cite> keyword argument can be anything that is callable as a function.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [3]: </span><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="gp">In [4]: </span><span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">FileType</span>
+
+<span class="gp">In [5]: </span><span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;infile&#39;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;FILE&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">FileType</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">),</span>
+<span class="gp">   ...: </span>                    <span class="n">default</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;input file path (default &lt;stdin&gt;)&#39;</span><span class="p">)</span>
+<span class="gh">Out[5]: </span><span class="go">_StoreAction(option_strings=[], dest=&#39;infile&#39;, nargs=None, const=None,</span>
+<span class="go">default=&lt;_io.TextIOWrapper name=&#39;&lt;stdin&gt;&#39; mode=&#39;r&#39; encoding=&#39;utf-8&#39;&gt;, type=FileType(&#39;r&#39;),</span>
+<span class="go">choices=None, help=&#39;input file path (default &lt;stdin&gt;)&#39;, metavar=&#39;FILE&#39;)</span>
+</pre></div>
+</div>
+<p>You can override what the variable will be referred to as in your code with <code class="docutils literal notranslate"><span class="pre">dest</span></code>
+(short for <cite>destination</cite>). By default, it will take the name of the option, stripped
+of its two leading hyphens and any joining hyphens replaced with an underscore,
+e.g., <code class="docutils literal notranslate"><span class="pre">'--tmp-dir</span></code> would become <code class="docutils literal notranslate"><span class="pre">tmp_dir</span></code>).</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [6]: </span><span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-o&#39;</span><span class="p">,</span> <span class="s1">&#39;--output&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;outfile&#39;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;FILE&#39;</span><span class="p">,</span>
+<span class="gp">   ...: </span>                    <span class="n">default</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">FileType</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">),</span>
+<span class="gp">   ...: </span>                    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;output file path (default &lt;stdout&gt;)&#39;</span><span class="p">)</span>
+<span class="gh">Out[6]: </span><span class="go">_StoreAction(option_strings=[&#39;-o&#39;, &#39;--output&#39;], dest=&#39;outfile&#39;, nargs=None, const=None,</span>
+<span class="go">default=&lt;_io.TextIOWrapper name=&#39;&lt;stdout&gt;&#39; mode=&#39;w&#39; encoding=&#39;utf-8&#39;&gt;, type=FileType(&#39;w&#39;),</span>
+<span class="go">choices=None, help=&#39;output file path (default &lt;stdout&gt;)&#39;, metavar=&#39;FILE&#39;)</span>
+</pre></div>
+</div>
+<p>Switches meant to be true/false are enabled with the <code class="docutils literal notranslate"><span class="pre">action</span></code> parameter.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [7]: </span><span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-l&#39;</span><span class="p">,</span> <span class="s1">&#39;--last-only&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+<span class="gp">   ...: </span>                    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;only keep the last value&#39;</span><span class="p">)</span>
+<span class="gh">Out[7]: </span><span class="go">_StoreTrueAction(option_strings=[&#39;-l&#39;, &#39;--last-only&#39;], dest=&#39;last_only&#39;, nargs=0,</span>
+<span class="go">const=True, default=False, type=None, choices=None, help=&#39;only keep the last value&#39;, metavar=None)</span>
+</pre></div>
+</div>
+<p>When you’ve finished adding all of your options, you can actually <cite>parse</cite> a set
+of inputs by calling the <code class="docutils literal notranslate"><span class="pre">parse_args</span></code> method with a list of strings. Be default, if nothing
+is given it will check <code class="docutils literal notranslate"><span class="pre">sys.argv</span></code> to get the “real” arguments to your program.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [8]: </span><span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">([</span><span class="s1">&#39;data.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;-l&#39;</span><span class="p">])</span>
+<span class="gh">Out[8]: </span><span class="go">Namespace(infile=&lt;_io.TextIOWrapper name=&#39;data.txt&#39; mode=&#39;r&#39; encoding=&#39;UTF-8&#39;&gt;,</span>
+<span class="go">last_only=True, outfile=&lt;_io.TextIOWrapper name=&#39;&lt;stdout&gt;&#39; mode=&#39;w&#39; encoding=&#39;utf-8&#39;&gt;)</span>
+</pre></div>
+</div>
+<p>Assign the result of this method call to a variable to access these options in your program.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [9]: </span><span class="n">cmdline</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">([</span><span class="s1">&#39;data.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;-l&#39;</span><span class="p">])</span>
+
+<span class="gp">In [10]: </span><span class="n">cmdline</span><span class="o">.</span><span class="n">outfile</span>
+<span class="gh">Out[10]: </span><span class="go">&lt;_io.TextIOWrapper name=&#39;&lt;stdout&gt;&#39; mode=&#39;w&#39; encoding=&#39;utf-8&#39;&gt;</span>
+</pre></div>
+</div>
+<p>The <cite>argparse</cite> module implements the full set of conventions outlined above. The usage/help
+statements are automatically generated for you (including <code class="docutils literal notranslate"><span class="pre">-h</span></code> and <code class="docutils literal notranslate"><span class="pre">--help</span></code>) and the
+convention regarding <code class="docutils literal notranslate"><span class="pre">-</span></code> and <code class="docutils literal notranslate"><span class="pre">--</span></code> are present as well.</p>
+<p>Let’s move on to the next section to see how to include this in our project and we’ll
+see what the usage and help statements look.</p>
+</div>
+<div class="section" id="entry-points">
+<h2>Entry-points<a class="headerlink" href="#entry-points" title="Permalink to this headline">¶</a></h2>
+<p>In order to expose some part of our package as a command-line tool, we need to create something
+called an <cite>entry-point</cite>. Instead of writing a script manually (as a <code class="docutils literal notranslate"><span class="pre">.py</span></code> file) and trying to
+include it as an executable part of the package, we can actually tell <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> to do it for
+us automatically (and in a way that’s cross-platform!).</p>
+<p>We need to add an argument to our <code class="docutils literal notranslate"><span class="pre">setup</span></code> function that points to a function in our package
+and specify how we want to invoke it at the command-line.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">setup.py</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">setuptools</span> <span class="kn">import</span> <span class="n">setup</span><span class="p">,</span> <span class="n">find_packages</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;README.rst&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">readme</span><span class="p">:</span>
+    <span class="n">long_description</span> <span class="o">=</span> <span class="n">readme</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="n">setup</span><span class="p">(</span>
+    <span class="n">name</span>             <span class="o">=</span> <span class="s1">&#39;python201&#39;</span><span class="p">,</span>
+    <span class="n">version</span>          <span class="o">=</span> <span class="s1">&#39;0.0.1&#39;</span><span class="p">,</span>
+    <span class="n">author</span>           <span class="o">=</span> <span class="s1">&#39;Geoffrey Lentner&#39;</span><span class="p">,</span>
+    <span class="n">author_email</span>     <span class="o">=</span> <span class="s1">&#39;glentner@purdue.edu&#39;</span><span class="p">,</span>
+    <span class="n">description</span>      <span class="o">=</span> <span class="s1">&#39;A Python package for numerical algorithms.&#39;</span><span class="p">,</span>
+    <span class="n">license</span>          <span class="o">=</span> <span class="s1">&#39;Apache Software License&#39;</span><span class="p">,</span>
+    <span class="n">keywords</span>         <span class="o">=</span> <span class="s1">&#39;tutorial packaging example&#39;</span><span class="p">,</span>
+    <span class="n">url</span>              <span class="o">=</span> <span class="s1">&#39;https://github.com/glentner/python201&#39;</span><span class="p">,</span>
+    <span class="n">packages</span>         <span class="o">=</span> <span class="n">find_packages</span><span class="p">(),</span>
+    <span class="n">include_package_data</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">long_description</span> <span class="o">=</span> <span class="n">long_description</span><span class="p">,</span>
+    <span class="n">long_description_content_type</span> <span class="o">=</span> <span class="s1">&#39;text/x-rst&#39;</span><span class="p">,</span>
+    <span class="n">classifiers</span>      <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Development Status :: 4 - Beta&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;Programming Language :: Python :: 3.7&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;Programming Language :: Python :: 3.8&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;Operating System :: POSIX :: Linux&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;Operating System :: MacOS&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;Operating System :: Microsoft :: Windows&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;License :: OSI Approved :: Apache Software License&#39;</span><span class="p">,</span> <span class="p">],</span>
+    <span class="n">install_requires</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;numpy&#39;</span><span class="p">,</span> <span class="s1">&#39;numba&#39;</span><span class="p">,</span> <span class="p">],</span>
+    <span class="n">extras_require</span>   <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;dev&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;ipython&#39;</span><span class="p">,</span> <span class="s1">&#39;pytest&#39;</span><span class="p">,</span> <span class="s1">&#39;hypothesis&#39;</span><span class="p">,</span> <span class="s1">&#39;pylint&#39;</span><span class="p">,</span> <span class="s1">&#39;sphinx&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;pydata_sphinx_theme&#39;</span><span class="p">],</span>
+    <span class="p">},</span>
+<span class="hll">    <span class="n">entry_points</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class="hll">        <span class="s1">&#39;console_scripts&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;cumprod=python201.algorithms:main&#39;</span><span class="p">]</span>
+</span><span class="hll">    <span class="p">}</span>
+</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>What we’ve said here is that we want to be able to invoke a command, <code class="docutils literal notranslate"><span class="pre">cumprod</span></code>, and that we want
+it to execute a function, <code class="docutils literal notranslate"><span class="pre">python201.algorithms:main</span></code>. That is, we need to define a function,
+<code class="docutils literal notranslate"><span class="pre">main</span></code> (the name is arbitrary in fact), within our <code class="docutils literal notranslate"><span class="pre">python201.algorithms</span></code> module. This
+function will be called for us <cite>without arguments</cite> and it should return an integer. That integer
+value will be the exit status of the command.</p>
+<p>If we install our package using Pip, this will automatically generate the necessary script and
+place it within the <code class="docutils literal notranslate"><span class="pre">bin</span></code> folder (or <code class="docutils literal notranslate"><span class="pre">Scripts</span></code> on Windows) of our Python prefix. I’m using
+a virtual environment on Linux, so I’ll have something like the following.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">/home/glentner/.local/share/virtualenvs/python201-StrqALMO/bin/cumprod</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/home/glentner/.local/share/virtualenvs/python201-StrqALMO/bin/python</span>
+<span class="c1"># EASY-INSTALL-ENTRY-SCRIPT: &#39;python201&#39;,&#39;console_scripts&#39;,&#39;cumprod&#39;</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">importlib.metadata</span> <span class="kn">import</span> <span class="n">distribution</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(-script\.pyw?|\.exe)?$&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">entry_point</span> <span class="ow">in</span> <span class="n">distribution</span><span class="p">(</span><span class="s1">&#39;python201&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">entry_points</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">entry_point</span><span class="o">.</span><span class="n">group</span> <span class="o">==</span> <span class="s1">&#39;console_scripts&#39;</span> <span class="ow">and</span> <span class="n">entry_point</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;cumprod&#39;</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">entry_point</span><span class="o">.</span><span class="n">load</span><span class="p">()())</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The contents of this script will be slightly different for you depending on what platform you
+are on and what (version of) Python you invoked Pip with. On Windows, this will actually
+generate a batch file, <code class="docutils literal notranslate"><span class="pre">.bat</span></code>, the suffix of which need not be given at the CMD prompt.</p>
+</div>
+<p>Now, there are many ways that you might organize or layout your interface in Python within your
+package. There are a few patterns that have become common place these days. This tutorial is not
+focussed on code style though. Here is what that entry-point might look like in the simplest case.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">python201/algorithms.py</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">ArgumentParser</span><span class="p">,</span> <span class="n">FileType</span>
+
+
+<span class="k">def</span> <span class="nf">cumulative_product</span><span class="p">(</span><span class="n">array</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the cumulative product of an array of numbers.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        array (list): An array of numeric values.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        result (list): A list of the same shape as `array`.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; cumulative_product([1, 2, 3, 4, 5])</span>
+<span class="sd">        [1, 2, 6, 24, 120]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
+        <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">value</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;command-line entry-point for `cumulative_product`.&quot;&quot;&quot;</span>
+
+    <span class="c1"># command-line interface</span>
+    <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Compute the cumulative product of an array of numbers.&#39;</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">ArgumentParser</span><span class="p">(</span><span class="n">prog</span><span class="o">=</span><span class="s1">&#39;cumprod&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-v&#39;</span><span class="p">,</span> <span class="s1">&#39;--version&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;version&#39;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;0.0.1&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;infile&#39;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;FILE&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">FileType</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">),</span>
+                        <span class="n">default</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;input file path (default &lt;stdin&gt;)&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-o&#39;</span><span class="p">,</span> <span class="s1">&#39;--output&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;outfile&#39;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;FILE&#39;</span><span class="p">,</span>
+                        <span class="n">default</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">FileType</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">),</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;output file path (default &lt;stdout&gt;)&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-l&#39;</span><span class="p">,</span> <span class="s1">&#39;--last-only&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;only keep the last value&#39;</span><span class="p">)</span>
+    <span class="n">cmdline</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">argv</span><span class="p">)</span>
+
+    <span class="n">values</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">cmdline</span><span class="o">.</span><span class="n">infile</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">cumulative_product</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
+
+    <span class="c1"># &#39;%g&#39; formatting automatically pretty-prints</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">cmdline</span><span class="o">.</span><span class="n">last_only</span> <span class="k">else</span> <span class="mi">0</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">value</span><span class="si">:</span><span class="s1">g</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="n">start</span><span class="p">:]]),</span> <span class="n">file</span><span class="o">=</span><span class="n">cmdline</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mi">0</span>
+</pre></div>
+</div>
+</div>
+<p>If we re-install our package we can try it out.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install -e . --user
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cumprod
+usage: cumprod [-h] [-v] [-o FILE] [-l] FILE
+cumprod: error: the following arguments are required: FILE
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cumprod -h
+usage: cumprod [-h] [-v] [-o FILE] [-l] FILE
+
+Compute the cumulative product of an array of numbers.
+
+positional arguments:
+  FILE                  input file path (default &lt;stdin&gt;)
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -v, --version         show program&#39;s version number and exit
+  -o FILE, --output FILE
+                        output file path (default &lt;stdout&gt;)
+  -l, --last-only       only keep the last value
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cumprod -v
+0.0.1
+</pre></div>
+</div>
+<p>In Unix-like environments, the <code class="docutils literal notranslate"><span class="pre">seq</span></code> command simply produces a sequence of integer values
+in a range. Let’s use it to compute the cumulative product of a sequence.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sed 5
+1
+2
+3
+4
+5
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sed 5 | cumprod -
+1
+2
+6
+24
+120
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ seq 10 | cumprod -
+1
+2
+6
+24
+120
+720
+5040
+40320
+362880
+3.6288e+06
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ seq 10 &gt; data.txt
+$ cumprod -l &lt; data.txt &gt; result.txt
+$ cat result.txt
+3.6288e+06
+</pre></div>
+</div>
+</div>
+<div class="section" id="extras">
+<h2>Extras<a class="headerlink" href="#extras" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="manual-pages">
+<h3>Manual Pages<a class="headerlink" href="#manual-pages" title="Permalink to this headline">¶</a></h3>
+<p>In addition to having a usage and help statement printable from the command-line, if your tool has
+a lot of features, it might be a good idea to also include a manual page (or <cite>manpage</cite> for short).
+This is in fact particular to Unix-like platforms, but typically in research computing this is the
+case anyways.</p>
+<p>Manual pages are provided by files stored in directories on your <code class="docutils literal notranslate"><span class="pre">MANPATH</span></code>. The <code class="docutils literal notranslate"><span class="pre">man</span></code> command
+looks for these files and parses their special syntax to present nicely formatted page-able output
+at the command-line. Writing one of these files can be a challenge because of this particular
+syntax.</p>
+<p>Fortunately, Sphinx makes creating manual pages for your project much easier! We can create
+another page in our documentation source tree, say <code class="docutils literal notranslate"><span class="pre">manpage.rst</span></code>. Sphinx understands what manual
+pages are and what sections to expect. A simple example in our case might be something like the
+following.</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">docs/source/manpage.rst</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span><span class="gh">Manual Page for CUMPROD</span>
+<span class="gh">=======================</span>
+
+<span class="gh">Synopsis</span>
+<span class="gh">--------</span>
+
+cumprod [-h] [-v] [-o FILE] [-l] FILE
+
+
+<span class="gh">Description</span>
+<span class="gh">-----------</span>
+
+Compute the cumulative product of a sequence of numbers.
+
+
+<span class="gh">Usage</span>
+<span class="gh">-----</span>
+
+FILE
+    input file path (default &lt;stdin&gt;)
+
+
+-h, --help
+    show this help message and exit
+
+-v, --version
+    show program&#39;s version number and exit
+
+-o FILE, --output FILE
+    output file path (default &lt;stdout&gt;)
+
+-l, --last-only
+    only keep the last value
+
+<span class="gh">Example</span>
+<span class="gh">-------</span>
+
+<span class="se">::</span>
+
+<span class="s">    $ seq 5 | cumprod -</span>
+<span class="s">    1</span>
+<span class="s">    2</span>
+<span class="s">    6</span>
+<span class="s">    24</span>
+<span class="s">    120</span>
+</pre></div>
+</div>
+</div>
+<p>We can then edit our configuration file to specify that this page is a manual page and how it
+should be treated. Here we have the name of the file, the name of the manual page, the
+description, copyright info, and the manual page section to save it under.</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">docs/source/conf.py</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">man_pages</span> <span class="o">=</span> <span class="p">[(</span>
+    <span class="s1">&#39;manpage&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;cumprod&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Compute cumulative product of a sequence of numbers.&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Geoffrey Lentner &lt;glentner@purdue.edu&gt;.&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;1&#39;</span>
+<span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<p>You can then build your manual page by using the same Makefile as we did for the html website.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd docs
+$ make man
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It might complain because your <cite>manpage.rst</cite> wasn’t included in the page index for the
+website. This is only a warning and is fine.</p>
+</div>
+<p>In order for you to include your now constructed manual page as part of the Python package, you
+need to place it somewhere that your <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> file can access and include as an installable
+asset. If you are committing your build folder to version control, than you just need to point
+there; otherwise, we should copy our new manual page out of the build folder to somewhere we will
+commit to version control.</p>
+<p>From the top-level of our project folder, we might do something like the following.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mkdir -p man/man1
+$ cp docs/build/man/cumprod.1 man/man1/
+</pre></div>
+</div>
+<p>Then, in our <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> file, you can point to our committed copy of the manual page using the
+<code class="docutils literal notranslate"><span class="pre">data_files</span></code> parameter.</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">setup.py</span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">setuptools</span> <span class="kn">import</span> <span class="n">setup</span><span class="p">,</span> <span class="n">find_packages</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;README.rst&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">readme</span><span class="p">:</span>
+    <span class="n">long_description</span> <span class="o">=</span> <span class="n">readme</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="n">setup</span><span class="p">(</span>
+    <span class="n">name</span>             <span class="o">=</span> <span class="s1">&#39;python201&#39;</span><span class="p">,</span>
+    <span class="n">version</span>          <span class="o">=</span> <span class="s1">&#39;0.0.1&#39;</span><span class="p">,</span>
+    <span class="n">author</span>           <span class="o">=</span> <span class="s1">&#39;Geoffrey Lentner&#39;</span><span class="p">,</span>
+    <span class="n">author_email</span>     <span class="o">=</span> <span class="s1">&#39;glentner@purdue.edu&#39;</span><span class="p">,</span>
+    <span class="n">description</span>      <span class="o">=</span> <span class="s1">&#39;A Python package for numerical algorithms.&#39;</span><span class="p">,</span>
+    <span class="n">license</span>          <span class="o">=</span> <span class="s1">&#39;Apache Software License&#39;</span><span class="p">,</span>
+    <span class="n">keywords</span>         <span class="o">=</span> <span class="s1">&#39;tutorial packaging example&#39;</span><span class="p">,</span>
+    <span class="n">url</span>              <span class="o">=</span> <span class="s1">&#39;https://github.com/glentner/python201&#39;</span><span class="p">,</span>
+    <span class="n">packages</span>         <span class="o">=</span> <span class="n">find_packages</span><span class="p">(),</span>
+    <span class="n">include_package_data</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">long_description</span> <span class="o">=</span> <span class="n">long_description</span><span class="p">,</span>
+    <span class="n">long_description_content_type</span> <span class="o">=</span> <span class="s1">&#39;text/x-rst&#39;</span><span class="p">,</span>
+    <span class="n">classifiers</span>      <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Development Status :: 4 - Beta&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;Programming Language :: Python :: 3.7&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;Programming Language :: Python :: 3.8&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;Operating System :: POSIX :: Linux&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;Operating System :: MacOS&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;Operating System :: Microsoft :: Windows&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;License :: OSI Approved :: Apache Software License&#39;</span><span class="p">,</span> <span class="p">],</span>
+    <span class="n">install_requires</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;numpy&#39;</span><span class="p">,</span> <span class="s1">&#39;numba&#39;</span><span class="p">,</span> <span class="p">],</span>
+    <span class="n">extras_require</span>   <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;dev&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;ipython&#39;</span><span class="p">,</span> <span class="s1">&#39;pytest&#39;</span><span class="p">,</span> <span class="s1">&#39;hypothesis&#39;</span><span class="p">,</span> <span class="s1">&#39;pylint&#39;</span><span class="p">,</span> <span class="s1">&#39;sphinx&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;pydata_sphinx_theme&#39;</span><span class="p">],</span>
+    <span class="p">},</span>
+    <span class="n">entry_points</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;console_scripts&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;cumprod=python201.algorithms:main&#39;</span><span class="p">]</span>
+    <span class="p">},</span>
+<span class="hll">    <span class="n">data_files</span> <span class="o">=</span> <span class="p">[</span>
+</span><span class="hll">        <span class="p">(</span><span class="s1">&#39;share/man/man1&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;man/man1/cumprod.1&#39;</span><span class="p">,</span> <span class="p">]),</span>
+</span><span class="hll">    <span class="p">],</span>
+</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>This option lets you explicitly list files that you want to include with the package and where you
+want them to be installed. Here, the <code class="docutils literal notranslate"><span class="pre">share/man/man1</span></code> is a relative path <cite>adjacent</cite> to the
+<code class="docutils literal notranslate"><span class="pre">bin</span></code> folder of our Python installation (where Pip is being executed from as well). This is good
+practice and makes it so that your manual page is part of your environment, so when the user
+activates the environment they have access to it.</p>
+<p>Let’s reinstall our package so it includes the command-line entry-point and the manual page.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install . --user --upgrade
+</pre></div>
+</div>
+<p>You can access manual pages with the <code class="docutils literal notranslate"><span class="pre">man</span></code> command.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ man cumprod
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CUMPROD(1)                          python201                          CUMPROD(1)
+
+
+
+NAME
+       cumprod - Compute cumulative product of a sequence of numbers.
+
+SYNOPSIS
+       cumprod [-h] [-v] [-o FILE] [-l] FILE
+
+DESCRIPTION
+       Compute the cumulative product of a sequence of numbers.
+
+USAGE
+       FILE   input file path (default &lt;stdin&gt;)
+
+       -h, --help
+              show this help message and exit
+
+       -v, --version
+              show program&#39;s version number and exit
+
+       -o FILE, --output FILE
+              output file path (default &lt;stdout&gt;)
+
+       -l, --last-only
+              only keep the last value
+
+EXAMPLE
+          $ seq 5 | cumprod -
+          1
+          2
+          6
+          24
+          120
+
+AUTHOR
+       Geoffrey Lentner &lt;glentner@purdue.edu&gt;.
+
+COPYRIGHT
+       2019-2020 Geoffrey Lentner, 2018 Ashwin Srinath
+
+
+
+0.0.1                              Jul 26, 2020                        CUMPROD(1)
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
 </div>
 </div>
 

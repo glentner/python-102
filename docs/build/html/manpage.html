@@ -6,7 +6,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>License &#8212; python201 0.0.1 documentation</title>
+    <title>Manual Page for CUMPROD &#8212; python201 0.0.1 documentation</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
@@ -19,7 +19,6 @@
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="References" href="references.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
   </head>
@@ -53,8 +52,8 @@
             <a class="nav-link" href="references.html">References</a>
         </li>
         
-        <li class="nav-item active">
-            <a class="nav-link" href="">License</a>
+        <li class="nav-item ">
+            <a class="nav-link" href="license.html">License</a>
         </li>
         
         
@@ -103,8 +102,6 @@
       
       
       
-        
-      
       
     </ul>
 
@@ -115,9 +112,28 @@
           
           <div class="d-none d-xl-block col-xl-2 bd-toc">
               
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
 
 <nav id="bd-toc-nav">
     <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#synopsis" class="nav-link">Synopsis</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#description" class="nav-link">Description</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#usage" class="nav-link">Usage</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#example" class="nav-link">Example</a>
+        </li>
     
     </ul>
 </nav>
@@ -132,31 +148,48 @@
               
               <div>
                 
-  <div class="section" id="license">
-<h1>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h1>
-<p>This tutorial and the code examples used therein are released under the
-<a class="reference external" href="https://mit-license.org">MIT License</a>.</p>
-<hr class="docutils" />
-<div class="line-block">
-<div class="line"><br /></div>
+  <div class="section" id="manual-page-for-cumprod">
+<h1>Manual Page for CUMPROD<a class="headerlink" href="#manual-page-for-cumprod" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="synopsis">
+<h2>Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h2>
+<p>cumprod [-h] [-v] [-o FILE] [-l] FILE</p>
 </div>
-<p>MIT License</p>
-<p>Copyright (c) 2019-2020 Geoffrey Lentner, 2018 Ashwin Srinath</p>
-<p>Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the “Software”), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:</p>
-<p>The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.</p>
-<p>THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.</p>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>Compute the cumulative product of a sequence of numbers.</p>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<dl class="simple">
+<dt>FILE</dt><dd><p>input file path (default &lt;stdin&gt;)</p>
+</dd>
+</dl>
+<dl class="option-list">
+<dt><kbd><span class="option">-h</span>, <span class="option">--help</span></kbd></dt>
+<dd><p>show this help message and exit</p>
+</dd>
+<dt><kbd><span class="option">-v</span>, <span class="option">--version</span></kbd></dt>
+<dd><p>show program’s version number and exit</p>
+</dd>
+<dt><kbd><span class="option">-o <var>FILE</var></span>, <span class="option">--output <var>FILE</var></span></kbd></dt>
+<dd><p>output file path (default &lt;stdout&gt;)</p>
+</dd>
+<dt><kbd><span class="option">-l</span>, <span class="option">--last-only</span></kbd></dt>
+<dd><p>only keep the last value</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ seq 5 | cumprod -
+1
+2
+6
+24
+120
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -165,7 +198,6 @@ SOFTWARE.</p>
               
               <div class='prev-next-bottom'>
                 
-    <a class='left-prev' id="prev-link" href="references.html" title="previous page">References</a>
 
               </div>
               
