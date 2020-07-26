@@ -194,7 +194,7 @@ Documentation-Driven Development
 --------------------------------
 
 In a similar manner in which `Test-driven Development` (TDD) forces you to think clearly about how
-the feature you intend to develop should behave, so to does `Documentation-driven Development`
+the feature you intend to develop should behave, so does `Documentation-driven Development`
 (DDD).
 
 The idea is as follows, you must first be able to describe what the thing does before you can
@@ -206,7 +206,7 @@ implementation.
 .. note::
 
     We have of course gone in precisely the wrong order in this tutorial, but its a
-    tutorial so we'll make an exception for the our sake.
+    tutorial so we'll make an exception for our sake.
 
 
 Extras
@@ -288,7 +288,7 @@ into a fully functioning website!
 
     This kind of special functionality and other features like it are often provided as a builtin
     or third party `extension`, in this case we are using the builtin ``sphinx.ext.autodoc``
-    extension. You can simple add these to the list of extensions activated in your ``conf.py``.
+    extension. You can simply add these to the list of extensions activated in your ``conf.py``.
 
 
 Hosting
