@@ -330,8 +330,8 @@ Here we're saying that ``name`` should be type ``str`` and that ``greeting`` als
 ``str``. The topic of type annotations can unveil some deep philosophical questions about how to
 write Python code, or even what it means for code to be `Pythonic`. We won't crack that `egg` (pun
 intended) open here, but type annotations are an officially supported part of the language and
-with tooling like we'll point out next, it let's you take the weight of type checking off of
-run-time code and leave it to `development`-time(?) code.
+with tooling like we'll point out next, it lets you perform type checking at `development`-time instead of
+at `run`-time.
 
 The `mypy <http://mypy-lang.org>`_ project provides static type checking to your project using these
 type annotations. Editors like `PyCharm` will alert you if you use a method in a way that doesn't
