@@ -414,7 +414,7 @@ If we re-install our package we can try it out.
 
 ::
 
-    $ pip install -e . --user
+    $ pip install . --upgrade
 
 ::
 
@@ -654,7 +654,7 @@ Let's reinstall our package so it includes the command-line entry-point and the 
 
 ::
 
-    $ pip install . --user --upgrade
+    $ pip install . --upgrade
 
 You can access manual pages with the ``man`` command.
 
