@@ -28,4 +28,10 @@ setup(
         'dev': ['ipython', 'pytest', 'hypothesis', 'pylint', 'sphinx',
                 'pydata_sphinx_theme'],
     },
+    entry_points = {
+        'console_scripts': ['cumprod=python201.algorithms:main']
+    },
+    data_files = [
+        ('share/man/man1', ['man/man1/cumprod.1', ]),
+    ],
 )
