@@ -83,7 +83,7 @@ result.
 Functions
 ---------
 
-The first thing to tackle here is how to make this code re-usable. We've hard coded the input
+The first thing to tackle here is how to make this code re-usable. We've hard-coded the input
 data, and if we wanted to compute the cumulative product on more than one set of data we would
 need to duplicate those lines of code each time.
 
@@ -129,7 +129,7 @@ look for packages.
 
 .. note::
 
-    Before diving into the mechanics of Python packaging it is usefully to talk about terminology.
+    Before diving into the mechanics of Python packaging it is helpful to talk about terminology.
     When not accepting input directly via an interactive console, Python needs to find code in a
     file somewhere. In the simplest case we are speaking of a ``.py`` file. If we execute such a
     file directly (as we did just now) it is referred to as a `script`. If instead we want to
@@ -186,7 +186,7 @@ paths by accessing the ``sys.path`` `list` from within a Python session or modul
      '/usr/local/lib/python3.8/site-packages']
 
 The exact values depend on both how Python was installed and what platform you are using (i.e.,
-Windows, MacOS, Linux, etc.). But there are some common patterns to observer. Your `system`
+Windows, MacOS, Linux, etc.). But there are some common patterns to observe. Your `system`
 libraries will occur first on your path; that's the ``.zip``, top-level library, and
 ``lib-dynload`` you see (this will be slightly different on Windows). These represent Python
 `itself` and the built-ins. Discussion of these is beyond the scope of this tutorial.
@@ -221,11 +221,11 @@ environment variable before launching a Python session or script.
 
     $ export PYTHONPATH=/opt/lab/python/modules:$PYTHONPATH
 
-This isn't the best solution however because it requires specially knowledge and facilitation
+This isn't the best solution however because it requires access to a special location (`/opt/lab/python`)
 to make use of the library. If we wanted to be able to use our algorithm in another project
-without having to hard code the location of the installed dependency `in the project`, we
+without having to hard-code the location of the installed dependency `in the project`, we
 should instead make it so our code is `installable` and automatically placed in the
-appropriate location wherever that happens to be.
+appropriate location (wherever that happens to be).
 
 
 Organizing a Python Project
@@ -390,7 +390,7 @@ and `gitlab.com <https://gitlab.com>`_ offer sophisticated features.
 License
 ^^^^^^^
 
-You should pick a software license the best suites your project. A license specifies the
+You should pick a software license that best suites your project. A license specifies the
 terms of use of the code. `Choosing a license <https://choosealicense.com>`_ is beyond the scope
 of this tutorial. Once you've decided on an appropriate license, most commonly used licenses
 are recognized by hosting services like `PyPI` and `github.com`.
