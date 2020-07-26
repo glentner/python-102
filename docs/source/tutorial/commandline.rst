@@ -192,9 +192,9 @@ Parsing Command-line Arguments in Python
 ----------------------------------------
 
 The good news is that in Python you don't need to worry about implementing this convention in
-terms of parsing these command-line arguments. We have a built in module in Python,
-`argparse <https://docs.python.org/3/library/argparse.html>`_ that makes it simple to implement
-interfaces compliant with these conventions.
+terms of parsing these command-line arguments. We have a built-in module in Python, `argparse
+<https://docs.python.org/3/library/argparse.html>`_, that makes it simple to implement interfaces
+compliant with these conventions.
 
 Create an ``ArgumentParser`` instance with the name of the program and a brief description,
 then use the ``add_argument`` function to add arguments to your interface. Special behavior
@@ -205,7 +205,7 @@ is enabled using the ``action`` keyword argument.
     In [1]: from argparse import ArgumentParser
 
     In [2]: parser = ArgumentParser(prog='cumprod',
-       ...:                         description='Compute the cumulative.')
+       ...:                         description='Compute the cumulative product.')
 
 Positional arguments can be specified with just the name. A `metavar` is how it will be referred to
 in the usage/help statements. The `type` keyword argument can be anything that is callable as a function.
