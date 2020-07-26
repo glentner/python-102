@@ -113,7 +113,7 @@ A good function:
     print(cumulative_product([3, 4, 6, 9]))
     print(cumulative_product([1, 8, 2, 7]))
 
-Now we can do more work without duplicating those lines of code. But we're still hard coding the
+Now we can do more work without duplicating those lines of code. But we're still hard-coding the
 input data. We'll explore making this function better in the next section when we discuss
 :ref:`testing <testing>`. For now, let's focus on making this code available as part of an
 installable package.
