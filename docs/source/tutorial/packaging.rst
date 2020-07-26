@@ -353,6 +353,16 @@ without needing to re-install it every time.
 
     $ pip install -e . --user
 
+As a side note, using pip's ``--user`` functionality might have some unexpected
+consequences and could cause package conflicts at some point later in the
+future (e.g. in the HPC environments with centrally-maintained JupyterHub
+instances, your ``module load``-ed Python interpreter may be different from the
+JupyterHub one, thus possibly causing Jupyter sessions to choke).  For this
+reason, we generally recommend against ``--user`` and suggest using some sort
+of Python virtual environment (Anaconda, Venv, Pipenv, etc.) for each of your
+projects.  This way inside each virtual environment you would be doing a
+"plain" ``pip install`` rather than a ``pip install --user``.
+
 
 Extras
 ------
