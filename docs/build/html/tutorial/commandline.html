@@ -373,16 +373,15 @@ e.g., <code class="docutils literal notranslate"><span class="pre">&lt;file&gt;<
 <div class="section" id="parsing-command-line-arguments-in-python">
 <h2>Parsing Command-line Arguments in Python<a class="headerlink" href="#parsing-command-line-arguments-in-python" title="Permalink to this headline">¶</a></h2>
 <p>The good news is that in Python you don’t need to worry about implementing this convention in
-terms of parsing these command-line arguments. We have a built in module in Python,
-<a class="reference external" href="https://docs.python.org/3/library/argparse.html">argparse</a> that makes it simple to implement
-interfaces compliant with these conventions.</p>
+terms of parsing these command-line arguments. We have a built-in module in Python, <a class="reference external" href="https://docs.python.org/3/library/argparse.html">argparse</a>, that makes it simple to implement interfaces
+compliant with these conventions.</p>
 <p>Create an <code class="docutils literal notranslate"><span class="pre">ArgumentParser</span></code> instance with the name of the program and a brief description,
 then use the <code class="docutils literal notranslate"><span class="pre">add_argument</span></code> function to add arguments to your interface. Special behavior
 is enabled using the <code class="docutils literal notranslate"><span class="pre">action</span></code> keyword argument.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [1]: </span><span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">ArgumentParser</span>
 
 <span class="gp">In [2]: </span><span class="n">parser</span> <span class="o">=</span> <span class="n">ArgumentParser</span><span class="p">(</span><span class="n">prog</span><span class="o">=</span><span class="s1">&#39;cumprod&#39;</span><span class="p">,</span>
-<span class="gp">   ...: </span>                        <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Compute the cumulative.&#39;</span><span class="p">)</span>
+<span class="gp">   ...: </span>                        <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Compute the cumulative product.&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Positional arguments can be specified with just the name. A <cite>metavar</cite> is how it will be referred to
@@ -573,7 +572,7 @@ focussed on code style though. Here is what that entry-point might look like in 
 </div>
 </div>
 <p>If we re-install our package we can try it out.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install -e . --user
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install . --upgrade
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cumprod
@@ -791,7 +790,7 @@ want them to be installed. Here, the <code class="docutils literal notranslate">
 practice and makes it so that your manual page is part of your environment, so when the user
 activates the environment they have access to it.</p>
 <p>Let’s reinstall our package so it includes the command-line entry-point and the manual page.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install . --user --upgrade
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install . --upgrade
 </pre></div>
 </div>
 <p>You can access manual pages with the <code class="docutils literal notranslate"><span class="pre">man</span></code> command.</p>
