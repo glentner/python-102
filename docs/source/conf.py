@@ -25,8 +25,8 @@ project = 'python201'
 copyright = f'2019-{year} Geoffrey Lentner, 2018 Ashwin Srinath'
 author = 'Geoffrey Lentner, Ashwin Srinath'
 
-version = '0.2'
-release = '0.2'
+version = '0.0.1'
+release = '0.0.1'
 
 
 # -- General configuration ---------------------------------------------------
@@ -77,9 +77,14 @@ latex_documents = [
 
 # -- Options for manual page output ------------------------------------------
 
-man_pages = [
-    (master_doc, 'python-201', 'python-201 Documentation',
-     [author], 1)
+# manual pages options
+man_pages = [(
+    'manpage',
+    'cumprod',
+    'Compute cumulative product of a sequence of numbers.',
+    'Geoffrey Lentner <glentner@purdue.edu>.',
+    '1'
+),
 ]
 
 

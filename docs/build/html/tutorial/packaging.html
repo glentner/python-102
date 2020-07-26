@@ -6,7 +6,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Packaging &#8212; python201 0.2 documentation</title>
+    <title>Packaging &#8212; python201 0.0.1 documentation</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
@@ -297,7 +297,7 @@ Hello, world!
 </div>
 <div class="section" id="functions">
 <h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
-<p>The first thing to tackle here is how to make this code re-usable. We’ve hard coded the input
+<p>The first thing to tackle here is how to make this code re-usable. We’ve hard-coded the input
 data, and if we wanted to compute the cumulative product on more than one set of data we would
 need to duplicate those lines of code each time.</p>
 <p>Functions facilitate code reuse. Whenever you see yourself typing the same code twice in the same
@@ -339,7 +339,7 @@ different types of files Python can import from and there is more than one locat
 look for packages.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Before diving into the mechanics of Python packaging it is usefully to talk about terminology.
+<p>Before diving into the mechanics of Python packaging it is helpful to talk about terminology.
 When not accepting input directly via an interactive console, Python needs to find code in a
 file somewhere. In the simplest case we are speaking of a <code class="docutils literal notranslate"><span class="pre">.py</span></code> file. If we execute such a
 file directly (as we did just now) it is referred to as a <cite>script</cite>. If instead we want to
@@ -388,7 +388,7 @@ paths by accessing the <code class="docutils literal notranslate"><span class="p
 </pre></div>
 </div>
 <p>The exact values depend on both how Python was installed and what platform you are using (i.e.,
-Windows, MacOS, Linux, etc.). But there are some common patterns to observer. Your <cite>system</cite>
+Windows, MacOS, Linux, etc.). But there are some common patterns to observe. Your <cite>system</cite>
 libraries will occur first on your path; that’s the <code class="docutils literal notranslate"><span class="pre">.zip</span></code>, top-level library, and
 <code class="docutils literal notranslate"><span class="pre">lib-dynload</span></code> you see (this will be slightly different on Windows). These represent Python
 <cite>itself</cite> and the built-ins. Discussion of these is beyond the scope of this tutorial.</p>
@@ -417,11 +417,11 @@ environment variable before launching a Python session or script.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">export</span> <span class="nv">PYTHONPATH</span><span class="o">=</span>/opt/lab/python/modules:<span class="nv">$PYTHONPATH</span>
 </pre></div>
 </div>
-<p>This isn’t the best solution however because it requires specially knowledge and facilitation
+<p>This isn’t the best solution however because it requires access to a special location (<cite>/opt/lab/python</cite>)
 to make use of the library. If we wanted to be able to use our algorithm in another project
-without having to hard code the location of the installed dependency <cite>in the project</cite>, we
+without having to hard-code the location of the installed dependency <cite>in the project</cite>, we
 should instead make it so our code is <cite>installable</cite> and automatically placed in the
-appropriate location wherever that happens to be.</p>
+appropriate location (wherever that happens to be).</p>
 </div>
 <div class="section" id="organizing-a-python-project">
 <h3>Organizing a Python Project<a class="headerlink" href="#organizing-a-python-project" title="Permalink to this headline">¶</a></h3>
@@ -563,7 +563,7 @@ and <a class="reference external" href="https://gitlab.com">gitlab.com</a> offer
 </div>
 <div class="section" id="license">
 <h3>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h3>
-<p>You should pick a software license the best suites your project. A license specifies the
+<p>You should pick a software license that best suites your project. A license specifies the
 terms of use of the code. <a class="reference external" href="https://choosealicense.com">Choosing a license</a> is beyond the scope
 of this tutorial. Once you’ve decided on an appropriate license, most commonly used licenses
 are recognized by hosting services like <cite>PyPI</cite> and <cite>github.com</cite>.</p>
