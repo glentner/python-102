@@ -202,26 +202,26 @@
             <a href="#use-better-data-formats" class="nav-link">Use Better Data Formats</a>
         </li>
     
-        <li class="nav-item toc-entry toc-h3">
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
             <a href="#coding-practices-and-memory-efficiency" class="nav-link">Coding Practices and Memory Efficiency</a><ul class="nav section-nav flex-column">
                 
-        <li class="nav-item toc-entry toc-h4">
+        <li class="nav-item toc-entry toc-h3">
             <a href="#benchmark-benchmark-benchmark" class="nav-link">Benchmark, benchmark, benchmark!</a>
         </li>
     
-        <li class="nav-item toc-entry toc-h4">
+        <li class="nav-item toc-entry toc-h3">
             <a href="#avoid-explicit-loops" class="nav-link">Avoid explicit loops</a>
         </li>
     
-        <li class="nav-item toc-entry toc-h4">
+        <li class="nav-item toc-entry toc-h3">
             <a href="#avoid-repeatedly-allocating-copying-and-rearranging-data" class="nav-link">Avoid repeatedly allocating, copying and rearranging data</a>
         </li>
     
-        <li class="nav-item toc-entry toc-h4">
+        <li class="nav-item toc-entry toc-h3">
             <a href="#access-data-from-memory-efficiently" class="nav-link">Access data from memory efficiently</a>
-        </li>
-    
-            </ul>
         </li>
     
             </ul>
@@ -270,19 +270,19 @@
                 
   <div class="section" id="performance">
 <span id="id1"></span><h1>Performance<a class="headerlink" href="#performance" title="Permalink to this headline">¶</a></h1>
-<p>Typically it’s better to first get something correct (and tested) before scrutinizing performance
-unnecessarily. As such, we’ve saved the matter of “performance” for last. That said, in
-scientific/research computing, especially in HPC, it is rather common to encounter performance
-bottlenecks.</p>
+<p>A lot has been said about dangers of premature optimization. Typically it is much better to first
+get something correct (and tested) before scrutinizing performance unnecessarily. As such, we’ve
+saved the matter of “performance” for last. That said, in scientific/research computing,
+especially in HPC, it is rather common to encounter performance bottlenecks.</p>
 <p>We’ll go through a natural progression. Here is a high-level summary of the topics:</p>
 <ol class="arabic simple">
 <li><p><strong>Benchmarking</strong> - You cannot establish that you’ve made an improvement if you haven’t
 benchmarked your code. This is the very first thing. You might even consider adding something
-like this to your automated testing. You’re <cite>regression</cite> tests might be timed.</p></li>
+like this to your automated testing. E.g., your <cite>regression</cite> tests might be timed.</p></li>
 <li><p><strong>Profiling</strong> - Identify the bottleneck in your code by investigating how much time is spent on
 what line of the code. You might find that a simple fix gives you tremendous improvements. The
 procedure here is similar to debugging and the best way to proceed is with special tools.</p></li>
-<li><p><strong>Do Not Reinvent the Wheel</strong> - Using existing (possibly compiled) implementations that are
+<li><p><strong>Do Not Reinvent the Wheel</strong> - Use existing (possibly compiled) implementations that are
 faster. Pick a different algorithm that may be more efficient.
 Pick a more efficient storage format when handling data.</p></li>
 <li><p><strong>Compiled Code</strong> - Depending on your code, you might be able to use something like
@@ -529,8 +529,9 @@ tabular data supported by the Pandas library.
 Performance for each is reported
 <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/io.html#performance-considerations">here</a>.</p>
 </div>
+</div>
 <div class="section" id="coding-practices-and-memory-efficiency">
-<h3>Coding Practices and Memory Efficiency<a class="headerlink" href="#coding-practices-and-memory-efficiency" title="Permalink to this headline">¶</a></h3>
+<h2>Coding Practices and Memory Efficiency<a class="headerlink" href="#coding-practices-and-memory-efficiency" title="Permalink to this headline">¶</a></h2>
 <p>For a better illustration, lets consider another example.</p>
 <p>Lets say we want to compute the average <code class="docutils literal notranslate"><span class="pre">hindfooth_length</span></code> for
 all species in <code class="docutils literal notranslate"><span class="pre">plot_id</span></code> 13 in the following dataset:</p>
@@ -549,7 +550,7 @@ all species in <code class="docutils literal notranslate"><span class="pre">plot
 </pre></div>
 </div>
 <div class="section" id="benchmark-benchmark-benchmark">
-<h4>Benchmark, benchmark, benchmark!<a class="headerlink" href="#benchmark-benchmark-benchmark" title="Permalink to this headline">¶</a></h4>
+<h3>Benchmark, benchmark, benchmark!<a class="headerlink" href="#benchmark-benchmark-benchmark" title="Permalink to this headline">¶</a></h3>
 <p>If there are two ways of doing the same thing, <em>benchmark</em> to see which is faster for different
 problem sizes. For example, one way to do this would be to group by the <code class="docutils literal notranslate"><span class="pre">plot_id</span></code>, compute the
 mean hindfoot length for each group, and extract the result for the group with <code class="docutils literal notranslate"><span class="pre">plot_id</span></code> 13:</p>
@@ -574,7 +575,7 @@ computing the mean of the <code class="docutils literal notranslate"><span class
 <p>Why do you think the first method is slower?</p>
 </div>
 <div class="section" id="avoid-explicit-loops">
-<h4>Avoid explicit loops<a class="headerlink" href="#avoid-explicit-loops" title="Permalink to this headline">¶</a></h4>
+<h3>Avoid explicit loops<a class="headerlink" href="#avoid-explicit-loops" title="Permalink to this headline">¶</a></h3>
 <p>Very often, you need to operate on multiple elements of a collection such as a NumPy array or
 Pandas DataFrame.</p>
 <p>In such cases, it is almost always a bad idea to write an explicit <code class="docutils literal notranslate"><span class="pre">for</span></code> loop over the elements.</p>
@@ -599,12 +600,12 @@ considered poor practice, and is very slow. Consider replacing values in a colum
 <code class="docutils literal notranslate"><span class="pre">for</span></code> loop over the elements of an array, DataFrame, or similar data structure.</p>
 </div>
 <div class="section" id="avoid-repeatedly-allocating-copying-and-rearranging-data">
-<h4>Avoid repeatedly allocating, copying and rearranging data<a class="headerlink" href="#avoid-repeatedly-allocating-copying-and-rearranging-data" title="Permalink to this headline">¶</a></h4>
+<h3>Avoid repeatedly allocating, copying and rearranging data<a class="headerlink" href="#avoid-repeatedly-allocating-copying-and-rearranging-data" title="Permalink to this headline">¶</a></h3>
 <p>Repeatedly creating and destroying new data can be very expensive especially if you are working
 with very large arrays or data frames. So avoid, for instance, creating a new array each time
 inside a loop. When operating on NumPy arrays, memory is allocated for intermediate results.
 Packages like <a class="reference external" href="https://github.com/pydata/numexpr">numexpr</a> aim to help with this.</p>
-<p>Understand when data needs to be copied v/s when data can be operated “in-place”. It also helps to
+<p>Understand when data needs to be copied vs. when data can be operated “in-place”. It also helps to
 know <em>when</em> copies are made. For example, do you think the following code results in two copies of
 the same array?</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -616,13 +617,13 @@ the same array?</p>
 <p><a class="reference external" href="https://nedbatchelder.com/text/names.html">This article</a>
 clears up a lot of confusion
 about how names and values work in Python
-and when copies are made v/s when they are not.</p>
+and when copies are made vs. when they are not.</p>
 </div>
 <div class="section" id="access-data-from-memory-efficiently">
-<h4>Access data from memory efficiently<a class="headerlink" href="#access-data-from-memory-efficiently" title="Permalink to this headline">¶</a></h4>
+<h3>Access data from memory efficiently<a class="headerlink" href="#access-data-from-memory-efficiently" title="Permalink to this headline">¶</a></h3>
 <p>Accessing data in the “wrong order”: it is always more efficient to access values that are “closer
 together” in memory than values that are farther apart. For example, looping over the elements
-along the rows of a 2-d NumPy array is <em>much</em> more efficient than looping over the elements along
+along the rows of a 2D NumPy array is <em>much</em> more efficient than looping over the elements along
 its columns. Similarly, looping over the columns of a DataFrame in Pandas will be faster than
 looping over its rows.</p>
 <ul class="simple">
@@ -631,7 +632,6 @@ if you only need to compute on a subset of your data,
 filter <em>before</em> doing the computation
 rather than after.</p></li>
 </ul>
-</div>
 </div>
 </div>
 <div class="section" id="compiled-code">
@@ -694,7 +694,7 @@ Consider applications like
 <a class="reference external" href="https://www.gnu.org/software/parallel/">GNU Parallel</a> or
 <a class="reference external" href="https://hyper-shell.readthedocs.io">hyper-shell</a> to scale out your workflow. Alternatively,
 if your tasks are large enough and you have access to a high-performance computing (HPC)
-cluster, use the available scheduler to your advantage and simple schedule all the tasks!</p>
+cluster, use the available scheduler to your advantage and simply schedule all the tasks!</p>
 <p>We won’t cover the entirety of parallelism here. Below is a list of references you
 might consider for parallel and distributed computing in Python.</p>
 <ul class="simple">
@@ -721,7 +721,7 @@ is useful when you have several independent tasks that can all be done concurren
 <p>Sometimes the bottleneck is a hybrid between performance and memory. Many data analysis tasks
 require a computation against a large-ish dataset. The challenge is that there are many
 “embarrassingly parallel” tasks to compute against the same data, but there isn’t enough memory on
-the system for every worker to have their own copy, and it’s a non-started to have the data
+the system for every worker to have their own copy, and it’s a non-starter to have the data
 serialized and de-serialized continuously between the workers.</p>
 <p>What to do then?</p>
 <p>In Python, for a long time this was a tall mountain to summit, getting into some fairly advanced
@@ -733,7 +733,7 @@ can easily <cite>put</cite> and <cite>get</cite> data structures (e.g., a <code 
 and from the in-memory store. Another program that <cite>gets</cite> the data only ever gets a reference.
 Using one of the above parallelism frameworks, create a pool of workers that all map to the shared
 data structure and operate on it as if they each had their own copy.</p>
-<p><a class="reference download internal" download="" href="../_downloads/0de07e300e390418e3e316f22d909b37/htc_with_plasma.pdf"><code class="xref download docutils literal notranslate"><span class="pre">See</span> <span class="pre">here</span></code></a>.</p>
+<p>Discussion of such an approach can be be found <a class="reference download internal" download="" href="../_downloads/0de07e300e390418e3e316f22d909b37/htc_with_plasma.pdf"><code class="xref download docutils literal notranslate"><span class="pre">here</span></code></a>.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
