@@ -54,7 +54,7 @@ Logging Level
 
 As stated, one of the core features of logging is that you should be able to control which
 messages are printed as a matter of category. These categories are usually a reference to the
-level of severity of the message. There is always a numeric value and a name for a 
+level of severity of the message. There is always a numeric value and a name for a
 `logging level <https://docs.python.org/3/howto/logging.html>`_.
 
 Conventionally you have a subset or a superset of the following levels.
@@ -218,8 +218,8 @@ Module Level Logging
 Let's update our code to include logging. When you are developing a Python package, you don't want
 to duplicate code in each module. Instead, let's create some generic code in a `logging` module.
 We could just add it right alongside our existing module, but it might be a good idea to create a
-distinct `core` sub-package for generic code that is separate from our main business-logic. That way, we can
-add things later (like configuration file handling) and not clutter our top-level API.
+distinct `core` sub-package for generic code that is separate from our main business-logic. That
+way, we can add things later (like configuration file handling) and not clutter our top-level API.
 
 .. code-block:: none
     :emphasize-lines: 16,17,18
