@@ -27,7 +27,7 @@ def cumulative_product(array: List[float]) -> List[float]:
     return result
 
 
-def main(argv: List[str] = None) -> int:
+def main() -> int:
     """Command line entry-point for `cumulative_product`."""
 
     # command line interface
@@ -45,7 +45,7 @@ def main(argv: List[str] = None) -> int:
 
     parser.add_argument('-d', '--debug', action='store_true',
                         help='show debugging messages')
-    cmdline = parser.parse_args(argv)
+    cmdline = parser.parse_args()
 
     if cmdline.debug:
         log.setLevel(DEBUG)
