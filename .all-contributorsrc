@@ -28,6 +28,16 @@
         "content",
         "code"
       ]
+    },
+    {
+      "login": "lgorenstein",
+      "name": "Lev Gorenstein",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/29085518?v=4",
+      "profile": "https://github.com/lgorenstein",
+      "contributions": [
+        "content",
+        "review"
+      ]
     }
   ],
   "contributorsPerLine": 7,
