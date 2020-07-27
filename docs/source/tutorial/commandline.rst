@@ -6,7 +6,7 @@ Command-line Interfaces
 In addition to including routines in a package that yourself and others can import within other
 projects, typically it is a good idea to expose those elements that can stand alone as a command
 line utility (e.g., a high level function whose parameters might map in a straightforward way to
-command-line arguments). Structuring your project so that it can manifest as both a library and a
+command-line arguments). Often such command-line functionality may even be the primary driving force behind initial development of a program (*"I need a script that does X"*), and only later it may evolve into *"I need to incorporate capability X into a higher-level process"*.  Structuring your project so that it can manifest as both a library and a
 command-line tool lets others not only execute that routine easily and repeatedly, but also allows
 for that routine to be integrated into other workflows.
 
@@ -182,7 +182,7 @@ Generally, the following few elements are universal.
 * The usage statement begins with the word "usage", ``usage: program ...``.
 * The usage statement is listed on a single line if possible, with a one sentence description.
 * Options are wrapped in square brackets, e.g., ``[-abc]`` or ``[-o PATH]``.
-* Positional arguments are named with either angle brackets or in all capitol letters,
+* Positional arguments are named with either angle brackets or in all capital letters,
   e.g., ``<file>`` or ``FILE``.
 * The help text includes the usage statement at the top.
 * Positional arguments are listed before optional arguments.
@@ -245,9 +245,10 @@ Switches meant to be true/false are enabled with the ``action`` parameter.
     Out[7]: _StoreTrueAction(option_strings=['-l', '--last-only'], dest='last_only', nargs=0,
     const=True, default=False, type=None, choices=None, help='only keep the last value', metavar=None)
 
-When you've finished adding all of your options, you can actually `parse` a set
-of inputs by calling the ``parse_args`` method with a list of strings. By default, if nothing
-is given, it will check ``sys.argv`` to get the "real" arguments to your program.
+When you've finished adding all of your acceptable options, you can actually `parse` a set
+of inputs by calling the ``parse_args`` method with a list of strings. Be default, if nothing
+is given it will check ``sys.argv`` to get the "real" arguments to your program.
+
 
 .. code-block:: ipython
 
@@ -354,8 +355,9 @@ a virtual environment on Linux, so I'll have something like the following.
     generate a batch file, ``.bat``, the suffix of which need not be given at the CMD prompt.
 
 Now, there are many ways that you might organize or layout your interface in Python within your
-package. There are a few patterns that have become common place these days. This tutorial is not
-focused on code style though. Here is what that entry-point might look like in the simplest case.
+package. There are a few patterns that have become commonplace these days. This tutorial is not
+focussed on code style though. Here is what that entry-point might look like in the simplest case.
+
 
 .. code-block:: python
     :caption: python201/algorithms.py
@@ -493,14 +495,14 @@ Extras
 Manual Pages
 ^^^^^^^^^^^^
 
-In addition to having a usage and help statement printable from the command-line, if your tool has
+In addition to having a usage and help statement printable from the command line, if your tool has
 a lot of features, it might be a good idea to also include a manual page (or `manpage` for short).
 This is in fact particular to Unix-like platforms, but typically in research computing this is the
 case anyways.
 
 Manual pages are provided by files stored in directories on your ``MANPATH``. The ``man`` command
 looks for these files and parses their special syntax to present nicely formatted page-able output
-at the command-line. Writing one of these files can be a challenge because of this particular
+at the command line. Writing one of these files can be a challenge because of this particular
 syntax.
 
 Fortunately, Sphinx makes creating manual pages for your project much easier! We can create
