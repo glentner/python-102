@@ -191,7 +191,7 @@ We can change the level if we like to allow lower level message to come through.
     2020-07-26 15:41:33,491 INFO [__main__] hello
 
 There's a way to have the logging library add an attribute so you can include the hostname in the
-message as named field, like ``%(hostname)s``. This is a bit cumbersome and makes things more
+message as a named field, like ``%(hostname)s``. This is a bit cumbersome and makes things more
 complicated than we'd like at this point. An easy hack though is to literally just code it in.
 
 .. code-block:: ipython
@@ -271,9 +271,12 @@ Our ``logging`` module might look something like this.
         Parameters:
             name (str): name for the logger
             level (str): logging level (default='warning')
+
         Returns:
+            logger (`logging.getLogger`): the created logger instance
+
         See Also:
-        Example:
+            `logging.getLogger`
         """
         log = logging.getLogger(name)
         log.addHandler(handler)
