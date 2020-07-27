@@ -67,6 +67,7 @@ A *comment* in Python is any line that begins with a ``#``:
    # a comment.
 
 .. note::
+
     The purpose of a docstring is to document a module, function, class, or method.
     The purpose of a comment is to explain a very difficult piece of code,
     or to justify a choice that was made while writing it.

@@ -355,9 +355,9 @@ a virtual environment on Linux, so I'll have something like the following.
 
     The contents of this script will be slightly different for you depending on what platform you
     are on and what (version of) Python you invoked Pip with. On Windows, this will actually
-    generate a batch file, ``.bat``, the suffix of which need not be given at the CMD prompt.
-    But most importantly, `you` don't have to remember or code any of this complex logic,
-    as ``pip`` and ``setup.py`` will automatically generate it for you.
+    generate a batch file, ``.bat``, the suffix of which need not be given at the CMD prompt. But
+    most importantly, `you` don't have to remember or code any of this complex logic, as ``pip``
+    and ``setup.py`` will automatically generate it for you.
 
 Now, there are many ways that you might organize or lay out your interface in Python within your
 package. There are a few patterns that have become commonplace these days. This tutorial is not

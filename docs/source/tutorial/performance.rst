@@ -3,17 +3,16 @@
 Performance
 ===========
 
-A lot has been said about dangers of premature optimization.
-Typically it is much better to first get something correct (and tested) before scrutinizing performance
-unnecessarily. As such, we've saved the matter of "performance" for last. That said, in
-scientific/research computing, especially in HPC, it is rather common to encounter performance
-bottlenecks.
+A lot has been said about dangers of premature optimization. Typically it is much better to first
+get something correct (and tested) before scrutinizing performance unnecessarily. As such, we've
+saved the matter of "performance" for last. That said, in scientific/research computing,
+especially in HPC, it is rather common to encounter performance bottlenecks.
 
 We'll go through a natural progression. Here is a high-level summary of the topics:
 
 1. **Benchmarking** - You cannot establish that you've made an improvement if you haven't
    benchmarked your code. This is the very first thing. You might even consider adding something
-   like this to your automated testing. E.g. your `regression` tests might be timed.
+   like this to your automated testing. E.g., your `regression` tests might be timed.
 2. **Profiling** - Identify the bottleneck in your code by investigating how much time is spent on
    what line of the code. You might find that a simple fix gives you tremendous improvements. The
    procedure here is similar to debugging and the best way to proceed is with special tools.
@@ -296,8 +295,9 @@ tabular data supported by the Pandas library.
 Performance for each is reported
 `here <https://pandas.pydata.org/pandas-docs/stable/io.html#performance-considerations>`_.
 
+
 Coding Practices and Memory Efficiency
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+--------------------------------------
 
 For a better illustration, lets consider another example.
 
@@ -320,7 +320,7 @@ all species in ``plot_id`` 13 in the following dataset:
     4        3         DM             35.0
 
 Benchmark, benchmark, benchmark!
-++++++++++++++++++++++++++++++++
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 If there are two ways of doing the same thing, *benchmark* to see which is faster for different
 problem sizes. For example, one way to do this would be to group by the ``plot_id``, compute the
@@ -351,8 +351,9 @@ Both methods give identical results, but the difference in performance is signif
 
 Why do you think the first method is slower?
 
+
 Avoid explicit loops
-++++++++++++++++++++
+^^^^^^^^^^^^^^^^^^^^
 
 Very often, you need to operate on multiple elements of a collection such as a NumPy array or
 Pandas DataFrame.
@@ -384,8 +385,9 @@ In addition to being faster, this also leads to more readable code.
 Of course, loops are unavoidable in many situations; but look for alternatives before you write a
 ``for`` loop over the elements of an array, DataFrame, or similar data structure.
 
+
 Avoid repeatedly allocating, copying and rearranging data
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Repeatedly creating and destroying new data can be very expensive especially if you are working
 with very large arrays or data frames. So avoid, for instance, creating a new array each time
@@ -409,7 +411,7 @@ about how names and values work in Python
 and when copies are made vs. when they are not.
 
 Access data from memory efficiently
-+++++++++++++++++++++++++++++++++++
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Accessing data in the "wrong order": it is always more efficient to access values that are "closer
 together" in memory than values that are farther apart. For example, looping over the elements
@@ -421,6 +423,7 @@ looping over its rows.
   if you only need to compute on a subset of your data,
   filter *before* doing the computation
   rather than after.
+
 
 Compiled Code
 -------------
@@ -493,7 +496,7 @@ Consider applications like
 `GNU Parallel <https://www.gnu.org/software/parallel/>`_ or
 `hyper-shell <https://hyper-shell.readthedocs.io>`_ to scale out your workflow. Alternatively,
 if your tasks are large enough and you have access to a high-performance computing (HPC)
-cluster, use the available scheduler to your advantage and simple schedule all the tasks!
+cluster, use the available scheduler to your advantage and simply schedule all the tasks!
 
 We won't cover the entirety of parallelism here. Below is a list of references you
 might consider for parallel and distributed computing in Python.
@@ -543,7 +546,7 @@ and from the in-memory store. Another program that `gets` the data only ever get
 Using one of the above parallelism frameworks, create a pool of workers that all map to the shared
 data structure and operate on it as if they each had their own copy.
 
-An example of such approach can be be found :download:`here <../_static/htc_with_plasma.pdf>`.
+Discussion of such an approach can be be found :download:`here <../_static/htc_with_plasma.pdf>`.
 
 
 |

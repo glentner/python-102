@@ -118,12 +118,12 @@ standard command-line tools.
 You should include a **topic** in your message so that you can associate it with some part of your
 library. It's not always the case, but often this is done by tagging all your messages by which
 module and/or function it came from. This can be done manually in the messages themselves, or
-automatically by the logging framework you are using. This can be very helpful in tracking down messages
-pertaining to a particular part of your code.
+automatically by the logging framework you are using. This can be very helpful in tracking down
+messages pertaining to a particular part of your code.
 
-You might want to include the **hostname** of the machine you are running on. This is not as common
-as other attributes, but in scientific computing the chances are high that you are running your
-workflow on many machines that are not your laptop. It might be useful to know what machine a
+You might want to include the **hostname** of the machine you are running on. This is not as
+common as other attributes, but in scientific computing the chances are high that you are running
+your workflow on many machines that are not your laptop. It might be useful to know what machine a
 particular task ran on when analyzing your logs. This is easy to include automatically in most
 logging frameworks.
 
