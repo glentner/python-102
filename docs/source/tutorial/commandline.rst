@@ -6,9 +6,12 @@ Command-line Interfaces
 In addition to including routines in a package that yourself and others can import within other
 projects, typically it is a good idea to expose those elements that can stand alone as a command
 line utility (e.g., a high level function whose parameters might map in a straightforward way to
-command-line arguments). Often such command-line functionality may even be the primary driving force behind initial development of a program (*"I need a script that does X"*), and only later it may evolve into *"I need to incorporate capability X into a higher-level process"*.  Structuring your project so that it can manifest as both a library and a
-command-line tool lets others not only execute that routine easily and repeatedly, but also allows
-for that routine to be integrated into other workflows.
+command-line arguments). Often such command-line functionality may even be the primary driving
+force behind initial development of a project (*"I need a script that does X"*), and only later it
+may evolve into *"I need to incorporate capability X into another project"*. Structuring
+your project so that it can manifest as both a library and a command-line tool lets others not
+only execute that routine easily and repeatedly, but also allows for that routine to be integrated
+into other workflows.
 
 
 Conventions
@@ -664,7 +667,7 @@ You can access manual pages with the ``man`` command.
 
     $ man cumprod
 
-::
+.. code-block:: man
 
     CUMPROD(1)                          python201                          CUMPROD(1)
 

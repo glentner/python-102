@@ -379,8 +379,8 @@ We can add annotations to our code as follows.
 
     From `PEP 484 <https://www.python.org/dev/peps/pep-0484/#id27>`_:
 
-    *Rather than requiring that users write ``import numbers`` and then use ``numbers.Float`` etc.,
+    "Rather than requiring that users write ``import numbers`` and then use ``numbers.Float`` etc.,
     this PEP proposes a straightforward shortcut that is almost as effective: when an argument is
-    annotated as having type ``float``, an argument of type ``int`` is acceptable...*
+    annotated as having type ``float``, an argument of type ``int`` is acceptable..."
 
 |

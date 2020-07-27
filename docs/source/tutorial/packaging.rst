@@ -353,15 +353,36 @@ without needing to re-install it every time.
 
     $ pip install -e . --user
 
-As a side note, using pip's ``--user`` functionality might have some unexpected
-consequences and could cause package conflicts at some point later in the
-future (e.g. in the HPC environments with centrally-maintained JupyterHub
-instances, your ``module load``-ed Python interpreter may be different from the
-JupyterHub one, thus possibly causing Jupyter sessions to choke).  For this
-reason, we generally recommend against ``--user`` and suggest using some sort
-of Python virtual environment (Anaconda, Venv, Pipenv, etc.) for each of your
-projects.  This way inside each virtual environment you would be doing a
-"plain" ``pip install`` rather than a ``pip install --user``.
+|
+
+.. warning::
+
+    As a side note, using pip's ``--user`` functionality might have some unexpected consequences
+    and could cause package conflicts at some point later in the future. As discussed previously,
+    your `user` site-packages always come first on your ``sys.path``. So long as you are using
+    the same Python version (e.g., 3.6), those packages will be preferred.
+
+    * First, if you're using
+      some kind of virtual environment, it `may` pick up packages that you didn't intend that
+      conflict with other libraries you're using.
+    * Second, other applications that `happen` to be running against `that` particular version of
+      Python may pick up those packages and there could be a conflict. A common example from a
+      shared HPC system: the centrally-maintained `JupyterHub` instance could be running the same
+      version of Python as your environment. If you install a web-based plotting library that pulls
+      down ``tornado`` as a dependency, now `all` of your kernels are "broken" in `JupyterHub`.
+
+    For this tutorial, if you're using Anaconda or a vanilla virtualenv, we recommend you use
+
+    ::
+
+        pip install -e .
+
+    `while you have the environment activated`. If you're using Pipenv, you
+    can add your package to your managed virtualenv with
+
+    ::
+
+        pipenv install -e .
 
 
 Extras
@@ -491,5 +512,27 @@ You can validate, register, and upload your package to the Python package index 
 supported way of doing so. It's perfectly accepted to `not` host your package via `PyPI`, and
 instead merely instruct users how to install directly via GitHub, for example.
 
+In the most basic scenario, assuming your project is `pure`-python, you would want to build both
+the a "binary distribution `wheel`" and a "source distribution" using your ``setup.py`` script.
+
+.. code-block:: none
+
+    $ python setup.py bdist_wheel sdist
+
+This creates distribution files that you can upload to PyPI. All necessary information should
+be contained within the ``setup.py`` file you used to "build" the distribution assets.
+Upload them with ``twine``.
+
+.. code-block:: none
+
+    $ twine upload dist/*
+
+.. warning::
+
+    Be sure to checkout the documentation for doing this before attempting. You'll want to
+    validate your assets `before` you push them to PyPI. There is a "test" server you can push to
+    that is more-or-less a black hole for testing purposes. It will let you check that everything
+    is setup properly before `actually` pushing to the world.
 
 |
+
