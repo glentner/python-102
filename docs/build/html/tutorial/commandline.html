@@ -514,10 +514,11 @@ a virtual environment on Linux, so I’ll have something like the following.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The contents of this script will be slightly different for you depending on what platform you
-are on and what (version of) Python you invoked Pip with. On Windows, this will actually
-generate a batch file, <code class="docutils literal notranslate"><span class="pre">.bat</span></code>, the suffix of which need not be given at the CMD prompt. But
-most importantly, <cite>you</cite> don’t have to remember or code any of this complex logic, as <code class="docutils literal notranslate"><span class="pre">pip</span></code>
-and <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> will automatically generate it for you.</p>
+are on and what (version of) Python you invoked Pip with. On Windows, some combination of an
+<code class="docutils literal notranslate"><span class="pre">.exe</span></code>, <code class="docutils literal notranslate"><span class="pre">.bat</span></code>, and/or <code class="docutils literal notranslate"><span class="pre">-script.py</span></code> will be auto-generated.</p>
+<p>Remember though, <cite>you</cite> don’t have to code any of this complex logic, as <code class="docutils literal notranslate"><span class="pre">pip</span></code> and
+<code class="docutils literal notranslate"><span class="pre">setup.py</span></code> will automatically generate the appropriate files. One way or another, you (or
+the user) will be able to use the name <code class="docutils literal notranslate"><span class="pre">cumprod</span></code> at the command-line.</p>
 </div>
 <p>Now, there are many ways that you might organize or lay out your interface in Python within your
 package. There are a few patterns that have become commonplace these days. This tutorial is not
@@ -564,7 +565,7 @@ focused on code style though. Here is what that entry-point might look like in t
                         <span class="n">help</span><span class="o">=</span><span class="s1">&#39;output file path (default &lt;stdout&gt;)&#39;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-l&#39;</span><span class="p">,</span> <span class="s1">&#39;--last-only&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
                         <span class="n">help</span><span class="o">=</span><span class="s1">&#39;only keep the last value&#39;</span><span class="p">)</span>
-    <span class="n">cmdline</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">argv</span><span class="p">)</span>
+    <span class="n">cmdline</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
 
     <span class="n">values</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">cmdline</span><span class="o">.</span><span class="n">infile</span><span class="p">)</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">cumulative_product</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>

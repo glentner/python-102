@@ -354,10 +354,12 @@ a virtual environment on Linux, so I'll have something like the following.
 .. note::
 
     The contents of this script will be slightly different for you depending on what platform you
-    are on and what (version of) Python you invoked Pip with. On Windows, this will actually
-    generate a batch file, ``.bat``, the suffix of which need not be given at the CMD prompt. But
-    most importantly, `you` don't have to remember or code any of this complex logic, as ``pip``
-    and ``setup.py`` will automatically generate it for you.
+    are on and what (version of) Python you invoked Pip with. On Windows, some combination of an
+    ``.exe``, ``.bat``, and/or ``-script.py`` will be auto-generated.
+
+    Remember though, `you` don't have to code any of this complex logic, as ``pip`` and
+    ``setup.py`` will automatically generate the appropriate files. One way or another, you (or
+    the user) will be able to use the name ``cumprod`` at the command-line.
 
 Now, there are many ways that you might organize or lay out your interface in Python within your
 package. There are a few patterns that have become commonplace these days. This tutorial is not
@@ -407,7 +409,7 @@ focused on code style though. Here is what that entry-point might look like in t
                             help='output file path (default <stdout>)')
         parser.add_argument('-l', '--last-only', action='store_true',
                             help='only keep the last value')
-        cmdline = parser.parse_args(argv)
+        cmdline = parser.parse_args()
 
         values = map(float, cmdline.infile)
         result = cumulative_product(list(values))
