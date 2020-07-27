@@ -409,7 +409,7 @@ focused on code style though. Here is what that entry-point might look like in t
                             help='output file path (default <stdout>)')
         parser.add_argument('-l', '--last-only', action='store_true',
                             help='only keep the last value')
-        cmdline = parser.parse_args(argv)
+        cmdline = parser.parse_args()
 
         values = map(float, cmdline.infile)
         result = cumulative_product(list(values))
