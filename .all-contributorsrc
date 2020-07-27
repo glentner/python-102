@@ -38,6 +38,16 @@
         "content",
         "review"
       ]
+    },
+    {
+      "login": "amaji",
+      "name": "Amiya Maji",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/2965454?v=4",
+      "profile": "https://orcid.org/0000-0002-6242-6184",
+      "contributions": [
+        "content",
+        "review"
+      ]
     }
   ],
   "contributorsPerLine": 7,
