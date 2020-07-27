@@ -135,7 +135,7 @@ Here we've followed a particular style guide; Sphinx uses `Google's documentatio
 <https://www.sphinx-doc.org/en/master/usage/extensions/example_google.html>`_ by default to parse
 your docstrings, more on this later! NumPy's `documentation guidelines
 <https://numpydoc.readthedocs.io/en/latest/>`_ are also a great reference for more information
-about what and how to document your code. There are other style guides you might prefer.
+about what and how to document in your code. There are other style guides you might prefer.
 
 
 Doctests
@@ -313,7 +313,7 @@ and follow some simple setup procedures. Not only will it host your Sphinx docum
 Type Annotations
 ^^^^^^^^^^^^^^^^
 
-A relatively new concept in Python,
+A relatively new concept in Python (3.5+),
 `type annotations <https://docs.python.org/3/library/typing.html>`_ are a powerful new feature that
 let you be more precise about your intentions with code. Many of the tools we rely on to develop
 code have support for using type annotations to help you catch bugs before you even get
@@ -379,8 +379,8 @@ We can add annotations to our code as follows.
 
     From `PEP 484 <https://www.python.org/dev/peps/pep-0484/#id27>`_:
 
-    *Rather than requiring that users write import numbers and then use numbers.Float etc.,
+    *Rather than requiring that users write ``import numbers`` and then use ``numbers.Float`` etc.,
     this PEP proposes a straightforward shortcut that is almost as effective: when an argument is
-    annotated as having type float, an argument of type int is acceptable...*
+    annotated as having type ``float``, an argument of type ``int`` is acceptable...*
 
 |

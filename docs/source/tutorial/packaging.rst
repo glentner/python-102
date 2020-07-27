@@ -113,7 +113,7 @@ A good function:
     print(cumulative_product([3, 4, 6, 9]))
     print(cumulative_product([1, 8, 2, 7]))
 
-Now we can do more work without duplicating those lines of code. But we're still hard coding the
+Now we can do more work without duplicating those lines of code. But we're still hard-coding the
 input data. We'll explore making this function better in the next section when we discuss
 :ref:`testing <testing>`. For now, let's focus on making this code available as part of an
 installable package.
@@ -352,6 +352,16 @@ without needing to re-install it every time.
 .. code-block:: none
 
     $ pip install -e . --user
+
+As a side note, using pip's ``--user`` functionality might have some unexpected
+consequences and could cause package conflicts at some point later in the
+future (e.g. in the HPC environments with centrally-maintained JupyterHub
+instances, your ``module load``-ed Python interpreter may be different from the
+JupyterHub one, thus possibly causing Jupyter sessions to choke).  For this
+reason, we generally recommend against ``--user`` and suggest using some sort
+of Python virtual environment (Anaconda, Venv, Pipenv, etc.) for each of your
+projects.  This way inside each virtual environment you would be doing a
+"plain" ``pip install`` rather than a ``pip install --user``.
 
 
 Extras
