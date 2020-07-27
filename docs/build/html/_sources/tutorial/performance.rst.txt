@@ -185,7 +185,7 @@ do something really silly to our code, like add a useless memory accumulator.
 .. warning::
 
     Be careful if you do something like this, you might accidentally run your machine
-    our of memory and freeze your session. And do not forget to remove these lines when
+    out of memory and freeze your session. And do not forget to remove these lines when
     you're done!
 
 |
