@@ -194,7 +194,7 @@ Documentation-Driven Development
 --------------------------------
 
 In a similar manner in which `Test-driven Development` (TDD) forces you to think clearly about how
-the feature you intend to develop should behave, so to does `Documentation-driven Development`
+the feature you intend to develop should behave, so too does `Documentation-driven Development`
 (DDD).
 
 The idea is as follows, you must first be able to describe what the thing does before you can
@@ -206,7 +206,7 @@ implementation.
 .. note::
 
     We have of course gone in precisely the wrong order in this tutorial, but its a
-    tutorial so we'll make an exception for the our sake.
+    tutorial so we'll make an exception for our sake.
 
 
 Extras
@@ -288,7 +288,7 @@ into a fully functioning website!
 
     This kind of special functionality and other features like it are often provided as a builtin
     or third party `extension`, in this case we are using the builtin ``sphinx.ext.autodoc``
-    extension. You can simple add these to the list of extensions activated in your ``conf.py``.
+    extension. You can simply add these to the list of extensions activated in your ``conf.py``.
 
 
 Hosting
@@ -330,8 +330,8 @@ Here we're saying that ``name`` should be type ``str`` and that ``greeting`` als
 ``str``. The topic of type annotations can unveil some deep philosophical questions about how to
 write Python code, or even what it means for code to be `Pythonic`. We won't crack that `egg` (pun
 intended) open here, but type annotations are an officially supported part of the language and
-with tooling like we'll point out next, it let's you take the weight of type checking off of
-run-time code and leave it to `development`-time(?) code.
+with tooling like we'll point out next, it lets you perform type checking at `development`-time instead of
+at `run`-time.
 
 The `mypy <http://mypy-lang.org>`_ project provides static type checking to your project using these
 type annotations. Editors like `PyCharm` will alert you if you use a method in a way that doesn't
