@@ -54,11 +54,12 @@ Logging Level
 
 As stated, one of the core features of logging is that you should be able to control which
 messages are printed as a matter of category. These categories are usually a reference to the
-level of severity of the message. There is always a numeric value and a name for a logging level.
+level of severity of the message. There is always a numeric value and a name for a 
+`logging level <https://docs.python.org/3/howto/logging.html>`_.
 
 Conventionally you have a subset or a superset of the following levels.
 
-1. **DEBUG**    - Supplemental messages typically only used when something is wrong.
+1. **DEBUG**    - Detailed information typically used when diagnosing problems.
 2. **INFO**     - General purposes messages for tracking progress.
 3. **WARNING**  - Something unexpected has occurred and may be important.
 4. **ERROR**    - A problem has occurred and a task cannot be completed.
@@ -137,7 +138,7 @@ Overview
 ^^^^^^^^
 
 The `logging <https://docs.python.org/3/library/logging.html>`_ module is quite comprehensive and
-allows the user to heavily customize many parts of the behavior. It is pretty strait forward to
+allows the user to heavily customize many parts of the behavior. It is pretty straightforward to
 implement your own logging functionality; unless you’re doing something special why not use the
 standard library?
 
