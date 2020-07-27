@@ -250,10 +250,11 @@ things you should consider.</p>
 <h3>Logging Level<a class="headerlink" href="#logging-level" title="Permalink to this headline">¶</a></h3>
 <p>As stated, one of the core features of logging is that you should be able to control which
 messages are printed as a matter of category. These categories are usually a reference to the
-level of severity of the message. There is always a numeric value and a name for a logging level.</p>
+level of severity of the message. There is always a numeric value and a name for a
+<a class="reference external" href="https://docs.python.org/3/howto/logging.html">logging level</a>.</p>
 <p>Conventionally you have a subset or a superset of the following levels.</p>
 <ol class="arabic simple">
-<li><p><strong>DEBUG</strong>    - Supplemental messages typically only used when something is wrong.</p></li>
+<li><p><strong>DEBUG</strong>    - Detailed information typically used when diagnosing problems.</p></li>
 <li><p><strong>INFO</strong>     - General purposes messages for tracking progress.</p></li>
 <li><p><strong>WARNING</strong>  - Something unexpected has occurred and may be important.</p></li>
 <li><p><strong>ERROR</strong>    - A problem has occurred and a task cannot be completed.</p></li>
@@ -319,7 +320,7 @@ Python has you covered with a module from the standard library.</p>
 <div class="section" id="overview">
 <h3>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h3>
 <p>The <a class="reference external" href="https://docs.python.org/3/library/logging.html">logging</a> module is quite comprehensive and
-allows the user to heavily customize many parts of the behavior. It is pretty strait forward to
+allows the user to heavily customize many parts of the behavior. It is pretty straightforward to
 implement your own logging functionality; unless you’re doing something special why not use the
 standard library?</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [1]: </span><span class="kn">import</span> <span class="nn">logging</span>
@@ -364,7 +365,7 @@ stderr and add it to our logger.</p>
 <span class="go">2020-07-26 15:41:33,491 INFO [__main__] hello</span>
 </pre></div>
 </div>
-<p>There’s a way to have the logging library add an attribute so you can include the hostname in the
+<p>There is a way to have the logging library add an attribute so you can include the hostname in the
 message as a named field, like <code class="docutils literal notranslate"><span class="pre">%(hostname)s</span></code>. This is a bit cumbersome and makes things more
 complicated than we’d like at this point. An easy hack though is to literally just code it in.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [14]: </span><span class="kn">import</span> <span class="nn">socket</span>
@@ -385,11 +386,11 @@ complicated than we’d like at this point. An easy hack though is to literally 
 </div>
 <div class="section" id="module-level-logging">
 <h3>Module Level Logging<a class="headerlink" href="#module-level-logging" title="Permalink to this headline">¶</a></h3>
-<p>Let’s update our code to include logging. When you’re developing a Python package, you don’t want
+<p>Let’s update our code to include logging. When you are developing a Python package, you don’t want
 to duplicate code in each module. Instead, let’s create some generic code in a <cite>logging</cite> module.
-We could just add it right along side our existing module, but it might be a good idea to create a
-distinct <cite>core</cite> sub-package for generic code separate from our business-logic. That way, we can
-add things later (like configuration file handling) and not clutter our top-level API.</p>
+We could just add it right alongside our existing module, but it might be a good idea to create a
+distinct <cite>core</cite> sub-package for generic code that is separate from our main business-logic. That
+way, we can add things later (like configuration file handling) and not clutter our top-level API.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ tree .
 .
 ├── docs/
@@ -416,8 +417,8 @@ add things later (like configuration file handling) and not clutter our top-leve
 The <code class="docutils literal notranslate"><span class="pre">find_packages</span></code> function we used in our <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> will automatically pick this up so
 we don’t need to worry about modifying any code there.</p>
 <p>Our <code class="docutils literal notranslate"><span class="pre">logging</span></code> module might look something like this.</p>
-<div class="literal-block-wrapper docutils container" id="id2">
-<div class="code-block-caption"><span class="caption-text">python201/core/logging.py</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">python201/core/logging.py</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">logging</span> <span class="kn">import</span> <span class="n">DEBUG</span><span class="p">,</span> <span class="n">INFO</span><span class="p">,</span> <span class="n">WARNING</span><span class="p">,</span> <span class="n">ERROR</span><span class="p">,</span> <span class="n">CRITICAL</span>
 <span class="kn">from</span> <span class="nn">socket</span> <span class="kn">import</span> <span class="n">gethostname</span>
@@ -454,8 +455,8 @@ we don’t need to worry about modifying any code there.</p>
 to create a new logger with a distinct name. So we’ve created a new function with the same name
 as the underlying logging library to let us automatically add the handler.</p>
 <p>Now let’s modify the <code class="docutils literal notranslate"><span class="pre">algorithms</span></code> module to make use of our logging module.</p>
-<div class="literal-block-wrapper docutils container" id="id3">
-<div class="code-block-caption"><span class="caption-text">python201/algorithms.py</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">python201/algorithms.py</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
 <span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">ArgumentParser</span><span class="p">,</span> <span class="n">FileType</span>

@@ -160,7 +160,17 @@
     <ul class="nav section-nav flex-column">
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#starting-point" class="nav-link">Starting Point</a>
+            <a href="#benchmarking" class="nav-link">Benchmarking</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#timing-your-code" class="nav-link">Timing Your Code</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#interactive-benchmarking-with-ipython" class="nav-link">Interactive Benchmarking with IPython</a>
+        </li>
+    
+            </ul>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
@@ -178,19 +188,71 @@
         </li>
     
         <li class="nav-item toc-entry toc-h2">
+            <a href="#do-not-reinvent-the-wheel" class="nav-link">Do Not Reinvent the Wheel</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
             <a href="#use-existing-libraries" class="nav-link">Use Existing Libraries</a>
         </li>
     
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#use-better-algorithms" class="nav-link">Use Better Algorithms</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#use-better-data-formats" class="nav-link">Use Better Data Formats</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#coding-practices-and-memory-efficiency" class="nav-link">Coding Practices and Memory Efficiency</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#benchmark-benchmark-benchmark" class="nav-link">Benchmark, benchmark, benchmark!</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#avoid-explicit-loops" class="nav-link">Avoid explicit loops</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#avoid-repeatedly-allocating-copying-and-rearranging-data" class="nav-link">Avoid repeatedly allocating, copying and rearranging data</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#access-data-from-memory-efficiently" class="nav-link">Access data from memory efficiently</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+            </ul>
+        </li>
+    
         <li class="nav-item toc-entry toc-h2">
+            <a href="#compiled-code" class="nav-link">Compiled Code</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
             <a href="#just-in-time-compilation" class="nav-link">Just-in-Time Compilation</a>
         </li>
     
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#parallel-and-distributed-computing" class="nav-link">Parallel and Distributed Computing</a>
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#c-extensions" class="nav-link">C-Extensions</a>
+        </li>
+    
+            </ul>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#developing-c-extensions" class="nav-link">Developing C-Extensions</a>
+            <a href="#extras" class="nav-link">Extras</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#parallel-and-distributed-computing" class="nav-link">Parallel and Distributed Computing</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#share-memory-programming" class="nav-link">Share-memory Programming</a>
+        </li>
+    
+            </ul>
         </li>
     
     </ul>
@@ -208,35 +270,474 @@
                 
   <div class="section" id="performance">
 <span id="id1"></span><h1>Performance<a class="headerlink" href="#performance" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="starting-point">
-<h2>Starting Point<a class="headerlink" href="#starting-point" title="Permalink to this headline">¶</a></h2>
-<p>…</p>
+<p>Typically it’s better to first get something correct (and tested) before scrutinizing performance
+unnecessarily. As such, we’ve saved the matter of “performance” for last. That said, in
+scientific/research computing, especially in HPC, it is rather common to encounter performance
+bottlenecks.</p>
+<p>We’ll go through a natural progression. Here is a high-level summary of the topics:</p>
+<ol class="arabic simple">
+<li><p><strong>Benchmarking</strong> - You cannot establish that you’ve made an improvement if you haven’t
+benchmarked your code. This is the very first thing. You might even consider adding something
+like this to your automated testing. You’re <cite>regression</cite> tests might be timed.</p></li>
+<li><p><strong>Profiling</strong> - Identify the bottleneck in your code by investigating how much time is spent on
+what line of the code. You might find that a simple fix gives you tremendous improvements. The
+procedure here is similar to debugging and the best way to proceed is with special tools.</p></li>
+<li><p><strong>Do Not Reinvent the Wheel</strong> - Using existing (possibly compiled) implementations that are
+faster. Pick a different algorithm that may be more efficient.
+Pick a more efficient storage format when handling data.</p></li>
+<li><p><strong>Compiled Code</strong> - Depending on your code, you might be able to use something like
+<a class="reference external" href="https://numba.pydata.org">numba</a> to JIT-compile your code and get tremendous performance
+improvements “for free”. As a last resort, it is possible to write more efficient code in
+<cite>C</cite>/<cite>C++</cite> that you can link to Python. This is non-trivial.</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This section does not offer an exhaustive guide, nor a particularly deep one.
+We merely touch on all the relevant areas. It is up to the developer to take
+each of these ideas and explore deeper.</p>
+</div>
+<div class="section" id="benchmarking">
+<h2>Benchmarking<a class="headerlink" href="#benchmarking" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="timing-your-code">
+<h3>Timing Your Code<a class="headerlink" href="#timing-your-code" title="Permalink to this headline">¶</a></h3>
+<p>As a simple starting point, lets look at the
+<a class="reference external" href="https://docs.python.org/3/library/time.html#time.time">time</a>
+function. We can time a section of code as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">)</span>
+<span class="n">t2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Generating random array took </span><span class="si">{}</span><span class="s2"> seconds&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t2</span><span class="o">-</span><span class="n">t1</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Generating random array took 0.44880104064941406 seconds
+</pre></div>
+</div>
+<p>If we want to get both sophisticated and automated, we might consider
+implementing a system in our tests to time function calls. We could even
+use Python’s fantastic
+<a class="reference external" href="http://en.wikipedia.org/wiki/Python_syntax_and_semantics#Decorators">decorator syntax</a>
+to make it widely applicable.</p>
+</div>
+<div class="section" id="interactive-benchmarking-with-ipython">
+<h3>Interactive Benchmarking with IPython<a class="headerlink" href="#interactive-benchmarking-with-ipython" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">%timeit</span></code> and <code class="docutils literal notranslate"><span class="pre">%%timeit</span></code> are
+<a class="reference external" href="https://ipython.readthedocs.io/en/stable/interactive/magics.html">magic statements</a>
+that can be used in an IPython console or Jupyter notebook
+for timing a single line of code or a block of code
+conveniently.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [1]: </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="gp">In [2]: </span><span class="o">%</span><span class="k">timeit</span> np.random.rand(5000, 5000)
+<span class="go">410 ms ± 2.59 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)</span>
+
+<span class="gp">In [3]: </span><span class="o">%%time</span>it
+<span class="gp">   ...: </span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">)</span>
+<span class="gp">   ...: </span><span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">)</span>
+<span class="gp">   ...: </span><span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+<span class="gp">   ...:</span>
+<span class="go">897 ms ± 10.2 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)</span>
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="performance-profiling">
 <h2>Performance Profiling<a class="headerlink" href="#performance-profiling" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">time</span></code> and <code class="docutils literal notranslate"><span class="pre">timeit</span></code> methods will get you pretty far in terms of measuring your code’s
+performance. A more delicate approach would be to apply a tool that can not just time the entire
+block, but piece apart how much time is spent on each line so you can see the relative weight of
+different parts of the routine.</p>
 <div class="section" id="line-profiler">
 <h3>Line Profiler<a class="headerlink" href="#line-profiler" title="Permalink to this headline">¶</a></h3>
+<p>In IPython, you can use the <a class="reference external" href="https://github.com/rkern/line_profiler">line_profiler</a> against
+a Python statement and tell it what functions to watch. Let’s take a look at our function.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ pip install line_profiler
+</pre></div>
+</div>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [4]: </span><span class="o">%</span><span class="k">load_ext</span> line_profiler
+
+<span class="gp">In [5]: </span><span class="kn">from</span> <span class="nn">python201.algorithms</span> <span class="kn">import</span> <span class="n">cumulative_product</span>
+
+<span class="gp">In [6]: </span><span class="o">%</span><span class="k">lprun</span> -f cumulative_product cumulative_product(list(range(100)))
+<span class="go">Timer unit: 1e-06 s</span>
+
+<span class="go">Total time: 0.000167 s</span>
+<span class="go">File: /home/glentner/code/github.com/glentner/python201/python201/algorithms.py</span>
+<span class="go">Function: cumulative_product at line 8</span>
+
+<span class="go">Line #      Hits         Time  Per Hit   % Time  Line Contents</span>
+<span class="go">==============================================================</span>
+<span class="go">     8                                           def cumulative_product(array: List[float]) -&gt; List[float]:</span>
+<span class="go">     9                                               &quot;&quot;&quot;</span>
+<span class="go">    10                                               Compute the cumulative product of an array of numbers.</span>
+<span class="go">    11</span>
+<span class="go">    12                                               Parameters:</span>
+<span class="go">    13                                                   array (list): An array of numeric values.</span>
+<span class="go">    14</span>
+<span class="go">    15                                               Returns:</span>
+<span class="go">    16                                                   result (list): A list of the same shape as `array`.</span>
+<span class="go">    17</span>
+<span class="go">    18                                               Example:</span>
+<span class="go">    19                                                   &gt;&gt;&gt; cumulative_product([1, 2, 3, 4, 5])</span>
+<span class="go">    20                                                   [1, 2, 6, 24, 120]</span>
+<span class="go">    21                                               &quot;&quot;&quot;</span>
+<span class="go">    22         1          3.0      3.0      1.8      result = list(array)</span>
+<span class="go">    23       100         70.0      0.7     41.9      for i, value in enumerate(array[1:]):</span>
+<span class="go">    24        99         73.0      0.7     43.7          result[i+1] = result[i] * value</span>
+<span class="go">    25         1          5.0      5.0      3.0      sample = &#39;[]&#39; if not result else f&#39;[..., {result[-1]:g}]&#39;</span>
+<span class="go">    26         1         16.0     16.0      9.6      log.debug(f&#39;cumulative_product: length-{len(result)} array {sample}&#39;)</span>
+<span class="go">    27         1          0.0      0.0      0.0      return result</span>
+</pre></div>
+</div>
+<p>There’s a wealth of information provided, including the total percent of time spent on each line.
+As expected, most of the time is spent around the for-loop with list-accesses. Before we move on
+to actually changing the code, let’s check out another type of profiling that might be relevant to
+scientific software development.</p>
 </div>
 <div class="section" id="memory-profiler">
 <h3>Memory Profiler<a class="headerlink" href="#memory-profiler" title="Permalink to this headline">¶</a></h3>
-<p>…</p>
+<p>Quite often, it’s not necessarily the amount of <cite>time</cite> spent on a piece of code that is problematic;
+it could be that too much memory is being used. In Python you can profile the memory consumption of
+your code as it is running in a similar way to how we used the <code class="docutils literal notranslate"><span class="pre">line_profiler</span></code>.</p>
+<p>The <a class="reference external" href="https://github.com/pythonprofilers/memory_profiler">memory_profiler</a> provides a line-by-line
+breakdown of a function and the <cite>memory difference</cite> it contributed.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ pip install memory_profiler
+</pre></div>
+</div>
+<p>In order to see this, lets
+do something really silly to our code, like add a useless memory accumulator.</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">python201/algorithms.py</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># collapsed for space  ...</span>
+
+<span class="k">def</span> <span class="nf">cumulative_product</span><span class="p">(</span><span class="n">array</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;...&quot;&quot;&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+<span class="hll">    <span class="n">big_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+</span>    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
+        <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">value</span>
+<span class="hll">        <span class="n">big_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10_000_000</span><span class="p">)))</span>
+</span>    <span class="n">sample</span> <span class="o">=</span> <span class="s1">&#39;[]&#39;</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span> <span class="k">else</span> <span class="sa">f</span><span class="s1">&#39;[..., </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s1">g</span><span class="si">}</span><span class="s1">]&#39;</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;cumulative_product: length-</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span><span class="si">}</span><span class="s1"> array </span><span class="si">{</span><span class="n">sample</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+<span class="c1"># collapsed for space  ...</span>
+</pre></div>
 </div>
 </div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Be careful if you do something like this, you might accidentally run your machine
+our of memory and freeze your session. And do not forget to remove these lines when
+you’re done!</p>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>The syntax is similar to before.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [1]: </span><span class="o">%</span><span class="k">load_ext</span> memory_profiler
+
+<span class="gp">In [2]: </span><span class="kn">from</span> <span class="nn">python201.algorithms</span> <span class="kn">import</span> <span class="n">cumulative_product</span>
+
+<span class="gp">In [3]: </span><span class="o">%</span><span class="k">mprun</span> -f cumulative_product cumulative_product(list(range(10)))
+<span class="go">Filename: /home/glentner/code/github.com/glentner/python201/python201/algorithms.py</span>
+
+<span class="go">Line #    Mem usage    Increment   Line Contents</span>
+<span class="go">================================================</span>
+<span class="go">     8     43.9 MiB     43.9 MiB   def cumulative_product(array: List[float]) -&gt; List[float]:</span>
+<span class="go">     9                                 &quot;&quot;&quot;</span>
+<span class="go">    10                                 Compute the cumulative product of an array of numbers.</span>
+<span class="go">    11</span>
+<span class="go">    12                                 Parameters:</span>
+<span class="go">    13                                     array (list): An array of numeric values.</span>
+<span class="go">    14</span>
+<span class="go">    15                                 Returns:</span>
+<span class="go">    16                                     result (list): A list of the same shape as `array`.</span>
+<span class="go">    17</span>
+<span class="go">    18                                 Example:</span>
+<span class="go">    19                                     &gt;&gt;&gt; cumulative_product([1, 2, 3, 4, 5])</span>
+<span class="go">    20                                     [1, 2, 6, 24, 120]</span>
+<span class="go">    21                                 &quot;&quot;&quot;</span>
+<span class="go">    22     43.9 MiB      0.0 MiB       result = list(array)</span>
+<span class="go">    23     43.9 MiB      0.0 MiB       big_list = list()</span>
+<span class="go">    24   3520.5 MiB      0.0 MiB       for i, value in enumerate(array[1:]):</span>
+<span class="go">    25   3134.2 MiB      0.0 MiB           result[i+1] = result[i] * value</span>
+<span class="go">    26   3520.5 MiB    386.7 MiB           big_list.append(list(range(10_000_000)))</span>
+<span class="go">    27   3520.5 MiB      0.0 MiB       sample = &#39;[]&#39; if not result else f&#39;[..., {result[-1]:g}]&#39;</span>
+<span class="go">    28   3520.5 MiB      0.0 MiB       log.debug(f&#39;cumulative_product: length-{len(result)} array {sample}&#39;)</span>
+<span class="go">    29   3520.5 MiB      0.0 MiB       return result</span>
+</pre></div>
+</div>
+<p>Again, all we can measure is the difference in the memory footprint of our program after a given
+line executes. It is <cite>very</cite> difficult to actually speak precisely about memory usage. Especially
+with container types, if you ask how much space it’s using with built-in Python tools (e.g., like
+<code class="docutils literal notranslate"><span class="pre">sys.getsizeof</span></code>) you may not be seeing the memory usage of the data the elements of that
+container are pointing to.</p>
+</div>
+</div>
+<div class="section" id="do-not-reinvent-the-wheel">
+<h2>Do Not Reinvent the Wheel<a class="headerlink" href="#do-not-reinvent-the-wheel" title="Permalink to this headline">¶</a></h2>
+<p>Writing correct, fast code can be hard. In 2020, if you’ve come across a problem, chances are that
+others have already run across the same challenge. There is likely an existing (possibly even
+optimized) implementation for Python.</p>
 <div class="section" id="use-existing-libraries">
-<h2>Use Existing Libraries<a class="headerlink" href="#use-existing-libraries" title="Permalink to this headline">¶</a></h2>
-<p>…</p>
+<h3>Use Existing Libraries<a class="headerlink" href="#use-existing-libraries" title="Permalink to this headline">¶</a></h3>
+<p>In our case, you might have already realized if you’re familiar with the popular numerical
+computing library for Python, <a class="reference external" href="https://numpy.org">numpy</a>, that it already has an fast,
+compiled version of the algorithm we’re looking for:
+<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.cumprod.html">numpy.cumprod</a>.</p>
+<p>Not only is the data stored in a fast data structure in contiguous memory, the for-loop exists
+in the C-layer beneath the Python interpreter.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [1]: </span><span class="kn">from</span> <span class="nn">python201.algorithms</span> <span class="kn">import</span> <span class="n">cumulative_product</span> <span class="k">as</span> <span class="n">cumprod</span>
+
+<span class="gp">In [2]: </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="gp">In [3]: </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10_000_000</span><span class="p">)</span>
+
+<span class="gp">In [4]: </span><span class="o">%</span><span class="k">timeit</span> result = cumprod(data)
+<span class="go">3.56 s ± 40.8 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)</span>
+
+<span class="gp">In [5]: </span><span class="o">%</span><span class="k">timeit</span> result = np.cumprod(data)
+<span class="go">33.6 ms ± 287 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)</span>
+</pre></div>
 </div>
+</div>
+<div class="section" id="use-better-algorithms">
+<h3>Use Better Algorithms<a class="headerlink" href="#use-better-algorithms" title="Permalink to this headline">¶</a></h3>
+<p>This is one of the most effective ways to improve the performance of a program.</p>
+<p>When choosing a function from a library or writing your own, ensure that you understand how it
+will perform for the type and size of data you have, and what options there may be to boost its
+performance. Always benchmark to compare with other functions and libraries.</p>
+<p>For example, if you are doing linear algebra, you may benefit from the use of
+<a class="reference external" href="https://en.wikipedia.org/wiki/Sparse_matrix">sparse</a> matrices and algorithms if you are
+dealing with very large matrices with relatively few non-zeros.</p>
+<p>As another example, many kinds of algorithms are iterative and require an initial “guess” for the
+solution. Typically, the closer this initial guess is to the actual solution, the faster the
+algorithm performs.</p>
+</div>
+<div class="section" id="use-better-data-formats">
+<h3>Use Better Data Formats<a class="headerlink" href="#use-better-data-formats" title="Permalink to this headline">¶</a></h3>
+<p>Familiarize yourself with
+the various data formats available for the type of data you are dealing with,
+and the performance considerations for each.
+For example,
+<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/io.html">this page</a>
+provides a good overview of various data formats for
+tabular data supported by the Pandas library.
+Performance for each is reported
+<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/io.html#performance-considerations">here</a>.</p>
+</div>
+<div class="section" id="coding-practices-and-memory-efficiency">
+<h3>Coding Practices and Memory Efficiency<a class="headerlink" href="#coding-practices-and-memory-efficiency" title="Permalink to this headline">¶</a></h3>
+<p>For a better illustration, lets consider another example.</p>
+<p>Lets say we want to compute the average <code class="docutils literal notranslate"><span class="pre">hindfooth_length</span></code> for
+all species in <code class="docutils literal notranslate"><span class="pre">plot_id</span></code> 13 in the following dataset:</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [1]: </span><span class="kn">import</span> <span class="nn">pandas</span>
+
+<span class="gp">In [2]: </span><span class="n">data</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;feet.csv&#39;</span><span class="p">)</span>
+
+<span class="gp">In [3]: </span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="gh">Out[3]:</span>
+<span class="go">   plot_id species_id  hindfoot_length</span>
+<span class="go">0        2         NL             32.0</span>
+<span class="go">1        3         NL             33.0</span>
+<span class="go">2        2         DM             37.0</span>
+<span class="go">3        7         DM             36.0</span>
+<span class="go">4        3         DM             35.0</span>
+</pre></div>
+</div>
+<div class="section" id="benchmark-benchmark-benchmark">
+<h4>Benchmark, benchmark, benchmark!<a class="headerlink" href="#benchmark-benchmark-benchmark" title="Permalink to this headline">¶</a></h4>
+<p>If there are two ways of doing the same thing, <em>benchmark</em> to see which is faster for different
+problem sizes. For example, one way to do this would be to group by the <code class="docutils literal notranslate"><span class="pre">plot_id</span></code>, compute the
+mean hindfoot length for each group, and extract the result for the group with <code class="docutils literal notranslate"><span class="pre">plot_id</span></code> 13:</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [4]: </span><span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;plot_id&#39;</span><span class="p">)[</span><span class="s1">&#39;hindfoot_length&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()[</span><span class="mi">13</span><span class="p">]</span>
+<span class="gh">Out[4]: </span><span class="go">27.570887035633056</span>
+</pre></div>
+</div>
+<p>Another way would be to filter the data first, keeping only records with <code class="docutils literal notranslate"><span class="pre">plot_id</span></code> 13, and then
+computing the mean of the <code class="docutils literal notranslate"><span class="pre">hindfoot_length</span></code> column:</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [5]: </span><span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;plot_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">13</span><span class="p">][</span><span class="s1">&#39;hindfoot_length&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="gh">Out[5]: </span><span class="go">27.570887035633056</span>
+</pre></div>
+</div>
+<p>Both methods give identical results, but the difference in performance is significant:</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [6]: </span><span class="o">%</span><span class="k">timeit</span> data.groupby(&#39;plot_id&#39;)[&#39;hindfoot_length&#39;].mean()[13]
+<span class="go">1.34 ms ± 24.5 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)</span>
+
+<span class="gp">In [7]: </span><span class="o">%</span><span class="k">timeit</span> data[data[&#39;plot_id&#39;] == 13][&#39;hindfoot_length&#39;].mean()
+<span class="go">750 µs ± 506 ns per loop (mean ± std. dev. of 7 runs, 1000 loops each)</span>
+</pre></div>
+</div>
+<p>Why do you think the first method is slower?</p>
+</div>
+<div class="section" id="avoid-explicit-loops">
+<h4>Avoid explicit loops<a class="headerlink" href="#avoid-explicit-loops" title="Permalink to this headline">¶</a></h4>
+<p>Very often, you need to operate on multiple elements of a collection such as a NumPy array or
+Pandas DataFrame.</p>
+<p>In such cases, it is almost always a bad idea to write an explicit <code class="docutils literal notranslate"><span class="pre">for</span></code> loop over the elements.</p>
+<p>For instance, looping over the rows (a.k.a, <em>indices</em> or <em>records</em>) of a Pandas DataFrame is
+considered poor practice, and is very slow. Consider replacing values in a column of a dataframe:</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [8]: </span><span class="o">%%time</span>it
+<span class="gp">   ...: </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;species_id&#39;</span><span class="p">])):</span>
+<span class="gp">   ...: </span>    <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;species_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;NL&#39;</span><span class="p">:</span>
+<span class="gp">   ...: </span>        <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;species_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;NZ&#39;</span>
+<span class="gp">   ...:</span>
+<span class="go">308 ms ± 4.49 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)</span>
+</pre></div>
+</div>
+<p>A better way to do this is simply to use the <code class="docutils literal notranslate"><span class="pre">replace()</span></code> method:</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [9]: </span><span class="o">%</span><span class="k">time</span> data[&#39;species_id&#39;].replace(&#39;NL&#39;, &#39;NZ&#39;, inplace=True)
+<span class="go">CPU times: user 3.1 ms, sys: 652 µs, total: 3.75 ms</span>
+<span class="go">Wall time: 3.34 ms</span>
+</pre></div>
+</div>
+<p>In addition to being faster, this also leads to more readable code.</p>
+<p>Of course, loops are unavoidable in many situations; but look for alternatives before you write a
+<code class="docutils literal notranslate"><span class="pre">for</span></code> loop over the elements of an array, DataFrame, or similar data structure.</p>
+</div>
+<div class="section" id="avoid-repeatedly-allocating-copying-and-rearranging-data">
+<h4>Avoid repeatedly allocating, copying and rearranging data<a class="headerlink" href="#avoid-repeatedly-allocating-copying-and-rearranging-data" title="Permalink to this headline">¶</a></h4>
+<p>Repeatedly creating and destroying new data can be very expensive especially if you are working
+with very large arrays or data frames. So avoid, for instance, creating a new array each time
+inside a loop. When operating on NumPy arrays, memory is allocated for intermediate results.
+Packages like <a class="reference external" href="https://github.com/pydata/numexpr">numexpr</a> aim to help with this.</p>
+<p>Understand when data needs to be copied v/s when data can be operated “in-place”. It also helps to
+know <em>when</em> copies are made. For example, do you think the following code results in two copies of
+the same array?</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">a</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="https://nedbatchelder.com/text/names.html">This article</a>
+clears up a lot of confusion
+about how names and values work in Python
+and when copies are made v/s when they are not.</p>
+</div>
+<div class="section" id="access-data-from-memory-efficiently">
+<h4>Access data from memory efficiently<a class="headerlink" href="#access-data-from-memory-efficiently" title="Permalink to this headline">¶</a></h4>
+<p>Accessing data in the “wrong order”: it is always more efficient to access values that are “closer
+together” in memory than values that are farther apart. For example, looping over the elements
+along the rows of a 2-d NumPy array is <em>much</em> more efficient than looping over the elements along
+its columns. Similarly, looping over the columns of a DataFrame in Pandas will be faster than
+looping over its rows.</p>
+<ul class="simple">
+<li><p>Redundant computations / computing “too much”:
+if you only need to compute on a subset of your data,
+filter <em>before</em> doing the computation
+rather than after.</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="compiled-code">
+<h2>Compiled Code<a class="headerlink" href="#compiled-code" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="just-in-time-compilation">
-<h2>Just-in-Time Compilation<a class="headerlink" href="#just-in-time-compilation" title="Permalink to this headline">¶</a></h2>
-<p>…</p>
+<h3>Just-in-Time Compilation<a class="headerlink" href="#just-in-time-compilation" title="Permalink to this headline">¶</a></h3>
+<p>Sometimes there just is not an existing implementation of the algorithm you need. And there
+may not be a way of easily <cite>vectorizing</cite> the algorithm, resigning you to “slow” for-loops and
+array accesses.</p>
+<p>Fortunately these days there is more hope for an easy fix than in the past. If you can write your
+code in a rudimentary, line-by-line, <cite>Fortran</cite>-style, there’s a chance you might be able to get
+tremendous performance improvements without needing to write a “real” C-extension.</p>
+<p><a class="reference external" href="https://numba.pydata.org/">Numba</a> is a library that lets you compile code written in Python
+using a very convenient “decorator” syntax. Lets re-implement our function with some slight
+modifications using Numba.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [6]: </span><span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">njit</span>
+
+<span class="gp">In [7]: </span><span class="nd">@njit</span>
+<span class="gp">   ...: </span><span class="k">def</span> <span class="nf">cumprod</span><span class="p">(</span><span class="n">array</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="gp">   ...: </span>    <span class="n">result</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="gp">   ...: </span>    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
+<span class="gp">   ...: </span>        <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">value</span>
+<span class="gp">   ...: </span>    <span class="k">return</span> <span class="n">result</span>
+<span class="gp">   ...:</span>
+
+<span class="gp">In [8]: </span><span class="k">assert</span> <span class="p">(</span><span class="n">cumprod</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">cumprod</span><span class="p">(</span><span class="n">data</span><span class="p">))</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+<span class="gp">In [9]: </span><span class="o">%</span><span class="k">timeit</span> result = cumprod(data)
+<span class="go">32.2 ms ± 239 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)</span>
+</pre></div>
 </div>
+<p>Our JIT-compiled function was <cite>FASTER</cite> than the <code class="docutils literal notranslate"><span class="pre">numpy.cumprod</span></code> implementation?!</p>
+<p><a class="reference external" href="http://cython.org/">Cython</a> is another option for interfacing with compiled code.
+It performs about the same as Numba but requires much more effort;
+although it can do many things that Numba cannot,
+such as generating C code, and
+interface with C/C++ libraries.</p>
+</div>
+<div class="section" id="c-extensions">
+<h3>C-Extensions<a class="headerlink" href="#c-extensions" title="Permalink to this headline">¶</a></h3>
+<p>If what you’re doing is not amenable to tools like Numba, you can in fact create a native
+C-extension yourself. Python has
+<a class="reference external" href="https://docs.python.org/3.8/extending/extending.html">documentation</a> for extending Python,
+and there are some pretty good
+<a class="reference external" href="http://madrury.github.io/jekyll/update/programming/2016/06/20/python-extension-modules.html">tutorials</a>
+online as well.</p>
+</div>
+</div>
+<div class="section" id="extras">
+<h2>Extras<a class="headerlink" href="#extras" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="parallel-and-distributed-computing">
-<h2>Parallel and Distributed Computing<a class="headerlink" href="#parallel-and-distributed-computing" title="Permalink to this headline">¶</a></h2>
-<p>…</p>
+<h3>Parallel and Distributed Computing<a class="headerlink" href="#parallel-and-distributed-computing" title="Permalink to this headline">¶</a></h3>
+<p>If your computer has multiple cores, or if you have access to a bigger computer (e.g., a
+high-performance computing cluster), parallelizing your code may be an option.</p>
+<p>First and foremost, know what layer is appropriate to parallelize at! If the challenge is
+that you have a large number of independent tasks to compute and each task is larger than a
+few seconds, the optimal approach is to not try to parallelize <cite>within</cite> your code. Instead,
+try to expose that part of your code as an executable workflow and use existing tools.
+Consider applications like
+<a class="reference external" href="https://www.gnu.org/software/parallel/">GNU Parallel</a> or
+<a class="reference external" href="https://hyper-shell.readthedocs.io">hyper-shell</a> to scale out your workflow. Alternatively,
+if your tasks are large enough and you have access to a high-performance computing (HPC)
+cluster, use the available scheduler to your advantage and simple schedule all the tasks!</p>
+<p>We won’t cover the entirety of parallelism here. Below is a list of references you
+might consider for parallel and distributed computing in Python.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://ipyparallel.readthedocs.io/en/latest/">IPython Parallel</a> - A general purpose
+framework using the same infrastructure that makes Jupyter possible. You can create a cluster
+of “headless” IPython engines and connect to them from your main program.</p></li>
+<li><p><a class="reference external" href="https://dask.pydata.org/en/latest/">Dask</a> - A great library for parallelizing computations
+and operating on large datasets that don’t fit in RAM. It implements many similar concepts
+to IPython Parallel but also offers a more data-centric out-of-core computing system.</p></li>
+<li><p><a class="reference external" href="http://parsl-project.org">Parsl</a> - A newer framework offering some similar concepts to
+Dask and IPython Parallel. Parsl’s goal is to offer scalability to the largest super computers
+in the world and integrates with HPC scheduling software.</p></li>
+<li><p>Note that many libraries support parallelization without any effort on your part.
+Libraries like Numba and <a class="reference external" href="https://www.tensorflow.org/">Tensorflow</a>
+can use all the cores on your CPU,
+and even your GPU for accelerating computations.</p></li>
+<li><p>The <a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html">multiprocessing</a> package
+is useful when you have several independent tasks that can all be done concurrently.
+<a class="reference external" href="https://pythonhosted.org/joblib/">joblib</a> is another popular library for this.</p></li>
+</ul>
 </div>
-<div class="section" id="developing-c-extensions">
-<h2>Developing C-Extensions<a class="headerlink" href="#developing-c-extensions" title="Permalink to this headline">¶</a></h2>
-<p>…</p>
+<div class="section" id="share-memory-programming">
+<h3>Share-memory Programming<a class="headerlink" href="#share-memory-programming" title="Permalink to this headline">¶</a></h3>
+<p>Sometimes the bottleneck is a hybrid between performance and memory. Many data analysis tasks
+require a computation against a large-ish dataset. The challenge is that there are many
+“embarrassingly parallel” tasks to compute against the same data, but there isn’t enough memory on
+the system for every worker to have their own copy, and it’s a non-started to have the data
+serialized and de-serialized continuously between the workers.</p>
+<p>What to do then?</p>
+<p>In Python, for a long time this was a tall mountain to summit, getting into some fairly advanced
+techniques. Now, thanks to incredible work by the <a class="reference external" href="https://arrow.apache.org">Apache Arrow</a>
+project, we can easily share data in-memory between entirely separate processes (even non-Python
+processes).</p>
+<p>Using the <a class="reference external" href="https://arrow.apache.org/docs/python/plasma.html">Plasma In-Memory Object Store</a> we
+can easily <cite>put</cite> and <cite>get</cite> data structures (e.g., a <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>, <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code>) to
+and from the in-memory store. Another program that <cite>gets</cite> the data only ever gets a reference.
+Using one of the above parallelism frameworks, create a pool of workers that all map to the shared
+data structure and operate on it as if they each had their own copy.</p>
+<p><a class="reference download internal" download="" href="../_downloads/0de07e300e390418e3e316f22d909b37/htc_with_plasma.pdf"><code class="xref download docutils literal notranslate"><span class="pre">See</span> <span class="pre">here</span></code></a>.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
 </div>
 </div>
 

@@ -54,11 +54,12 @@ Logging Level
 
 As stated, one of the core features of logging is that you should be able to control which
 messages are printed as a matter of category. These categories are usually a reference to the
-level of severity of the message. There is always a numeric value and a name for a logging level.
+level of severity of the message. There is always a numeric value and a name for a
+`logging level <https://docs.python.org/3/howto/logging.html>`_.
 
 Conventionally you have a subset or a superset of the following levels.
 
-1. **DEBUG**    - Supplemental messages typically only used when something is wrong.
+1. **DEBUG**    - Detailed information typically used when diagnosing problems.
 2. **INFO**     - General purposes messages for tracking progress.
 3. **WARNING**  - Something unexpected has occurred and may be important.
 4. **ERROR**    - A problem has occurred and a task cannot be completed.
@@ -137,7 +138,7 @@ Overview
 ^^^^^^^^
 
 The `logging <https://docs.python.org/3/library/logging.html>`_ module is quite comprehensive and
-allows the user to heavily customize many parts of the behavior. It is pretty strait forward to
+allows the user to heavily customize many parts of the behavior. It is pretty straightforward to
 implement your own logging functionality; unless you’re doing something special why not use the
 standard library?
 
@@ -190,7 +191,7 @@ We can change the level if we like to allow lower level message to come through.
     In [13]: log.info('hello')
     2020-07-26 15:41:33,491 INFO [__main__] hello
 
-There's a way to have the logging library add an attribute so you can include the hostname in the
+There is a way to have the logging library add an attribute so you can include the hostname in the
 message as a named field, like ``%(hostname)s``. This is a bit cumbersome and makes things more
 complicated than we'd like at this point. An easy hack though is to literally just code it in.
 
@@ -214,11 +215,11 @@ complicated than we'd like at this point. An easy hack though is to literally ju
 Module Level Logging
 ^^^^^^^^^^^^^^^^^^^^
 
-Let's update our code to include logging. When you're developing a Python package, you don't want
+Let's update our code to include logging. When you are developing a Python package, you don't want
 to duplicate code in each module. Instead, let's create some generic code in a `logging` module.
-We could just add it right along side our existing module, but it might be a good idea to create a
-distinct `core` sub-package for generic code separate from our business-logic. That way, we can
-add things later (like configuration file handling) and not clutter our top-level API.
+We could just add it right alongside our existing module, but it might be a good idea to create a
+distinct `core` sub-package for generic code that is separate from our main business-logic. That
+way, we can add things later (like configuration file handling) and not clutter our top-level API.
 
 .. code-block:: none
     :emphasize-lines: 16,17,18
