@@ -285,7 +285,7 @@ Our ``logging`` module might look something like this.
 
 We only need to create the handler once. But we want to allow each of the modules in our package
 to create a new logger with a distinct name. So we've created a new function with the same name
-as the underlying logging library to let us automatically add the handler added.
+as the underlying logging library to let us automatically add the handler.
 
 Now let's modify the ``algorithms`` module to make use of our logging module.
 

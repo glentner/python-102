@@ -452,7 +452,7 @@ we don’t need to worry about modifying any code there.</p>
 </div>
 <p>We only need to create the handler once. But we want to allow each of the modules in our package
 to create a new logger with a distinct name. So we’ve created a new function with the same name
-as the underlying logging library to let us automatically add the handler added.</p>
+as the underlying logging library to let us automatically add the handler.</p>
 <p>Now let’s modify the <code class="docutils literal notranslate"><span class="pre">algorithms</span></code> module to make use of our logging module.</p>
 <div class="literal-block-wrapper docutils container" id="id3">
 <div class="code-block-caption"><span class="caption-text">python201/algorithms.py</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
