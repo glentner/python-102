@@ -194,7 +194,7 @@ Documentation-Driven Development
 --------------------------------
 
 In a similar manner in which `Test-driven Development` (TDD) forces you to think clearly about how
-the feature you intend to develop should behave, so does `Documentation-driven Development`
+the feature you intend to develop should behave, so too does `Documentation-driven Development`
 (DDD).
 
 The idea is as follows, you must first be able to describe what the thing does before you can
