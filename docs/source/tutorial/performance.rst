@@ -3,9 +3,9 @@
 Performance
 ===========
 
-A lot has been said about dangers of premature optimization. Typically it is much better to first
-get something correct (and tested) before scrutinizing performance unnecessarily. As such, we've
-saved the matter of "performance" for last. That said, in scientific/research computing,
+A lot has been said about the dangers of premature optimization. Typically it is much better to
+first get something correct (and tested) before scrutinizing performance unnecessarily. As such,
+we've saved the matter of "performance" for last. That said, in scientific/research computing,
 especially in HPC, it is rather common to encounter performance bottlenecks.
 
 We'll go through a natural progression. Here is a high-level summary of the topics:
