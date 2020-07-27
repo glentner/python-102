@@ -33,8 +33,8 @@ was created in, all they see is the command-line interface.
 Command-line Arguments
 ^^^^^^^^^^^^^^^^^^^^^^
 
-The distinguishing characteristic of a "real" command-line tool and `merely` a script is the
-presents of what could be a rich set of arguments and options passable to the command.
+The distinguishing characteristic of a "real" command-line tool or `merely` a script is the
+presence of what could be a rich set of arguments and options passable to the command.
 
 As with functions in Python, there are both positional arguments and named parameters. Positional
 arguments are precisely what they sound like, any and all unqualified arguments that occur on the
@@ -112,7 +112,7 @@ will provide an exit status, it's up to you as a developer to make that exit sta
 
 The idea is that other programs (e.g., a shell script you are writing) should be able to refer to
 a previously executed program's exit status in order to take some action. The convention is that
-an exit status of zero, ``0``, means everything when as expected, "success". Anything else, any
+an exit status of zero, ``0``, means everything went as expected, "success". Anything else, any
 `non-zero` exit status, means something went wrong. The particular value should have meaning. Many
 programs publish the meaning of different exit status values in their documentation.
 
@@ -182,7 +182,7 @@ Generally, the following few elements are universal.
 * The usage statement begins with the word "usage", ``usage: program ...``.
 * The usage statement is listed on a single line if possible, with a one sentence description.
 * Options are wrapped in square brackets, e.g., ``[-abc]`` or ``[-o PATH]``.
-* Positional arguments are named with either angle brackets or in all capitol letters,
+* Positional arguments are named with either angle brackets or in all capital letters,
   e.g., ``<file>`` or ``FILE``.
 * The help text includes the usage statement at the top.
 * Positional arguments are listed before optional arguments.
@@ -245,7 +245,7 @@ Switches meant to be true/false are enabled with the ``action`` parameter.
     Out[7]: _StoreTrueAction(option_strings=['-l', '--last-only'], dest='last_only', nargs=0,
     const=True, default=False, type=None, choices=None, help='only keep the last value', metavar=None)
 
-When you've finished adding all of your options, you can actually `parse` a set
+When you've finished adding all of your acceptable options, you can actually `parse` a set
 of inputs by calling the ``parse_args`` method with a list of strings. Be default, if nothing
 is given it will check ``sys.argv`` to get the "real" arguments to your program.
 
@@ -354,7 +354,7 @@ a virtual environment on Linux, so I'll have something like the following.
     generate a batch file, ``.bat``, the suffix of which need not be given at the CMD prompt.
 
 Now, there are many ways that you might organize or layout your interface in Python within your
-package. There are a few patterns that have become common place these days. This tutorial is not
+package. There are a few patterns that have become commonplace these days. This tutorial is not
 focussed on code style though. Here is what that entry-point might look like in the simplest case.
 
 .. code-block:: python
@@ -493,14 +493,14 @@ Extras
 Manual Pages
 ^^^^^^^^^^^^
 
-In addition to having a usage and help statement printable from the command-line, if your tool has
+In addition to having a usage and help statement printable from the command line, if your tool has
 a lot of features, it might be a good idea to also include a manual page (or `manpage` for short).
 This is in fact particular to Unix-like platforms, but typically in research computing this is the
 case anyways.
 
 Manual pages are provided by files stored in directories on your ``MANPATH``. The ``man`` command
 looks for these files and parses their special syntax to present nicely formatted page-able output
-at the command-line. Writing one of these files can be a challenge because of this particular
+at the command line. Writing one of these files can be a challenge because of this particular
 syntax.
 
 Fortunately, Sphinx makes creating manual pages for your project much easier! We can create
