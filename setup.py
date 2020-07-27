@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-with open('README.rst', mode='r') as readme:
+with open('README.md', mode='r', encoding='utf-8') as readme:
     long_description = readme.read()
 
 setup(
@@ -15,7 +15,7 @@ setup(
     packages         = find_packages(),
     include_package_data = True,
     long_description = long_description,
-    long_description_content_type = 'text/x-rst',
+    long_description_content_type = 'text/markdown',
     classifiers      = ['Development Status :: 4 - Beta',
                         'Programming Language :: Python :: 3.7',
                         'Programming Language :: Python :: 3.8',
