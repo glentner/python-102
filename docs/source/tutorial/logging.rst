@@ -191,7 +191,7 @@ We can change the level if we like to allow lower level message to come through.
     In [13]: log.info('hello')
     2020-07-26 15:41:33,491 INFO [__main__] hello
 
-There's a way to have the logging library add an attribute so you can include the hostname in the
+There is a way to have the logging library add an attribute so you can include the hostname in the
 message as a named field, like ``%(hostname)s``. This is a bit cumbersome and makes things more
 complicated than we'd like at this point. An easy hack though is to literally just code it in.
 
@@ -215,10 +215,10 @@ complicated than we'd like at this point. An easy hack though is to literally ju
 Module Level Logging
 ^^^^^^^^^^^^^^^^^^^^
 
-Let's update our code to include logging. When you're developing a Python package, you don't want
+Let's update our code to include logging. When you are developing a Python package, you don't want
 to duplicate code in each module. Instead, let's create some generic code in a `logging` module.
-We could just add it right along side our existing module, but it might be a good idea to create a
-distinct `core` sub-package for generic code separate from our business-logic. That way, we can
+We could just add it right alongside our existing module, but it might be a good idea to create a
+distinct `core` sub-package for generic code that is separate from our main business-logic. That way, we can
 add things later (like configuration file handling) and not clutter our top-level API.
 
 .. code-block:: none
