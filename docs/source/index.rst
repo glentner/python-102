@@ -43,7 +43,7 @@ cover some of the most import elements of good scientific software.
 - :ref:`Testing <testing>`
 - :ref:`Documentation <documentation>`
 - :ref:`Command-line Interfaces <commandline_interfaces>`
-- :ref:`Logging <logging>`
+- :ref:`Logging <logging_section>`
 - :ref:`Performance <performance>`
 
 |
@@ -52,9 +52,9 @@ Getting Started
 ---------------
 
 Proceed to the :ref:`setup <setup>` page to read about the prerequisites for this tutorial. The
-content itself is in the :ref:`Tutorial <tutorial>` section. Some experience of working in an 
-interactive terminal (either a Windows/Linux/Mac terminal or a Python console) is required. This 
-tutorial is designed for a novice Python developer; if you can write a loop and a function in 
+content itself is in the :ref:`Tutorial <tutorial>` section. Some experience of working in an
+interactive terminal (either a Windows/Linux/Mac terminal or a Python console) is required. This
+tutorial is designed for a novice Python developer; if you can write a loop and a function in
 Python, and if you know how to run a ``.py`` script, you should be able to follow along comfortably.
 
 |

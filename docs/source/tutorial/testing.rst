@@ -181,10 +181,10 @@ Like many testing frameworks, ``pytest`` can be quite sophisticated. For the pur
 this tutorial, we'll stick to the basics. Essentially, if you place all of your tests within
 the appropriate layout, ``pytest`` will automatically find and execute all your tests.
 
-We want all of our tests to live under files that start with ``test`` and we need all of our tests
-to be encapsulated by functions that also start with ``test``. A nice approach is to have a top
+We want all of our tests to live under files with names that start with ``test`` and we need all of our tests
+to be encapsulated by functions whose names also start with ``test``. A nice approach is to have a top
 level ``tests`` folder in your project with a structure that mirrors your python package,
-including a ``tests_X.py`` partner for every module in your package.
+including a ``test_X.py`` partner for every module in your package.
 
 In our case, we would have ``tests/test_algorithms.py``.
 
@@ -250,11 +250,11 @@ or represent different conditions that the code may be exposed to.
 For example:
 
 * An array of length 0 or 1.
-* An array of mixed signs or precisions.
+* An array of mixed sign or precision.
 * An array containing NaN values.
 
-In our case, it was even simpler than that; the existence of a value equal to that of the final
-value prematurely truncates the sequence.
+In our case, it was even simpler than that; `the existence of a value equal to that of the final
+value prematurely truncates the sequence`.
 
 .. note::
 

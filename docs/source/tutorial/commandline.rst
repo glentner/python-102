@@ -33,7 +33,7 @@ was created in, all they see is the command-line interface.
 Command-line Arguments
 ^^^^^^^^^^^^^^^^^^^^^^
 
-The distinguishing characteristic of a "real" command-line tool or `merely` a script is the
+The distinguishing characteristic of a "real" command-line tool and `merely` a script is the
 presence of what could be a rich set of arguments and options passable to the command.
 
 As with functions in Python, there are both positional arguments and named parameters. Positional
@@ -122,7 +122,7 @@ We will demonstrate how to manage this in your code below.
 Usage and Help Text
 ^^^^^^^^^^^^^^^^^^^
 
-A good CLI tool should print it's own usage and help information to standard output upon request.
+A good CLI tool should print its own usage and help information to standard output upon request.
 The convention is that the lack of any arguments (positional or otherwise) is a request to see a
 `usage` statement (exceptions exist, the ``python`` command among them).
 
@@ -249,6 +249,7 @@ When you've finished adding all of your acceptable options, you can actually `pa
 of inputs by calling the ``parse_args`` method with a list of strings. Be default, if nothing
 is given it will check ``sys.argv`` to get the "real" arguments to your program.
 
+
 .. code-block:: ipython
 
     In [8]: parser.parse_args(['data.txt', '-l'])
@@ -357,6 +358,7 @@ Now, there are many ways that you might organize or layout your interface in Pyt
 package. There are a few patterns that have become commonplace these days. This tutorial is not
 focussed on code style though. Here is what that entry-point might look like in the simplest case.
 
+
 .. code-block:: python
     :caption: python201/algorithms.py
 
@@ -449,7 +451,7 @@ in a range. Let's use it to compute the cumulative product of a sequence.
 
 ::
 
-    $ sed 5
+    $ seq 5
     1
     2
     3
@@ -458,7 +460,7 @@ in a range. Let's use it to compute the cumulative product of a sequence.
 
 ::
 
-    $ sed 5 | cumprod -
+    $ seq 5 | cumprod -
     1
     2
     6
@@ -588,7 +590,7 @@ You can then build your manual page by using the same Makefile as we did for the
 
 In order for you to include your now constructed manual page as part of the Python package, you
 need to place it somewhere that your ``setup.py`` file can access and include as an installable
-asset. If you are committing your build folder to version control, than you just need to point
+asset. If you are committing your build folder to version control, then you just need to point
 there; otherwise, we should copy our new manual page out of the build folder to somewhere we will
 commit to version control.
 
