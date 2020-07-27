@@ -326,7 +326,7 @@ If a function is doing too much, then it should probably be broken into smaller 
 </pre></div>
 </div>
 </div>
-<p>Now we can do more work without duplicating those lines of code. But we’re still hard coding the
+<p>Now we can do more work without duplicating those lines of code. But we’re still hard-coding the
 input data. We’ll explore making this function better in the next section when we discuss
 <a class="reference internal" href="testing.html#testing"><span class="std std-ref">testing</span></a>. For now, let’s focus on making this code available as part of an
 installable package.</p>
@@ -531,6 +531,35 @@ without needing to re-install it every time.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ pip install -e . --user
 </pre></div>
 </div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>As a side note, using pip’s <code class="docutils literal notranslate"><span class="pre">--user</span></code> functionality might have some unexpected consequences
+and could cause package conflicts at some point later in the future. As discussed previously,
+your <cite>user</cite> site-packages always come first on your <code class="docutils literal notranslate"><span class="pre">sys.path</span></code>. So long as you are using
+the same Python version (e.g., 3.6), those packages will be preferred.</p>
+<ul class="simple">
+<li><p>First, if you’re using
+some kind of virtual environment, it <cite>may</cite> pick up packages that you didn’t intend that
+conflict with other libraries you’re using.</p></li>
+<li><p>Second, other applications that <cite>happen</cite> to be running against <cite>that</cite> particular version of
+Python may pick up those packages and there could be a conflict. A common example from a
+shared HPC system: the centrally-maintained <cite>JupyterHub</cite> instance could be running the same
+version of Python as your environment. If you install a web-based plotting library that pulls
+down <code class="docutils literal notranslate"><span class="pre">tornado</span></code> as a dependency, now <cite>all</cite> of your kernels are “broken” in <cite>JupyterHub</cite>.</p></li>
+</ul>
+<p>For this tutorial, if you’re using Anaconda or a vanilla virtualenv, we recommend you use</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">.</span>
+</pre></div>
+</div>
+<p><cite>while you have the environment activated</cite>. If you’re using Pipenv, you
+can add your package to your managed virtualenv with</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pipenv</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">.</span>
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 <div class="section" id="extras">
@@ -649,6 +678,24 @@ if you plan to upload your package to the package index.</p>
 <a class="reference external" href="https://twine.readthedocs.io/en/latest/">Twine</a> command line tool. This is the officially
 supported way of doing so. It’s perfectly accepted to <cite>not</cite> host your package via <cite>PyPI</cite>, and
 instead merely instruct users how to install directly via GitHub, for example.</p>
+<p>In the most basic scenario, assuming your project is <cite>pure</cite>-python, you would want to build both
+the a “binary distribution <cite>wheel</cite>” and a “source distribution” using your <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> script.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python setup.py bdist_wheel sdist
+</pre></div>
+</div>
+<p>This creates distribution files that you can upload to PyPI. All necessary information should
+be contained within the <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> file you used to “build” the distribution assets.
+Upload them with <code class="docutils literal notranslate"><span class="pre">twine</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ twine upload dist/*
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Be sure to checkout the documentation for doing this before attempting. You’ll want to
+validate your assets <cite>before</cite> you push them to PyPI. There is a “test” server you can push to
+that is more-or-less a black hole for testing purposes. It will let you check that everything
+is setup properly before <cite>actually</cite> pushing to the world.</p>
+</div>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>

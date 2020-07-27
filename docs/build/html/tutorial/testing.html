@@ -237,8 +237,7 @@ the same answers as before?</p></li>
 excellent article and PyCon 2014 talk
 <a class="reference external" href="https://nedbatchelder.com/text/test0.html">Getting Started Testing</a>.</p>
 <div class="line-block">
-<div class="line">“<em>Tests are the dental floss of development: everyone knows they should do it more,</em></div>
-<div class="line"><em>but they don’t, and they feel guilty about it.</em>”</div>
+<div class="line">“<em>Tests are the dental floss of development: everyone knows they should do it more, but they don’t, and they feel guilty about it.</em>”</div>
 <div class="line">- Ned Batchelder</div>
 </div>
 <div class="line-block">
@@ -425,7 +424,7 @@ FAILED tests/test_algorithms.py::test_cumulative_product - assert [1, 2, 6] == [
 ==================================== 1 failed in 0.21s =====================================
 </pre></div>
 </div>
-<p>Pytest has found our test modules and run all our tests. Each module will be reported on it’s own
+<p>Pytest has found our test modules and run all our tests. Each module will be reported on its own
 line. A <cite>dot</cite> will appear while it is running each test. An <code class="docutils literal notranslate"><span class="pre">F</span></code> is printed when a test fails
 with a summary of what happened. Here we see that our final comparison failed and we are told
 precisely what the problem is.</p>
@@ -574,7 +573,7 @@ This can be difficult if your code isn’t modular,
 i.e., if different parts of your code depend heavily on each other.
 This is one of the reasons TDD is said to produce more modular code.</p></li>
 <li><p><strong>Tests should cover all possible code paths</strong>: if your function has multiple code paths
-(e.g., an if-else statement),
+(e.g., an <em>if-else</em> statement),
 write tests that execute both the “if” part
 and the “else” part.
 Otherwise, you might have bugs in your code and still have all tests pass.</p></li>
@@ -598,7 +597,7 @@ so that you force your code to handle them.</p></li>
 extended by design. A notable package that works as a plugin for <code class="docutils literal notranslate"><span class="pre">pytest</span></code> is
 <a class="reference external" href="https://hypothesis.readthedocs.io/en/latest/index.html">Hypothesis</a>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">Hypothesis</span></code> implements <cite>property-based testing</cite> that allows you to write unit tests in a way
-that isn’t hard coded. You define strategies for given inputs and it automatically generates
+that isn’t hard-coded. You define strategies for given inputs and <code class="docutils literal notranslate"><span class="pre">hypothesis</span></code> automatically generates
 entire ensembles of tests for a given definition including edge cases you would want to cover.</p>
 <p>For our <cite>zero</cite> test, if the initial value of the array is zero, it simply doesn’t matter what the
 remaining values of the array are, the result will be an array of the same length and all zeros.

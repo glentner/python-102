@@ -217,9 +217,12 @@
 <p>In addition to including routines in a package that yourself and others can import within other
 projects, typically it is a good idea to expose those elements that can stand alone as a command
 line utility (e.g., a high level function whose parameters might map in a straightforward way to
-command-line arguments). Structuring your project so that it can manifest as both a library and a
-command-line tool lets others not only execute that routine easily and repeatedly, but also allows
-for that routine to be integrated into other workflows.</p>
+command-line arguments). Often such command-line functionality may even be the primary driving
+force behind initial development of a project (<em>“I need a script that does X”</em>), and only later it
+may evolve into <em>“I need to incorporate capability X into another project”</em>. Structuring
+your project so that it can manifest as both a library and a command-line tool lets others not
+only execute that routine easily and repeatedly, but also allows for that routine to be integrated
+into other workflows.</p>
 <div class="section" id="conventions">
 <h2>Conventions<a class="headerlink" href="#conventions" title="Permalink to this headline">¶</a></h2>
 <p>There are several elements to a good command-line interface that are common to most CLI tools.
@@ -363,7 +366,7 @@ Generally, the following few elements are universal.</p>
 <li><p>The usage statement begins with the word “usage”, <code class="docutils literal notranslate"><span class="pre">usage:</span> <span class="pre">program</span> <span class="pre">...</span></code>.</p></li>
 <li><p>The usage statement is listed on a single line if possible, with a one sentence description.</p></li>
 <li><p>Options are wrapped in square brackets, e.g., <code class="docutils literal notranslate"><span class="pre">[-abc]</span></code> or <code class="docutils literal notranslate"><span class="pre">[-o</span> <span class="pre">PATH]</span></code>.</p></li>
-<li><p>Positional arguments are named with either angle brackets or in all capitol letters,
+<li><p>Positional arguments are named with either angle brackets or in all capital letters,
 e.g., <code class="docutils literal notranslate"><span class="pre">&lt;file&gt;</span></code> or <code class="docutils literal notranslate"><span class="pre">FILE</span></code>.</p></li>
 <li><p>The help text includes the usage statement at the top.</p></li>
 <li><p>Positional arguments are listed before optional arguments.</p></li>
@@ -416,9 +419,9 @@ e.g., <code class="docutils literal notranslate"><span class="pre">'--tmp-dir</s
 <span class="go">const=True, default=False, type=None, choices=None, help=&#39;only keep the last value&#39;, metavar=None)</span>
 </pre></div>
 </div>
-<p>When you’ve finished adding all of your options, you can actually <cite>parse</cite> a set
-of inputs by calling the <code class="docutils literal notranslate"><span class="pre">parse_args</span></code> method with a list of strings. By default, if nothing
-is given, it will check <code class="docutils literal notranslate"><span class="pre">sys.argv</span></code> to get the “real” arguments to your program.</p>
+<p>When you’ve finished adding all of your acceptable options, you can actually <cite>parse</cite> a set
+of inputs by calling the <code class="docutils literal notranslate"><span class="pre">parse_args</span></code> method with a list of strings. Be default, if nothing
+is given it will check <code class="docutils literal notranslate"><span class="pre">sys.argv</span></code> to get the “real” arguments to your program.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [8]: </span><span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">([</span><span class="s1">&#39;data.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;-l&#39;</span><span class="p">])</span>
 <span class="gh">Out[8]: </span><span class="go">Namespace(infile=&lt;_io.TextIOWrapper name=&#39;data.txt&#39; mode=&#39;r&#39; encoding=&#39;UTF-8&#39;&gt;,</span>
 <span class="go">last_only=True, outfile=&lt;_io.TextIOWrapper name=&#39;&lt;stdout&gt;&#39; mode=&#39;w&#39; encoding=&#39;utf-8&#39;&gt;)</span>
@@ -515,8 +518,8 @@ are on and what (version of) Python you invoked Pip with. On Windows, this will 
 generate a batch file, <code class="docutils literal notranslate"><span class="pre">.bat</span></code>, the suffix of which need not be given at the CMD prompt.</p>
 </div>
 <p>Now, there are many ways that you might organize or layout your interface in Python within your
-package. There are a few patterns that have become common place these days. This tutorial is not
-focused on code style though. Here is what that entry-point might look like in the simplest case.</p>
+package. There are a few patterns that have become commonplace these days. This tutorial is not
+focussed on code style though. Here is what that entry-point might look like in the simplest case.</p>
 <div class="literal-block-wrapper docutils container" id="id3">
 <div class="code-block-caption"><span class="caption-text">python201/algorithms.py</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
@@ -642,13 +645,13 @@ $ cat result.txt
 <h2>Extras<a class="headerlink" href="#extras" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="manual-pages">
 <h3>Manual Pages<a class="headerlink" href="#manual-pages" title="Permalink to this headline">¶</a></h3>
-<p>In addition to having a usage and help statement printable from the command-line, if your tool has
+<p>In addition to having a usage and help statement printable from the command line, if your tool has
 a lot of features, it might be a good idea to also include a manual page (or <cite>manpage</cite> for short).
 This is in fact particular to Unix-like platforms, but typically in research computing this is the
 case anyways.</p>
 <p>Manual pages are provided by files stored in directories on your <code class="docutils literal notranslate"><span class="pre">MANPATH</span></code>. The <code class="docutils literal notranslate"><span class="pre">man</span></code> command
 looks for these files and parses their special syntax to present nicely formatted page-able output
-at the command-line. Writing one of these files can be a challenge because of this particular
+at the command line. Writing one of these files can be a challenge because of this particular
 syntax.</p>
 <p>Fortunately, Sphinx makes creating manual pages for your project much easier! We can create
 another page in our documentation source tree, say <code class="docutils literal notranslate"><span class="pre">manpage.rst</span></code>. Sphinx understands what manual
@@ -797,7 +800,7 @@ activates the environment they have access to it.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ man cumprod
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CUMPROD(1)                          python201                          CUMPROD(1)
+<div class="highlight-man notranslate"><div class="highlight"><pre><span></span>CUMPROD(1)                          python201                          CUMPROD(1)
 
 
 

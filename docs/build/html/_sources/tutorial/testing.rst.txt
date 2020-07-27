@@ -22,8 +22,7 @@ These seemingly unrelated questions all have the same answer, and it is
    excellent article and PyCon 2014 talk
    `Getting Started Testing <https://nedbatchelder.com/text/test0.html>`_.
 
-   | "*Tests are the dental floss of development: everyone knows they should do it more,*
-   | *but they don’t, and they feel guilty about it.*"
+   | "*Tests are the dental floss of development: everyone knows they should do it more, but they don’t, and they feel guilty about it.*"
    | - Ned Batchelder
 
    | "*Code without tests should be approached with a 10-foot pole.*"
@@ -232,7 +231,7 @@ project.
     ==================================== 1 failed in 0.21s =====================================
 
 
-Pytest has found our test modules and run all our tests. Each module will be reported on it's own
+Pytest has found our test modules and run all our tests. Each module will be reported on its own
 line. A `dot` will appear while it is running each test. An ``F`` is printed when a test fails
 with a summary of what happened. Here we see that our final comparison failed and we are told
 precisely what the problem is.
@@ -401,7 +400,7 @@ and it helps to keep the following in mind when growing tests:
    This is one of the reasons TDD is said to produce more modular code.
 
 3. **Tests should cover all possible code paths**: if your function has multiple code paths
-   (e.g., an if-else statement),
+   (e.g., an *if-else* statement),
    write tests that execute both the "if" part
    and the "else" part.
    Otherwise, you might have bugs in your code and still have all tests pass.
@@ -427,7 +426,7 @@ extended by design. A notable package that works as a plugin for ``pytest`` is
 `Hypothesis <https://hypothesis.readthedocs.io/en/latest/index.html>`_.
 
 ``Hypothesis`` implements `property-based testing` that allows you to write unit tests in a way
-that isn't hard coded. You define strategies for given inputs and it automatically generates
+that isn't hard-coded. You define strategies for given inputs and ``hypothesis`` automatically generates
 entire ensembles of tests for a given definition including edge cases you would want to cover.
 
 For our `zero` test, if the initial value of the array is zero, it simply doesn't matter what the
