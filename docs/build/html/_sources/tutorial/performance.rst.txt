@@ -244,8 +244,8 @@ Use Existing Libraries
 ^^^^^^^^^^^^^^^^^^^^^^
 
 In our case, you might have already realized if you're familiar with the popular numerical
-computing library for Python, `numpy <https://numpy.org>`_, that it already has an fast,
-compiled version of the algorithm we're looking for:
+computing library for Python, `numpy <https://numpy.org>`_, that it already has a fast,
+compiled version of the algorithm we're looking for,
 `numpy.cumprod <https://numpy.org/doc/stable/reference/generated/numpy.cumprod.html>`_.
 
 Not only is the data stored in a fast data structure in contiguous memory, the for-loop exists
@@ -520,8 +520,8 @@ might consider for parallel and distributed computing in Python.
   is useful when you have several independent tasks that can all be done concurrently.
   `joblib <https://pythonhosted.org/joblib/>`_ is another popular library for this.
 
-Share-memory Programming
-^^^^^^^^^^^^^^^^^^^^^^^^
+Shared-memory Programming
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Sometimes the bottleneck is a hybrid between performance and memory. Many data analysis tasks
 require a computation against a large-ish dataset. The challenge is that there are many

@@ -249,7 +249,7 @@
         </li>
     
         <li class="nav-item toc-entry toc-h3">
-            <a href="#share-memory-programming" class="nav-link">Share-memory Programming</a>
+            <a href="#shared-memory-programming" class="nav-link">Shared-memory Programming</a>
         </li>
     
             </ul>
@@ -485,8 +485,8 @@ optimized) implementation for Python.</p>
 <div class="section" id="use-existing-libraries">
 <h3>Use Existing Libraries<a class="headerlink" href="#use-existing-libraries" title="Permalink to this headline">¶</a></h3>
 <p>In our case, you might have already realized if you’re familiar with the popular numerical
-computing library for Python, <a class="reference external" href="https://numpy.org">numpy</a>, that it already has an fast,
-compiled version of the algorithm we’re looking for:
+computing library for Python, <a class="reference external" href="https://numpy.org">numpy</a>, that it already has a fast,
+compiled version of the algorithm we’re looking for,
 <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.cumprod.html">numpy.cumprod</a>.</p>
 <p>Not only is the data stored in a fast data structure in contiguous memory, the for-loop exists
 in the C-layer beneath the Python interpreter.</p>
@@ -716,8 +716,8 @@ is useful when you have several independent tasks that can all be done concurren
 <a class="reference external" href="https://pythonhosted.org/joblib/">joblib</a> is another popular library for this.</p></li>
 </ul>
 </div>
-<div class="section" id="share-memory-programming">
-<h3>Share-memory Programming<a class="headerlink" href="#share-memory-programming" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="shared-memory-programming">
+<h3>Shared-memory Programming<a class="headerlink" href="#shared-memory-programming" title="Permalink to this headline">¶</a></h3>
 <p>Sometimes the bottleneck is a hybrid between performance and memory. Many data analysis tasks
 require a computation against a large-ish dataset. The challenge is that there are many
 “embarrassingly parallel” tasks to compute against the same data, but there isn’t enough memory on
