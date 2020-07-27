@@ -529,7 +529,7 @@ Upload them with ``twine``.
 
 .. warning::
 
-    Be sure to checkout the documentation for doing this before attempting. You'll want to
+    Be sure to check out the documentation for doing this before attempting. You'll want to
     validate your assets `before` you push them to PyPI. There is a "test" server you can push to
     that is more-or-less a black hole for testing purposes. It will let you check that everything
     is setup properly before `actually` pushing to the world.

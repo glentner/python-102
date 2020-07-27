@@ -3,7 +3,8 @@
 Performance
 ===========
 
-Typically it’s better to first get something correct (and tested) before scrutinizing performance
+A lot has been said about dangers of premature optimization.
+Typically it is much better to first get something correct (and tested) before scrutinizing performance
 unnecessarily. As such, we've saved the matter of "performance" for last. That said, in
 scientific/research computing, especially in HPC, it is rather common to encounter performance
 bottlenecks.
@@ -12,11 +13,11 @@ We'll go through a natural progression. Here is a high-level summary of the topi
 
 1. **Benchmarking** - You cannot establish that you've made an improvement if you haven't
    benchmarked your code. This is the very first thing. You might even consider adding something
-   like this to your automated testing. You're `regression` tests might be timed.
+   like this to your automated testing. E.g. your `regression` tests might be timed.
 2. **Profiling** - Identify the bottleneck in your code by investigating how much time is spent on
    what line of the code. You might find that a simple fix gives you tremendous improvements. The
    procedure here is similar to debugging and the best way to proceed is with special tools.
-3. **Do Not Reinvent the Wheel** - Using existing (possibly compiled) implementations that are
+3. **Do Not Reinvent the Wheel** - Use existing (possibly compiled) implementations that are
    faster. Pick a different algorithm that may be more efficient.
    Pick a more efficient storage format when handling data.
 4. **Compiled Code** - Depending on your code, you might be able to use something like
@@ -391,7 +392,7 @@ with very large arrays or data frames. So avoid, for instance, creating a new ar
 inside a loop. When operating on NumPy arrays, memory is allocated for intermediate results.
 Packages like `numexpr <https://github.com/pydata/numexpr>`_ aim to help with this.
 
-Understand when data needs to be copied v/s when data can be operated "in-place". It also helps to
+Understand when data needs to be copied vs. when data can be operated "in-place". It also helps to
 know *when* copies are made. For example, do you think the following code results in two copies of
 the same array?
 
@@ -405,14 +406,14 @@ the same array?
 `This article <https://nedbatchelder.com/text/names.html>`_
 clears up a lot of confusion
 about how names and values work in Python
-and when copies are made v/s when they are not.
+and when copies are made vs. when they are not.
 
 Access data from memory efficiently
 +++++++++++++++++++++++++++++++++++
 
 Accessing data in the "wrong order": it is always more efficient to access values that are "closer
 together" in memory than values that are farther apart. For example, looping over the elements
-along the rows of a 2-d NumPy array is *much* more efficient than looping over the elements along
+along the rows of a 2D NumPy array is *much* more efficient than looping over the elements along
 its columns. Similarly, looping over the columns of a DataFrame in Pandas will be faster than
 looping over its rows.
 
@@ -526,7 +527,7 @@ Shared-memory Programming
 Sometimes the bottleneck is a hybrid between performance and memory. Many data analysis tasks
 require a computation against a large-ish dataset. The challenge is that there are many
 "embarrassingly parallel" tasks to compute against the same data, but there isn't enough memory on
-the system for every worker to have their own copy, and it's a non-started to have the data
+the system for every worker to have their own copy, and it's a non-starter to have the data
 serialized and de-serialized continuously between the workers.
 
 What to do then?
@@ -542,7 +543,7 @@ and from the in-memory store. Another program that `gets` the data only ever get
 Using one of the above parallelism frameworks, create a pool of workers that all map to the shared
 data structure and operate on it as if they each had their own copy.
 
-:download:`See here <../_static/htc_with_plasma.pdf>`.
+An example of such approach can be be found :download:`here <../_static/htc_with_plasma.pdf>`.
 
 
 |
