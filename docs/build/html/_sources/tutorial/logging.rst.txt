@@ -60,14 +60,15 @@ Conventionally you have a subset or a superset of the following levels.
 
 1. **DEBUG**    - Supplemental messages typically only used when something is wrong.
 2. **INFO**     - General purposes messages for tracking progress.
-3. **WARNING**  - Something unexpected as occurred and may be important.
+3. **WARNING**  - Something unexpected has occurred and may be important.
 4. **ERROR**    - A problem has occurred and a task cannot be completed.
 5. **CRITICAL** - The code or application must halt.
 
-This is not a requirement, it is merely convention. As we'll see in a moment, Python automatically
-supports these levels as described. Some applications include additional levels for more fine
-grained control. Completely different schemes are not unheard of either; another common sort of
-approach for simple tools may be to just have **OK**/**ERR** messages instead.
+These particular levels are not required, they are merely conventional. As we'll see in a moment,
+Python automatically supports these levels as described. Some applications include additional
+levels for more fine grained control. Completely different schemes are not unheard of either;
+another common sort of approach for simple tools may be to just have **OK**/**ERR** messages
+instead.
 
 The important feature is that these levels are an ordered set. The numeric value of the level is
 what is used to filter against. Setting a logging level of WARNING (i.e., 3) means that levels
@@ -86,7 +87,7 @@ Logging Output
 ^^^^^^^^^^^^^^
 
 There are many targets for outputting logs. Often, logs are simply printed (or redirected from)
-the console, or written in plain text to a file. You might imaging having logs written to another
+the console, or written in plain text to a file. You might imagine having logs written to another
 service over the network or maybe even a database. Sometimes, one doesn't preclude the other.
 
 .. note::
@@ -106,24 +107,24 @@ What to Include
 In addition to the logging level, you might want to include a few other things. Some good ones include
 the timestamp for the message, a topic, and a hostname.
 
-You should include a timestamp for your message so you have a record of when the event occurred.
-It also might be the case that you are running more than one workflow at a time from more than one
-program and it helps if they are all logging timestamps so you can merge them to get an order of
-events. In this regard, it's a good idea to include the timestamp at the very beginning of the
-message so that you can combine output from multiple sources and sort it with standard
-command-line tools.
+You should include a **timestamp** for your message so you have a record of when the event
+occurred. It also might be the case that you are running more than one workflow at a time from
+more than one program and it helps if they are all logging timestamps so you can merge them to get
+an order of events. In this regard, it's a good idea to include the timestamp at the very
+beginning of the message so that you can combine output from multiple sources and sort it with
+standard command-line tools.
 
-You should include a topic in your message so that you can associate it with some part of your
+You should include a **topic** in your message so that you can associate it with some part of your
 library. It's not always the case, but often this is done by tagging all your messages by which
 module and/or function it came from. This can be done manually in the messages themselves, or
-automatically by the the framework you're using. This can be very helpful in tracking down messages
+automatically by the framework you're using. This can be very helpful in tracking down messages
 pertaining to a particular part of your code.
 
-You might want to include the hostname of the machine you're running on in the message. This is
-not as common as other attributes, but in scientific computing the chances are high that you're
-running your workflow on many machines that are not your laptop. It might be useful to know what
-machine a particular task ran on when analyzing your logs. This is easy to include automatically
-in most logging frameworks.
+You might want to include the **hostname** of the machine you're running on. This is not as common
+as other attributes, but in scientific computing the chances are high that you're running your
+workflow on many machines that are not your laptop. It might be useful to know what machine a
+particular task ran on when analyzing your logs. This is easy to include automatically in most
+logging frameworks.
 
 
 Logging in Python
